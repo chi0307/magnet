@@ -1,7 +1,8 @@
 import {
   defineConfig,
   presetUno,
-  presetAttributify
+  presetAttributify,
+  transformerVariantGroup,
 } from 'unocss'
 import { Breakpoints } from './src/constant/breakpoint'
 import type { Theme } from '@unocss/preset-mini'
@@ -17,5 +18,8 @@ export default defineConfig({
       lg: `${Breakpoints.lg}px`,
       xl: `${Breakpoints.xl}px`,
     },
-  }
+  },
+  transformers: [
+    transformerVariantGroup(),
+  ],
 })
