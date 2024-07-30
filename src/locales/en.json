@@ -1,0 +1,11 @@
+{
+  "general": {
+    "welcome": "Welcome to React"
+  },
+  "language": {
+    "en": "English",
+    "tw": "Traditional Chinese (TW)",
+    "hk": "Traditional Chinese (HK)",
+    "ja": "Japanese"
+  }
+}
