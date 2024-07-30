@@ -27,6 +27,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^7.15.0
         version: 7.17.0(eslint@8.57.0)(typescript@5.5.4)
+      '@unocss/preset-mini':
+        specifier: ^0.61.8
+        version: 0.61.8
       '@unocss/preset-uno':
         specifier: ^0.61.8
         version: 0.61.8
