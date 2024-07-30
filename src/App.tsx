@@ -1,9 +1,21 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import { useTranslation } from 'react-i18next'
 import './App.css'
 
 function App(): JSX.Element {
+  const { t, i18n } = useTranslation()
+  const changeLanguage = (lng: string): void => {
+    i18n
+      .changeLanguage(lng)
+      .then(() => {
+        console.log('Language changed successfully')
+      })
+      .catch((error) => {
+        console.error('Error changing language:', error)
+      })
+  }
   const [count, setCount] = useState(0)
 
   return (
@@ -28,6 +40,13 @@ function App(): JSX.Element {
       <p className='read-the-docs'>
         Click on the Vite and React logos to learn more
       </p>
+      <div>
+        <h1>{t('general.welcome')}</h1>
+        <button onClick={() => changeLanguage('en')}>{t('language.en')}</button>
+        <button onClick={() => changeLanguage('tw')}>{t('language.tw')}</button>
+        <button onClick={() => changeLanguage('hk')}>{t('language.hk')}</button>
+        <button onClick={() => changeLanguage('ja')}>{t('language.ja')}</button>
+      </div>
     </>
   )
 }
