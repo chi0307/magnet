@@ -4,7 +4,8 @@ import en from './locales/en-US.json'
 import jp from './locales/ja-JP.json'
 import hk from './locales/zh-HK.json'
 import tw from './locales/zh-TW.json'
-import { defaultLocale, Locales } from './utils/locale'
+import { defaultLocale, Locales, isLocale, type Locale } from './utils/locale'
+import { localStorageManager } from './utils/StorageManager'
 
 const resources = {
   [Locales.EN_US]: { translation: en },
@@ -13,10 +14,20 @@ const resources = {
   [Locales.ZH_TW]: { translation: tw },
 }
 
+const getBrowserLanguage = (): Locale => {
+  const language = navigator.language
+  return isLocale(language) ? language : defaultLocale
+}
+
+const savedLanguage = localStorageManager.get('locale')
+const languageToUse: Locale = savedLanguage || getBrowserLanguage()
+
+localStorageManager.set('locale', languageToUse)
+
 const initI18n = async (): Promise<void> => {
   await i18n.use(initReactI18next).init({
     resources,
-    lng: defaultLocale,
+    lng: languageToUse,
     fallbackLng: Locales.EN_US,
     interpolation: {
       escapeValue: false,

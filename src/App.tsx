@@ -3,14 +3,16 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { useTranslation } from 'react-i18next'
 import './App.css'
-import { Locales } from './utils/locale'
+import { Locales, type Locale } from './utils/locale'
+import { localStorageManager } from './utils/StorageManager'
 
 function App(): JSX.Element {
   const { t, i18n } = useTranslation()
-  const changeLanguage = (lng: string): void => {
+  const changeLanguage = (lng: Locale): void => {
     i18n
       .changeLanguage(lng)
       .then(() => {
+        localStorageManager.set('locale', lng)
         console.log('Language changed successfully')
       })
       .catch((error) => {
