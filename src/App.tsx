@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { useTranslation } from 'react-i18next'
 import './App.css'
+import { Locales } from './utils/locale'
 
 function App(): JSX.Element {
   const { t, i18n } = useTranslation()
@@ -42,10 +43,18 @@ function App(): JSX.Element {
       </p>
       <div>
         <h1>{t('general.welcome')}</h1>
-        <button onClick={() => changeLanguage('en')}>{t('language.en')}</button>
-        <button onClick={() => changeLanguage('tw')}>{t('language.tw')}</button>
-        <button onClick={() => changeLanguage('hk')}>{t('language.hk')}</button>
-        <button onClick={() => changeLanguage('ja')}>{t('language.ja')}</button>
+        <button onClick={() => changeLanguage(Locales.EN_US)}>
+          {t('language.en-us')}
+        </button>
+        <button onClick={() => changeLanguage(Locales.JA_JP)}>
+          {t('language.ja-jp')}
+        </button>
+        <button onClick={() => changeLanguage(Locales.ZH_HK)}>
+          {t('language.zh-hk')}
+        </button>
+        <button onClick={() => changeLanguage(Locales.ZH_TW)}>
+          {t('language.zh-tw')}
+        </button>
       </div>
     </>
   )

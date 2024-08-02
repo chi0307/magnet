@@ -3,9 +3,9 @@
     "welcome": "歡迎嚟到 React"
   },
   "language": {
-    "en": "英文",
-    "tw": "繁體中文 (TW)",
-    "hk": "繁體中文 (HK)",
-    "ja": "日文"
+    "en-us": "英文",
+    "ja-jp": "日文",
+    "zh-tw": "繁體中文 (TW)",
+    "zh-hk": "繁體中文 (HK)"
   }
 }
