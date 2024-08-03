@@ -1,4 +1,4 @@
-import i18n from 'i18next'
+import i18n, { type ResourceLanguage } from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import en from './locales/en-US.json'
 import jp from './locales/ja-JP.json'
@@ -7,7 +7,7 @@ import tw from './locales/zh-TW.json'
 import { defaultLocale, Locales, isLocale, type Locale } from './utils/locale'
 import { localStorageManager } from './utils/StorageManager'
 
-const resources = {
+const resources: Record<Locales, { translation: ResourceLanguage }> = {
   [Locales.EN_US]: { translation: en },
   [Locales.JA_JP]: { translation: jp },
   [Locales.ZH_HK]: { translation: hk },
