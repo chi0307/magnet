@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { useTranslation } from 'react-i18next'
 import './App.css'
-import { Locales, type Locale } from './utils/locale'
+import { type Locale } from './utils/locale'
 import { localStorageManager } from './utils/StorageManager'
 
 function App(): JSX.Element {
@@ -45,16 +45,16 @@ function App(): JSX.Element {
       </p>
       <div>
         <h1>{t('general.welcome')}</h1>
-        <button onClick={() => changeLanguage(Locales.EN_US)}>
+        <button onClick={() => changeLanguage('en-US')}>
           {t('language.en-us')}
         </button>
-        <button onClick={() => changeLanguage(Locales.JA_JP)}>
+        <button onClick={() => changeLanguage('ja-JP')}>
           {t('language.ja-jp')}
         </button>
-        <button onClick={() => changeLanguage(Locales.ZH_HK)}>
+        <button onClick={() => changeLanguage('zh-HK')}>
           {t('language.zh-hk')}
         </button>
-        <button onClick={() => changeLanguage(Locales.ZH_TW)}>
+        <button onClick={() => changeLanguage('zh-TW')}>
           {t('language.zh-tw')}
         </button>
       </div>
