@@ -7,12 +7,12 @@ import {
 import type { Theme } from 'unocss/preset-mini'
 import { Breakpoints } from './src/constant/breakpoint'
 
-export default defineConfig({
+export default defineConfig<Theme>({
   presets: [
     presetUno(),
     presetAttributify(),
   ],
-  theme: <Theme>{
+  theme: {
     breakpoints: {
       md: `${Breakpoints.md}px`,
       lg: `${Breakpoints.lg}px`,
