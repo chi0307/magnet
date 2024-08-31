@@ -61,3 +61,9 @@ const isString = (data: unknown): data is string => typeof data === 'string';
 export const loginStorageManager = new StorageManager<{
   loginMethod: string
 }>(localStorage, { loginMethod: isString, })
+
+export const currencyStorageManager = new StorageManager<{
+  currency: string
+}>(localStorage, {
+  currency: isString,
+})
