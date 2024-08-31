@@ -54,3 +54,10 @@ export const localStorageManager = new StorageManager<{
 }>(localStorage, {
   locale: isLocale,
 })
+
+// TODO: For SSO Login setting info
+const isString = (data: unknown): data is string => typeof data === 'string';
+
+export const loginStorageManager = new StorageManager<{
+  loginMethod: string
+}>(localStorage, { loginMethod: isString, })
