@@ -17,6 +17,8 @@
     "guest": "Continue as Guest"
   },
   "ledger": {
-    "my_ledger": "My Ledger"
+    "my_ledger": "My Ledger",
+    "expense": "Expense",
+    "income": "Income"
   }
 }

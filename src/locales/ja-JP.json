@@ -17,6 +17,8 @@
     "guest": "ゲストとして続行"
   },
   "ledger": {
-    "my_ledger": "私の帳簿"
+    "my_ledger": "私の帳簿",
+    "expense": "支出",
+    "income": "収入"
   }
 }

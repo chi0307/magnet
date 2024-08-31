@@ -17,6 +17,8 @@
     "guest": "繼續以訪客身份登入"
   },
   "ledger": {
-    "my_ledger": "我的帳本"
+    "my_ledger": "我的帳本",
+    "expense": "支出",
+    "income": "收入"
   }
 }
