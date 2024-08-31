@@ -1,11 +1,22 @@
 {
   "general": {
-    "welcome": "Welcome to React"
+    "welcome": "Magnet EasyBook",
+    "complete": "Complete"
   },
   "language": {
     "en-us": "English",
     "ja-jp": "Japanese",
     "zh-tw": "Traditional Chinese (TW)",
     "zh-hk": "Traditional Chinese (HK)"
+  },
+  "sign-in": {
+    "facebook": "Sign in with Facebook",
+    "google": "Sign in with Google",
+    "line": "Sign in with LINE",
+    "apple": "Sign in with Apple",
+    "guest": "Continue as Guest"
+  },
+  "ledger": {
+    "my_ledger": "My Ledger"
   }
 }
