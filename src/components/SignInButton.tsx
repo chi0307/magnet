@@ -21,7 +21,7 @@ const SignInButton = ({
 
   return (
     <button
-      className={`px-6 py-2 min-w-40 rounded-10 text-white text-bold ${className}`}
+      className={`px-6 py-2 min-w-40 rounded-5 text-white text-bold-lg ${className}`}
       style={{ backgroundColor: color }}
       onClick={() => handleClick(text)}
     >

@@ -21,7 +21,8 @@ export default defineConfig<Theme>({
   },
   shortcuts: [
     {
-      'text-bold': 'font-bold',
+      'text-bold-md': 'font-medium',
+      'text-bold-lg': 'font-bold',
       'z-low': 'z-100',
       'z-medium': 'z-200',
       'z-high': 'z-300',
