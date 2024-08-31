@@ -4,24 +4,53 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './i18n'
 import 'virtual:uno.css'
 import '@unocss/reset/tailwind.css'
+import { redirect } from 'react-router-dom'
+import { loginStorageManager } from './utils/StorageManager'
 import ErrorPage from './error-page'
 import SignInPage from './pages/SignInPage'
 import LedgerPage from './pages/LedgerPage'
 import CreateLedgerPage from './pages/CreateLedgerPage'
+
+export function rootLoader(): Response {
+  const savedLoginMethod = loginStorageManager.get('loginMethod')
+
+  if (savedLoginMethod != null && savedLoginMethod != '') {
+    return redirect('/ledger')
+  }
+
+  return new Response(null, {
+    status: 200,
+  })
+}
+
+export function authLoader(): Response {
+  const savedLoginMethod = loginStorageManager.get('loginMethod')
+
+  if (savedLoginMethod == null || savedLoginMethod == '') {
+    return redirect('/')
+  }
+
+  return new Response(null, {
+    status: 200,
+  })
+}
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <SignInPage />,
     errorElement: <ErrorPage />,
+    loader: rootLoader,
   },
   {
     path: '/ledger',
     element: <LedgerPage />,
+    loader: authLoader,
   },
   {
     path: '/ledger/create',
     element: <CreateLedgerPage />,
+    loader: authLoader,
   },
 ])
 
