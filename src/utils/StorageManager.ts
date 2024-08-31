@@ -24,7 +24,7 @@ class StorageManager<StorageTyping extends Record<string, unknown>> {
       if (this._typeChecker[key](data)) {
         return data
       }
-    } finally {
+    } catch {
       // when JSON parse to remove local storage value
       this.remove(key)
     }
