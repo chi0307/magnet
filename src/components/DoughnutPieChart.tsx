@@ -1,18 +1,21 @@
 import { useEffect, useRef } from 'react'
-import Chart from 'chart.js/auto'
+import Chart, { type ChartType } from 'chart.js/auto'
 
-interface PieChartProps {
+interface DoughnutPieChartProps {
+  type?: ChartType
   className?: string
 }
 
-const PieChart = ({ className = '' }: PieChartProps): JSX.Element => {
+const DoughnutPieChart = ({
+  type = 'doughnut',
+  className = '',
+}: DoughnutPieChartProps): JSX.Element => {
   const chartRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
     const ctx = chartRef.current?.getContext('2d')
     if (!ctx) return
 
-    // Pie chart configuration
     const data = {
       labels: ['Red', 'Blue', 'Yellow'],
       datasets: [
@@ -24,30 +27,33 @@ const PieChart = ({ className = '' }: PieChartProps): JSX.Element => {
       ],
     }
 
-    // Creating the pie chart
-    const pieChart = new Chart(ctx, {
-      type: 'pie',
+    const chart = new Chart(ctx, {
+      type,
       data: data,
       options: {
-        animation: {
-          animateRotate: true,
-        },
         responsive: true,
         plugins: {
           legend: {
             display: false, // Disable the legend (tag labels)
           },
+          tooltip: {
+            enabled: false, // Disable tooltips
+          },
         },
+        interaction: {
+          intersect: false, // Prevent intersection highlighting
+        },
+        events: [], // Disable all events, including click and hover
       },
     })
 
     // Cleanup the chart on component unmount
     return (): void => {
-      pieChart.destroy()
+      chart.destroy()
     }
-  }, [])
+  }, [type])
 
   return <canvas ref={chartRef} className={className}></canvas>
 }
 
-export default PieChart
+export default DoughnutPieChart
