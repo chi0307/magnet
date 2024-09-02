@@ -5,16 +5,16 @@ import './i18n'
 import 'virtual:uno.css'
 import '@unocss/reset/tailwind.css'
 import { redirect } from 'react-router-dom'
-import { loginStorageManager } from './utils/StorageManager'
+import { localStorageManager } from './utils/StorageManager'
 import ErrorPage from './error-page'
 import SignInPage from './pages/SignInPage'
 import LedgerPage from './pages/LedgerPage'
 import CreateLedgerPage from './pages/CreateLedgerPage'
 
 export function rootLoader(): Response {
-  const savedLoginMethod = loginStorageManager.get('loginMethod')
+  const savedLoginMethod = localStorageManager.get('loginMethod')
 
-  if (savedLoginMethod != null && savedLoginMethod != '') {
+  if (savedLoginMethod !== null && savedLoginMethod !== '') {
     return redirect('/ledger')
   }
 
@@ -24,7 +24,7 @@ export function rootLoader(): Response {
 }
 
 export function authLoader(): Response {
-  const savedLoginMethod = loginStorageManager.get('loginMethod')
+  const savedLoginMethod = localStorageManager.get('loginMethod')
 
   if (savedLoginMethod == null || savedLoginMethod == '') {
     return redirect('/')

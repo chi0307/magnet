@@ -1,4 +1,6 @@
-import { isLocale, type Locale } from './locale'
+import typia from 'typia'
+import { type Locale } from './locale'
+import { type Currency } from './CurrencyManager'
 
 class StorageManager<StorageTyping extends Record<string, unknown>> {
   private readonly _storage: Storage
@@ -49,21 +51,13 @@ type TypeChecker<StorageTyping> = {
   [key in keyof StorageTyping]: (data: unknown) => data is StorageTyping[key]
 }
 
+// using 'typia.createIs<Your type>()' is necessary, can not use 'typia.is<Your type>'
 export const localStorageManager = new StorageManager<{
   locale: Locale
-}>(localStorage, {
-  locale: isLocale,
-})
-
-// TODO: For SSO Login setting info
-const isString = (data: unknown): data is string => typeof data === 'string';
-
-export const loginStorageManager = new StorageManager<{
   loginMethod: string
-}>(localStorage, { loginMethod: isString, })
-
-export const currencyStorageManager = new StorageManager<{
-  currency: string
+  currency: Currency
 }>(localStorage, {
-  currency: isString,
+  locale: typia.createIs<Locale>(),
+  loginMethod: typia.createIs<string>(),
+  currency: typia.createIs<Currency>(),
 })

@@ -1,17 +1,20 @@
-import { getBrowserLanguage, type Locale } from "./locale";
-import { currencyStorageManager } from "./StorageManager";
+import { getBrowserLanguage, type Locale } from './locale'
+import { localStorageManager } from './StorageManager'
 
-const currencyMap: Record<Locale, string> = {
+const currencyMap = {
   'en-US': 'USD',
   'ja-JP': 'JPY',
   'zh-HK': 'HKD',
   'zh-TW': 'TWD',
-}
+} as const satisfies Record<Locale, string>
+export type Currency = (typeof currencyMap)[keyof typeof currencyMap]
 
 export function initializeCurrency(): void {
-  currencyStorageManager.set('currency', getCurrency())
+  localStorageManager.set('currency', getCurrency())
 }
 
-export function getCurrency(): string {
-  return currencyStorageManager.get('currency') ?? currencyMap[getBrowserLanguage()]
+export function getCurrency(): Currency {
+  return (
+    localStorageManager.get('currency') ?? currencyMap[getBrowserLanguage()]
+  )
 }

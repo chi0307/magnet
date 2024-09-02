@@ -1,5 +1,5 @@
 import React from 'react'
-import { loginStorageManager } from '../utils/StorageManager'
+import { localStorageManager } from '../utils/StorageManager'
 
 interface SignInButtonProps {
   color: string
@@ -15,7 +15,7 @@ const SignInButton = ({
   className = '',
 }: SignInButtonProps): JSX.Element => {
   const handleClick = (method: string): void => {
-    loginStorageManager.set('loginMethod', method)
+    localStorageManager.set('loginMethod', method)
     window.location.reload()
   }
 
