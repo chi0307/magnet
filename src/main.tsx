@@ -26,7 +26,7 @@ export function rootLoader(): Response {
 export function authLoader(): Response {
   const savedLoginMethod = localStorageManager.get('loginMethod')
 
-  if (savedLoginMethod == null || savedLoginMethod == '') {
+  if (savedLoginMethod === null || savedLoginMethod === '') {
     return redirect('/')
   }
 
