@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 const SignInPage = (): JSX.Element => {
   const { t } = useTranslation()
-  const buttons = [
+  const buttons: Parameters<typeof SignInButton>[0][] = [
     { color: '#4267B2', icon: <FaFacebookF />, text: t('sign-in.facebook') },
     { color: '#DB4437', icon: <FaGoogle />, text: t('sign-in.google') },
     { color: '#4BC764', icon: <FaLine />, text: t('sign-in.line') },
