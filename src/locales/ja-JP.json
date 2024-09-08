@@ -1,11 +1,24 @@
 {
   "general": {
-    "welcome": "React へようこそ"
+    "welcome": "マグブック",
+    "complete": "完了"
   },
   "language": {
     "en-us": "英語",
     "ja-jp": "日本語",
     "zh-tw": "繁体字 (TW)",
     "zh-hk": "繁体字 (HK)"
+  },
+  "sign-in": {
+    "facebook": "Facebookでサインイン",
+    "google": "Googleでサインイン",
+    "line": "LINEでサインイン",
+    "apple": "Appleでサインイン",
+    "guest": "ゲストとして続行"
+  },
+  "ledger": {
+    "my_ledger": "私の帳簿",
+    "expense": "支出",
+    "income": "収入"
   }
 }

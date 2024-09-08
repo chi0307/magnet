@@ -1,4 +1,6 @@
-import { isLocale, type Locale } from './locale'
+import typia from 'typia'
+import { type Locale } from './locale'
+import { type Currency } from './CurrencyManager'
 
 class StorageManager<StorageTyping extends Record<string, unknown>> {
   private readonly _storage: Storage
@@ -24,7 +26,7 @@ class StorageManager<StorageTyping extends Record<string, unknown>> {
       if (this._typeChecker[key](data)) {
         return data
       }
-    } finally {
+    } catch {
       // when JSON parse to remove local storage value
       this.remove(key)
     }
@@ -49,8 +51,13 @@ type TypeChecker<StorageTyping> = {
   [key in keyof StorageTyping]: (data: unknown) => data is StorageTyping[key]
 }
 
+// using 'typia.createIs<Your type>()' is necessary, can not use 'typia.is<Your type>'
 export const localStorageManager = new StorageManager<{
   locale: Locale
+  loginMethod: string
+  currency: Currency
 }>(localStorage, {
-  locale: isLocale,
+  locale: typia.createIs<Locale>(),
+  loginMethod: typia.createIs<string>(),
+  currency: typia.createIs<Currency>(),
 })
