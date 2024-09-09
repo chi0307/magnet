@@ -19,6 +19,16 @@ export default defineConfig<Theme>({
       xl: `${Breakpoints.xl}px`,
     },
   },
+  shortcuts: [
+    {
+      'text-bold-md': 'font-medium',
+      'text-bold-lg': 'font-bold',
+      'z-low': 'z-100',
+      'z-medium': 'z-200',
+      'z-high': 'z-300',
+    },
+    [/^(flex|grid)-center/g, () => 'justify-center items-center'],
+  ],
   transformers: [
     transformerVariantGroup(),
   ],
