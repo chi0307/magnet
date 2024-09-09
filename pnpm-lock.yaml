@@ -14,6 +14,9 @@ importers:
       chart.js:
         specifier: ^4.4.4
         version: 4.4.4
+      dexie:
+        specifier: ^4.0.8
+        version: 4.0.8
       i18next:
         specifier: ^23.12.2
         version: 23.12.2
@@ -933,6 +936,9 @@ packages:
 
   destr@2.0.3:
     resolution: {integrity: sha512-2N3BOUU4gYMpTP24s5rF5iP7BDr7uNTCs4ozw3kf/eKfvWSIu93GEBi5m427YoyJoeOzQ5smuu4nNAPGb8idSQ==}
+
+  dexie@4.0.8:
+    resolution: {integrity: sha512-1G6cJevS17KMDK847V3OHvK2zei899GwpDiqfEXHP1ASvme6eWJmAp9AU4s1son2TeGkWmC0g3y8ezOBPnalgQ==}
 
   dir-glob@3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
@@ -2836,6 +2842,8 @@ snapshots:
   defu@6.1.4: {}
 
   destr@2.0.3: {}
+
+  dexie@4.0.8: {}
 
   dir-glob@3.0.1:
     dependencies:
