@@ -11,6 +11,7 @@ import ErrorPage from './error-page'
 import SignInPage from './pages/SignInPage'
 import LedgerPage from './pages/LedgerPage'
 import CreateLedgerPage from './pages/CreateLedgerPage'
+import AddTransaction from './pages/AddTransaction'
 
 export function rootLoader(): Response {
   const savedLoginMethod = localStorageManager.get('loginMethod')
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
   {
     path: '/ledger',
     element: <LedgerPage />,
+    loader: authLoader,
+  },
+  {
+    path: '/ledger/add',
+    element: <AddTransaction />,
     loader: authLoader,
   },
   {
