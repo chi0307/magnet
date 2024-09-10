@@ -11,7 +11,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh', '@typescript-eslint'],
   parserOptions: {
-    project: 'tsconfig.app.json',
+    project: ['./tsconfig.app.json', './tsconfig.node.json'],
   },
   rules: {
     'react-refresh/only-export-components': [
