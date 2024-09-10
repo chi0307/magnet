@@ -1,7 +1,10 @@
 {
   "general": {
     "welcome": "Magbook",
-    "complete": "完成"
+    "complete": "完成",
+    "today": "今日",
+    "save": "儲存",
+    "add": "新增"
   },
   "language": {
     "en-us": "英文",
@@ -19,6 +22,24 @@
   "ledger": {
     "my_ledger": "我的帳本",
     "expense": "支出",
-    "income": "收入"
+    "income": "收入",
+    "tap_to_write": "點擊此處撰寫",
+    "category": {
+      "breakfast": "早餐",
+      "lunch": "午餐",
+      "dinner": "晚餐",
+      "drinks": "飲品",
+      "housing": "日用品",
+      "desert": "甜品",
+      "shopping": "購物",
+      "socialize": "社交",
+      "rent": "租金",
+      "bill": "帳單",
+      "traffic": "交通",
+      "ent": "娛樂",
+      "medical": "醫療",
+      "gift": "禮物",
+      "other": "其他"
+    }
   }
 }

@@ -1,7 +1,10 @@
 {
   "general": {
     "welcome": "Magbook",
-    "complete": "Complete"
+    "complete": "Complete",
+    "today": "Today",
+    "save": "Save",
+    "add": "Add"
   },
   "language": {
     "en-us": "English",
@@ -19,6 +22,24 @@
   "ledger": {
     "my_ledger": "My Ledger",
     "expense": "Expense",
-    "income": "Income"
+    "income": "Income",
+    "tap_to_write": "Tap here to write.",
+    "category": {
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "drinks": "Drinks",
+      "housing": "Housing",
+      "desert": "Desert",
+      "shopping": "Shopping",
+      "socialize": "Socialize",
+      "rent": "Rent",
+      "bill": "Bill",
+      "traffic": "Traffic",
+      "ent": "ENT",
+      "medical": "Medical",
+      "gift": "Gift",
+      "other": "Other"
+    }
   }
 }
