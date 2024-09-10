@@ -65,8 +65,10 @@ const Calculator = ({
           return
       }
 
-      setDisplayValue(result.toFixed(2).toString())
-      onDisplayValueChange(result.toFixed(2).toString())
+      const formattedResult = parseFloat(result.toFixed(10)).toString()
+
+      setDisplayValue(formattedResult)
+      onDisplayValueChange(formattedResult)
       setFirstOperand(result)
       setOperator(null)
     }
