@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import { useState } from 'react'
 
 interface CalculatorProps {
@@ -65,7 +66,7 @@ const Calculator = ({
           return
       }
 
-      const formattedResult = parseFloat(result.toFixed(10)).toString()
+      const formattedResult = parseFloat(result.toFixed(2)).toString()
 
       setDisplayValue(formattedResult)
       onDisplayValueChange(formattedResult)
@@ -154,7 +155,7 @@ const Calculator = ({
         }`}
         onClick={calculateResult}
       >
-        {operator && !isOperatorClicked ? '=' : 'Save'}
+        {operator && !isOperatorClicked ? '=' : t('general.save')}
       </button>
 
       {/* 第四排 */}
