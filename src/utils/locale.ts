@@ -16,12 +16,3 @@ export function getBrowserLanguage(): Locale {
 export function getLocale(): Locale {
   return localStorageManager.get('locale') ?? getBrowserLanguage()
 }
-
-export function getBrowserLanguage(): Locale {
-  const language = navigator.language
-  return isLocale(language) ? language : defaultLocale
-}
-
-export function getLocale(): Locale {
-  return localStorageManager.get('locale') ?? getBrowserLanguage()
-}
