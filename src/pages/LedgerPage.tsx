@@ -79,7 +79,7 @@ const LedgerPage = (): JSX.Element => {
         </div>
         <div className='text-right'>
           <p className='text-[#4B4B4B] text-sm'>{t('ledger.income')}</p>
-          <p className='text-[#1DB0F5] text-xl'>{formattedCurrency(654321)}</p>
+          <p className='text-[#1BB0F6] text-xl'>{formattedCurrency(654321)}</p>
         </div>
       </div>
       <div className='mx-auto my-8 w-80'>
@@ -102,7 +102,7 @@ const LedgerPage = (): JSX.Element => {
                     text-bold-lg 
                     ${
                       transaction.total > 0
-                        ? 'text-[#1DB0F5]'
+                        ? 'text-[#1BB0F6]'
                         : 'text-[#FF4B4A]'
                     }
                   `}
