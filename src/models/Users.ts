@@ -1,7 +1,7 @@
 import { type UserInfoEntity } from '../types/database'
 import { BaseTable } from './BaseTable'
 
-class UserTable extends BaseTable<'userInfo'> {
+export class UserTable extends BaseTable<'userInfo'> {
   public constructor() {
     super('userInfo')
   }
@@ -12,5 +12,3 @@ class UserTable extends BaseTable<'userInfo'> {
     return (await this.table.where({ email }).first()) ?? null
   }
 }
-
-export const Users = new UserTable()
