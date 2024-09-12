@@ -18,7 +18,7 @@ export class CategoryTable extends BaseTable<'category'> {
     readonly Readonly<CategoryEntity>[]
   > {
     const categories = await this.table
-      .where({ ledgerId: this._ledgerId })
+      .filter((item) => item.ledgerId === this._ledgerId)
       .toArray()
     return categories.sort(
       (aItem, bItem) =>
