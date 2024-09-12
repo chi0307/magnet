@@ -35,7 +35,7 @@ db.version(1).stores(
 
 type ExcludeAutoBaseEntity<Entity> = Omit<Entity, keyof AutoBaseEntity>
 export class BaseTable<TableName extends keyof TableSchema> {
-  private _db = db
+  protected _db = db
   private _tableName: TableName
   public constructor(tableName: TableName) {
     this._tableName = tableName
