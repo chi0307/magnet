@@ -14,7 +14,9 @@ export class CategoryTable extends BaseTable<'categoryInfo'> {
    * 1. sort_index big -> small
    * 2. created_at old -> new
    */
-  public override async findAll(): Promise<CategoryInfoEntity[]> {
+  public override async findAll(): Promise<
+    readonly Readonly<CategoryInfoEntity>[]
+  > {
     const categories = await this.table
       .where({ ledgerId: this._ledgerId })
       .toArray()

@@ -53,11 +53,13 @@ export class BaseTable<TableName extends keyof TableSchema> {
     >(this._tableName)
   }
 
-  public async findAll(): Promise<TableSchema[TableName][]> {
+  public async findAll(): Promise<readonly Readonly<TableSchema[TableName]>[]> {
     return this.table.toArray()
   }
 
-  public async find(id: UUID): Promise<TableSchema[TableName] | null> {
+  public async find(
+    id: UUID
+  ): Promise<Readonly<TableSchema[TableName]> | null> {
     return (await this.table.get(id)) ?? null
   }
 

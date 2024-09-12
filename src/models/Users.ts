@@ -8,7 +8,7 @@ export class UserTable extends BaseTable<'userInfo'> {
 
   public async findByEmail(
     email: UserInfoEntity['email']
-  ): Promise<UserInfoEntity | null> {
+  ): Promise<Readonly<UserInfoEntity> | null> {
     return (await this.table.where({ email }).first()) ?? null
   }
 }
