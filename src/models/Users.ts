@@ -1,14 +1,14 @@
-import { type UserInfoEntity } from '../types/database'
+import { type UserEntity } from '../types/database'
 import { BaseTable } from './BaseTable'
 
-export class UserTable extends BaseTable<'userInfo'> {
+export class UserTable extends BaseTable<'user'> {
   public constructor() {
-    super('userInfo')
+    super('user')
   }
 
   public async findByEmail(
-    email: UserInfoEntity['email']
-  ): Promise<Readonly<UserInfoEntity> | null> {
+    email: UserEntity['email']
+  ): Promise<Readonly<UserEntity> | null> {
     return (await this.table.where({ email }).first()) ?? null
   }
 }

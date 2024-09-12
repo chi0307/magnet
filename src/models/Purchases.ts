@@ -1,7 +1,7 @@
 import { BaseTable } from './BaseTable'
 
-export class PurchaseTable extends BaseTable<'purchaseInfo'> {
+export class PurchaseTable extends BaseTable<'purchase'> {
   public constructor() {
-    super('purchaseInfo')
+    super('purchase')
   }
 }

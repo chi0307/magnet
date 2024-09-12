@@ -1,11 +1,11 @@
-import { type CategoryInfoEntity } from '../types/database'
+import { type CategoryEntity } from '../types/database'
 import { type UUID } from '../types/utils'
 import { BaseTable } from './BaseTable'
 
-export class CategoryTable extends BaseTable<'categoryInfo'> {
+export class CategoryTable extends BaseTable<'category'> {
   private _ledgerId: UUID
   public constructor(ledgerId: UUID) {
-    super('categoryInfo')
+    super('category')
     this._ledgerId = ledgerId
   }
 
@@ -15,7 +15,7 @@ export class CategoryTable extends BaseTable<'categoryInfo'> {
    * 2. created_at old -> new
    */
   public override async findAll(): Promise<
-    readonly Readonly<CategoryInfoEntity>[]
+    readonly Readonly<CategoryEntity>[]
   > {
     const categories = await this.table
       .where({ ledgerId: this._ledgerId })

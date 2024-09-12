@@ -1,29 +1,29 @@
 import Dexie from 'dexie'
 import { type UpdateSpec, type Table } from 'dexie'
 import {
-  type UserInfoEntity,
+  type UserEntity,
   type AutoBaseEntity,
-  type LedgerInfoEntity,
-  type CategoryInfoEntity,
-  type PurchaseInfoEntity,
+  type LedgerEntity,
+  type CategoryEntity,
+  type PurchaseEntity,
 } from '../types/database'
 import { type UUID } from '../types/utils'
 import { generateUuid } from '../utils/utils'
 
 interface TableSchema {
-  userInfo: UserInfoEntity
-  ledgerInfo: LedgerInfoEntity
-  categoryInfo: CategoryInfoEntity
-  purchaseInfo: PurchaseInfoEntity
+  user: UserEntity
+  ledger: LedgerEntity
+  category: CategoryEntity
+  purchase: PurchaseEntity
 }
 
 const tableIndexes: {
   [key in keyof TableSchema]: (keyof TableSchema[key])[]
 } = {
-  userInfo: ['id', 'email'],
-  ledgerInfo: ['id', 'userInfoId'],
-  categoryInfo: ['id', 'ledgerInfoId'],
-  purchaseInfo: ['id', 'ledgerInfoId', 'categoryInfoId'],
+  user: ['id', 'email'],
+  ledger: ['id', 'userId'],
+  category: ['id', 'ledgerId'],
+  purchase: ['id', 'ledgerId', 'categoryId'],
 }
 
 const db = new Dexie('MagnetDB')
