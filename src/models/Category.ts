@@ -2,7 +2,7 @@ import { type CategoryEntity } from '../types/database'
 import { type UUID } from '../types/utils'
 import { BaseTable } from './BaseTable'
 
-export class CategoryTable extends BaseTable<'category'> {
+export class Category extends BaseTable<'category'> {
   private _ledgerId: UUID
   public constructor(ledgerId: UUID) {
     super('category')

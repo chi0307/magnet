@@ -1,7 +1,7 @@
 import { type UserEntity } from '../types/database'
 import { BaseTable } from './BaseTable'
 
-export class UserTable extends BaseTable<'user'> {
+export class User extends BaseTable<'user'> {
   public constructor() {
     super('user')
   }

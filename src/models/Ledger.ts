@@ -1,6 +1,6 @@
 import { BaseTable } from './BaseTable'
 
-export class LedgerTable extends BaseTable<'ledger'> {
+export class Ledger extends BaseTable<'ledger'> {
   public constructor() {
     super('ledger')
   }
