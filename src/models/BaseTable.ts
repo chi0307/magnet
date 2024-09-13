@@ -8,7 +8,7 @@ import {
   type PurchaseEntity,
 } from '../types/database'
 import { type UUID } from '../types/utils'
-import { generateUuid } from '../utils/utils'
+import { generateUuid, uniqueArray } from '../utils/utils'
 
 interface TableSchema {
   user: UserEntity
@@ -29,7 +29,10 @@ const tableIndexes: {
 const db = new Dexie('MagnetDB')
 db.version(1).stores(
   Object.fromEntries(
-    Object.entries(tableIndexes).map(([key, value]) => [key, value.join(',')])
+    Object.entries(tableIndexes).map(([key, value]) => [
+      key,
+      uniqueArray(value).join(','),
+    ])
   )
 )
 
