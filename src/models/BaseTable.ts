@@ -33,38 +33,34 @@ db.version(1).stores(
   )
 )
 
-type ExcludeAutoBaseEntity<Entity> = Omit<Entity, keyof AutoBaseEntity>
-export class BaseTable<TableName extends keyof TableSchema> {
+type TableName<Entity> = {
+  [K in keyof TableSchema]: TableSchema[K] extends Entity ? K : never
+}[keyof TableSchema]
+export type ExcludeAutoBaseEntity<Entity> = Omit<Entity, keyof AutoBaseEntity>
+
+export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
   protected _db = db
-  private _tableName: TableName
-  public constructor(tableName: TableName) {
+  private _tableName: TableName<Entity>
+  public constructor(tableName: TableName<Entity>) {
     this._tableName = tableName
   }
 
-  protected get table(): Table<
-    TableSchema[TableName],
-    UUID,
-    ExcludeAutoBaseEntity<TableSchema[TableName]>
-  > {
-    return this._db.table<
-      TableSchema[TableName],
-      UUID,
-      ExcludeAutoBaseEntity<TableSchema[TableName]>
-    >(this._tableName)
+  protected get table(): Table<Entity, UUID, ExcludeAutoBaseEntity<Entity>> {
+    return this._db.table<Entity, UUID, ExcludeAutoBaseEntity<Entity>>(
+      this._tableName
+    )
   }
 
-  public async findAll(): Promise<readonly Readonly<TableSchema[TableName]>[]> {
+  public async findAll(): Promise<readonly Readonly<Entity>[]> {
     return this.table.toArray()
   }
 
-  public async find(
-    id: UUID
-  ): Promise<Readonly<TableSchema[TableName]> | null> {
+  public async find(id: UUID): Promise<Readonly<Entity> | null> {
     return (await this.table.get(id)) ?? null
   }
 
   public async insert(
-    item: ExcludeAutoBaseEntity<TableSchema[TableName]>
+    item: ExcludeAutoBaseEntity<Entity>
   ): Promise<UUID | null> {
     try {
       // TODO: 之後 id, createdAt, updatedAt 搬移到 hook 裡面去可能會比較正確
@@ -82,7 +78,7 @@ export class BaseTable<TableName extends keyof TableSchema> {
 
   public async update(
     id: UUID,
-    item: UpdateSpec<ExcludeAutoBaseEntity<TableSchema[TableName]>>
+    item: UpdateSpec<ExcludeAutoBaseEntity<Entity>>
   ): Promise<boolean> {
     // TODO: 之後 updatedAt 搬移到 hook 裡面去可能會比較正確
     return (
