@@ -2,27 +2,17 @@ import { useEffect, useState } from 'react'
 import { t } from 'i18next'
 import { IoAddCircleOutline } from 'react-icons/io5'
 import { DayPicker } from 'react-day-picker'
-import { enUS, ja, zhHK, zhTW, type Locale as Lan } from 'date-fns/locale'
-import dayjs from 'dayjs'
+import { enUS, ja, zhHK, zhTW, type Locale as LanLocale } from 'date-fns/locale'
 import { FaCaretLeft } from 'react-icons/fa6'
 import { FaCaretRight } from 'react-icons/fa6'
 import { type Locale, getLocale } from '../utils/locale'
-import weekday from 'dayjs/plugin/weekday'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
+import { addDays, format, subDays } from 'date-fns'
 import Calculator from '../components/Calculator'
 import {
   type Category,
   expenseCategory,
   incomeCategory,
 } from '../constant/transactionCategories'
-import 'dayjs/locale/zh-tw'
-import 'dayjs/locale/zh-hk'
-import 'dayjs/locale/ja'
-import 'dayjs/locale/en'
-
-// Initialize dayjs plugins
-dayjs.extend(weekday)
-dayjs.extend(localizedFormat)
 
 interface CategoryItemProps {
   category: Category
@@ -32,20 +22,20 @@ interface CategoryItemProps {
 }
 
 const formatDate = (date: Date, locale: Locale): string => {
-  const localeMap: Record<Locale, string> = {
-    'zh-TW': 'zh-tw',
-    'zh-HK': 'zh-hk',
-    'ja-JP': 'ja',
-    'en-US': 'en',
+  const localeMap: Record<Locale, LanLocale> = {
+    'zh-TW': zhTW,
+    'zh-HK': zhHK,
+    'ja-JP': ja,
+    'en-US': enUS,
   }
   const formatMap: Record<Locale, string> = {
-    'zh-TW': 'YYYY/MM/DD dddd',
-    'zh-HK': 'DD/MM/YYYY dddd',
-    'ja-JP': 'dddd, YYYY年M月D日',
-    'en-US': 'ddd, MMM D, YYYY',
+    'zh-TW': 'yyyy/MM/dd EEEE',
+    'zh-HK': 'dd/MM/yyyy EEEE',
+    'ja-JP': 'EEEE, yyyy年M月d日',
+    'en-US': 'EEE, MMM d, yyyy',
   }
 
-  return dayjs(date).locale(localeMap[locale]).format(formatMap[locale])
+  return format(date, formatMap[locale], { locale: localeMap[locale] })
 }
 
 // Category component
@@ -104,7 +94,7 @@ const AddTransaction = (): JSX.Element => {
   }, [isDayPickerVisible])
 
   // Maps locale to date-fns locale for DayPicker
-  const dateLanguageMap: Record<Locale, Lan> = {
+  const dateLanguageMap: Record<Locale, LanLocale> = {
     'en-US': enUS,
     'ja-JP': ja,
     'zh-HK': zhHK,
@@ -207,9 +197,7 @@ const AddTransaction = (): JSX.Element => {
         {/* Date */}
         <div className='my-4 flex flex-center gap-5'>
           <FaCaretLeft
-            onClick={() =>
-              setSelectedDate(dayjs(selectedDate).subtract(1, 'day').toDate())
-            }
+            onClick={() => setSelectedDate(subDays(selectedDate, 1))}
           />
           <span
             className='min-w-50 text-(center bold-lg)'
@@ -218,9 +206,7 @@ const AddTransaction = (): JSX.Element => {
             {formatDate(selectedDate, getLocale())}
           </span>
           <FaCaretRight
-            onClick={() =>
-              setSelectedDate(dayjs(selectedDate).add(1, 'day').toDate())
-            }
+            onClick={() => setSelectedDate(addDays(selectedDate, 1))}
           />
         </div>
 
