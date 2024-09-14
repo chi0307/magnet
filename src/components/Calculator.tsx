@@ -6,7 +6,19 @@ interface CalculatorProps {
   onDisplayValueChange?: (value: string) => void
 }
 
-type Operator = '+' | '-' | '*' | '/' | null
+type Operator = '+' | '-' | '*' | '/'
+type CalculatorInputKey =
+  | '0'
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5'
+  | '6'
+  | '7'
+  | '8'
+  | '9'
+  | '.'
 
 const Calculator = ({
   className = '',
@@ -14,10 +26,10 @@ const Calculator = ({
 }: CalculatorProps): JSX.Element => {
   const [displayValue, setDisplayValue] = useState<string>('0')
   const [firstOperand, setFirstOperand] = useState<number | null>(null)
-  const [operator, setOperator] = useState<Operator>(null)
+  const [operator, setOperator] = useState<Operator | null>(null)
   const [isOperatorClicked, setIsOperatorClicked] = useState<boolean>(false)
 
-  const handleNumberClick = (input: string): void => {
+  const handleNumberClick = (input: CalculatorInputKey): void => {
     if (isOperatorClicked) {
       setDisplayValue(input)
       onDisplayValueChange(input)
