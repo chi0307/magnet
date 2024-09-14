@@ -109,13 +109,15 @@ const Calculator = ({
     onDisplayValueChange(newValue)
   }
 
+  const defaultButtonStyle = 'border-2 border-[#E5E5E5] rounded-full'
+
   const renderButton = (
     label: string,
     onClick: () => void,
     className = ''
   ): JSX.Element => (
     <button
-      className={`border-2 border-[#E5E5E5] rounded-full aspect-ratio-1/1 ${className}`}
+      className={`${defaultButtonStyle} aspect-ratio-1/1 ${className}`}
       onClick={onClick}
     >
       {label}
@@ -162,7 +164,7 @@ const Calculator = ({
           : 'bg-[#FEC700] text-white'
       )}
       <button
-        className={`border-2 border-[#E5E5E5] rounded-full text-white row-span-2 ${
+        className={`${defaultButtonStyle} text-white row-span-2 ${
           operator && !isOperatorClicked ? 'bg-[#FF9E0B]' : 'bg-[#FF4B4A]'
         }`}
         onClick={calculateResult}
@@ -172,7 +174,7 @@ const Calculator = ({
 
       {/* 第四排 */}
       <button
-        className='border-2 border-[#E5E5E5] rounded-full col-span-2'
+        className={`${defaultButtonStyle} col-span-2`}
         onClick={() => handleNumberClick('0')}
       >
         0
