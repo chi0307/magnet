@@ -3,10 +3,10 @@ import { type UUID } from '../types/utils'
 import { BaseTable } from './BaseTable'
 
 export class Category extends BaseTable<CategoryEntity> {
-  private _ledgerId: UUID
+  private ledgerId: UUID
   public constructor(ledgerId: UUID) {
     super('category')
-    this._ledgerId = ledgerId
+    this.ledgerId = ledgerId
   }
 
   /**
@@ -18,7 +18,7 @@ export class Category extends BaseTable<CategoryEntity> {
     readonly Readonly<CategoryEntity>[]
   > {
     const categories = await this.table
-      .filter((item) => item.ledgerId === this._ledgerId)
+      .filter((item) => item.ledgerId === this.ledgerId)
       .toArray()
     return categories.sort(
       (aItem, bItem) =>

@@ -43,14 +43,14 @@ export type ExcludeAutoBaseEntity<Entity> = Omit<Entity, keyof AutoBaseEntity>
 
 export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
   protected _db = db
-  private _tableName: TableName<Entity>
+  private tableName: TableName<Entity>
   public constructor(tableName: TableName<Entity>) {
-    this._tableName = tableName
+    this.tableName = tableName
   }
 
   protected get table(): Table<Entity, UUID, ExcludeAutoBaseEntity<Entity>> {
     return this._db.table<Entity, UUID, ExcludeAutoBaseEntity<Entity>>(
-      this._tableName
+      this.tableName
     )
   }
 
