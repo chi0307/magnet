@@ -19,13 +19,13 @@ import { IoHomeOutline } from 'react-icons/io5'
 import { IoMdGift } from 'react-icons/io'
 import { t } from 'i18next'
 
-export interface ICategory {
+export interface Category {
   icon: IconType
   name: string
   sortIndex: number
 }
 
-export const expenseCategory: ICategory[] = [
+export const expenseCategory: Category[] = [
   {
     icon: LiaBreadSliceSolid,
     name: t('ledger.category.breakfast'),
@@ -64,7 +64,7 @@ export const expenseCategory: ICategory[] = [
 ]
 
 // TODO: Edit default income category
-export const incomeCategory: ICategory[] = [
+export const incomeCategory: Category[] = [
   { icon: LiaBreadSliceSolid, name: 'Breakfast', sortIndex: 15 },
   { icon: MdOutlineLunchDining, name: 'Lunch', sortIndex: 14 },
   { icon: GiMeal, name: 'Dinner', sortIndex: 13 },

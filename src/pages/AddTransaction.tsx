@@ -11,7 +11,7 @@ import weekday from 'dayjs/plugin/weekday'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import Calculator from '../components/Calculator'
 import {
-  type ICategory,
+  type Category,
   expenseCategory,
   incomeCategory,
 } from '../constant/transactionCategories'
@@ -25,7 +25,7 @@ dayjs.extend(weekday)
 dayjs.extend(localizedFormat)
 
 interface CategoryItemProps {
-  category: ICategory
+  category: Category
   isSelected: boolean
   onSelect: () => void
   color: string
