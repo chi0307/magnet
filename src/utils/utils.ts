@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import typia from 'typia'
 
-import { type UUID } from '../types/utils'
+import { type UUID } from '@/types/utils'
 
 export function generateUuid(): UUID {
   const id = uuidv4()

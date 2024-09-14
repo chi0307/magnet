@@ -1,11 +1,11 @@
 import i18n, { type ResourceLanguage } from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import en from './locales/en-US.json'
-import jp from './locales/ja-JP.json'
-import hk from './locales/zh-HK.json'
-import tw from './locales/zh-TW.json'
-import { type Locale, getLocale } from './utils/locale'
-import { localStorageManager } from './utils/StorageManager'
+import en from '@/locales/en-US.json'
+import jp from '@/locales/ja-JP.json'
+import hk from '@/locales/zh-HK.json'
+import tw from '@/locales/zh-TW.json'
+import { type Locale, getLocale } from '@/utils/locale'
+import { localStorageManager } from '@/utils/StorageManager'
 
 const resources: Record<Locale, { translation: ResourceLanguage }> = {
   'en-US': { translation: en },

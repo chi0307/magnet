@@ -6,9 +6,9 @@ import {
   type LedgerEntity,
   type CategoryEntity,
   type PurchaseEntity,
-} from '../types/database'
-import { type UUID } from '../types/utils'
-import { generateUuid, uniqueArray } from '../utils/utils'
+} from '@/types/database'
+import { type UUID } from '@/types/utils'
+import { generateUuid, uniqueArray } from '@/utils/utils'
 
 interface TableSchema {
   user: UserEntity

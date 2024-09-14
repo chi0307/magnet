@@ -1,5 +1,5 @@
-import { getBrowserLanguage, type Locale } from './locale'
-import { localStorageManager } from './StorageManager'
+import { getBrowserLanguage, type Locale } from '@/utils/locale'
+import { localStorageManager } from '@/utils/StorageManager'
 
 const currencyMap = {
   'en-US': 'USD',

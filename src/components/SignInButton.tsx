@@ -1,5 +1,5 @@
 import React from 'react'
-import { localStorageManager } from '../utils/StorageManager'
+import { localStorageManager } from '@/utils/StorageManager'
 
 interface SignInButtonProps {
   color: string
