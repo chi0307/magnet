@@ -8,10 +8,7 @@ import type { Theme } from 'unocss/preset-mini'
 import { Breakpoints } from './src/constant/breakpoint'
 
 export default defineConfig<Theme>({
-  presets: [
-    presetUno(),
-    presetAttributify(),
-  ],
+  presets: [presetUno(), presetAttributify()],
   theme: {
     breakpoints: {
       md: `${Breakpoints.md}px`,
@@ -27,9 +24,7 @@ export default defineConfig<Theme>({
       'z-medium': 'z-200',
       'z-high': 'z-300',
     },
-    [/^(flex|grid)-center/g, () => 'justify-center items-center'],
+    [/^(flex|grid)-center/g, (): string => 'justify-center items-center'],
   ],
-  transformers: [
-    transformerVariantGroup(),
-  ],
+  transformers: [transformerVariantGroup()],
 })
