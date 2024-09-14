@@ -1,68 +1,69 @@
 import Dexie from 'dexie'
 import { type UpdateSpec, type Table } from 'dexie'
 import {
-  type UserInfoEntity,
+  type UserEntity,
   type AutoBaseEntity,
-  type LedgerInfoEntity,
-  type CategoryInfoEntity,
-  type PurchaseInfoEntity,
+  type LedgerEntity,
+  type CategoryEntity,
+  type PurchaseEntity,
 } from '../types/database'
 import { type UUID } from '../types/utils'
-import { generateUuid } from '../utils/utils'
+import { generateUuid, uniqueArray } from '../utils/utils'
 
 interface TableSchema {
-  userInfo: UserInfoEntity
-  ledgerInfo: LedgerInfoEntity
-  categoryInfo: CategoryInfoEntity
-  purchaseInfo: PurchaseInfoEntity
+  user: UserEntity
+  ledger: LedgerEntity
+  category: CategoryEntity
+  purchase: PurchaseEntity
 }
 
 const tableIndexes: {
   [key in keyof TableSchema]: (keyof TableSchema[key])[]
 } = {
-  userInfo: ['id', 'email'],
-  ledgerInfo: ['id', 'userInfoId'],
-  categoryInfo: ['id', 'ledgerInfoId'],
-  purchaseInfo: ['id', 'ledgerInfoId', 'categoryInfoId'],
+  user: ['id', 'email'],
+  ledger: ['id', 'userId'],
+  category: ['id', 'ledgerId'],
+  purchase: ['id', 'ledgerId', 'categoryId'],
 }
 
 const db = new Dexie('MagnetDB')
 db.version(1).stores(
   Object.fromEntries(
-    Object.entries(tableIndexes).map(([key, value]) => [key, value.join(',')])
+    Object.entries(tableIndexes).map(([key, value]) => [
+      key,
+      uniqueArray(value).join(','),
+    ])
   )
 )
 
-type ExcludeAutoBaseEntity<Entity> = Omit<Entity, keyof AutoBaseEntity>
-export class BaseTable<TableName extends keyof TableSchema> {
-  private _db = db
-  private _tableName: TableName
-  public constructor(tableName: TableName) {
-    this._tableName = tableName
+type TableName<Entity> = {
+  [K in keyof TableSchema]: TableSchema[K] extends Entity ? K : never
+}[keyof TableSchema]
+export type ExcludeAutoBaseEntity<Entity> = Omit<Entity, keyof AutoBaseEntity>
+
+export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
+  protected _db = db
+  private tableName: TableName<Entity>
+  public constructor(tableName: TableName<Entity>) {
+    this.tableName = tableName
   }
 
-  protected get table(): Table<
-    TableSchema[TableName],
-    UUID,
-    ExcludeAutoBaseEntity<TableSchema[TableName]>
-  > {
-    return this._db.table<
-      TableSchema[TableName],
-      UUID,
-      ExcludeAutoBaseEntity<TableSchema[TableName]>
-    >(this._tableName)
+  protected get table(): Table<Entity, UUID, ExcludeAutoBaseEntity<Entity>> {
+    return this._db.table<Entity, UUID, ExcludeAutoBaseEntity<Entity>>(
+      this.tableName
+    )
   }
 
-  public async findAll(): Promise<TableSchema[TableName][]> {
+  public async findAll(): Promise<readonly Readonly<Entity>[]> {
     return this.table.toArray()
   }
 
-  public async find(id: UUID): Promise<TableSchema[TableName] | null> {
+  public async find(id: UUID): Promise<Readonly<Entity> | null> {
     return (await this.table.get(id)) ?? null
   }
 
   public async insert(
-    item: ExcludeAutoBaseEntity<TableSchema[TableName]>
+    item: ExcludeAutoBaseEntity<Entity>
   ): Promise<UUID | null> {
     try {
       // TODO: 之後 id, createdAt, updatedAt 搬移到 hook 裡面去可能會比較正確
@@ -80,7 +81,7 @@ export class BaseTable<TableName extends keyof TableSchema> {
 
   public async update(
     id: UUID,
-    item: UpdateSpec<ExcludeAutoBaseEntity<TableSchema[TableName]>>
+    item: UpdateSpec<ExcludeAutoBaseEntity<Entity>>
   ): Promise<boolean> {
     // TODO: 之後 updatedAt 搬移到 hook 裡面去可能會比較正確
     return (

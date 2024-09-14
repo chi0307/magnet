@@ -3,27 +3,27 @@ import { type Locale } from './locale'
 import { type Currency } from './CurrencyManager'
 
 class StorageManager<StorageTyping extends Record<string, unknown>> {
-  private readonly _storage: Storage
-  private readonly _typeChecker: TypeChecker<StorageTyping>
+  private readonly storage: Storage
+  private readonly typeChecker: TypeChecker<StorageTyping>
 
   public constructor(
     storage: Storage,
     typeChecker: TypeChecker<StorageTyping>
   ) {
-    this._storage = storage
-    this._typeChecker = typeChecker
+    this.storage = storage
+    this.typeChecker = typeChecker
   }
 
   public get<Key extends Extract<keyof StorageTyping, string>>(
     key: Key
   ): StorageTyping[Key] | null {
-    const sourceData = this._storage.getItem(key)
+    const sourceData = this.storage.getItem(key)
     if (sourceData === null) {
       return null
     }
     try {
       const data: unknown = JSON.parse(sourceData)
-      if (this._typeChecker[key](data)) {
+      if (this.typeChecker[key](data)) {
         return data
       }
     } catch {
@@ -37,13 +37,13 @@ class StorageManager<StorageTyping extends Record<string, unknown>> {
     key: Key,
     value: StorageTyping[Key]
   ): void {
-    this._storage.setItem(key, JSON.stringify(value))
+    this.storage.setItem(key, JSON.stringify(value))
   }
 
   public remove<Key extends Extract<keyof StorageTyping, string>>(
     key: Key
   ): void {
-    this._storage.removeItem(key)
+    this.storage.removeItem(key)
   }
 }
 
