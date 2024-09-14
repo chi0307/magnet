@@ -21,6 +21,8 @@ interface CategoryItemProps {
   color: string
 }
 
+type SelectedTab = 'expense' | 'income'
+
 const formatDate = (date: Date, locale: Locale): string => {
   const localeMap: Record<Locale, LanLocale> = {
     'zh-TW': zhTW,
@@ -65,9 +67,7 @@ const AddTransaction = (): JSX.Element => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0)
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [isDayPickerVisible, setIsDayPickerVisible] = useState(false)
-  const [selectedTab, setSelectedTab] = useState<'expense' | 'income'>(
-    'expense'
-  )
+  const [selectedTab, setSelectedTab] = useState<SelectedTab>('expense')
   const [displayValue, setDisplayValue] = useState('0')
 
   // Toggles visibility of DayPicker
@@ -81,7 +81,7 @@ const AddTransaction = (): JSX.Element => {
   }
 
   // Sets tab state and resets category index
-  const toggleTab = (tab: 'expense' | 'income'): void => {
+  const toggleTab = (tab: SelectedTab): void => {
     if (selectedTab !== tab) {
       setSelectedTab(tab)
       setSelectedCategoryIndex(0)
@@ -106,6 +106,8 @@ const AddTransaction = (): JSX.Element => {
 
   const categoryList =
     selectedTab === 'expense' ? expenseCategory : incomeCategory
+
+  const tabs: SelectedTab[] = ['expense', 'income']
 
   // Fix Safari input focus issue
   useEffect(() => {
@@ -132,10 +134,10 @@ const AddTransaction = (): JSX.Element => {
         '
       >
         <div className='flex border-2 border-[#E5E5E5] rounded-4 overflow-hidden'>
-          {['expense', 'income'].map((tab) => (
+          {tabs.map((tab) => (
             <button
               key={tab}
-              onClick={() => toggleTab(tab as 'expense' | 'income')}
+              onClick={() => toggleTab(tab)}
               className={`py-2 px-5 text-bold-lg transition-colors duration-100 ${
                 selectedTab === tab
                   ? (tab === 'expense' ? 'bg-[#FF4B4A]' : 'bg-[#1BB0F6]') +
