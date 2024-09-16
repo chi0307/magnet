@@ -1,6 +1,6 @@
-import { type CategoryEntity } from '../types/database'
-import { type UUID } from '../types/utils'
-import { BaseTable } from './BaseTable'
+import { type CategoryEntity } from '@/types/database'
+import { type UUID } from '@/types/utils'
+import { BaseTable } from '@/models/BaseTable'
 
 export class Category extends BaseTable<CategoryEntity> {
   private ledgerId: UUID

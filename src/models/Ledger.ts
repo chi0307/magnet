@@ -1,5 +1,5 @@
-import { type LedgerEntity } from '../types/database'
-import { BaseTable } from './BaseTable'
+import { type LedgerEntity } from '@/types/database'
+import { BaseTable } from '@/models/BaseTable'
 
 export class Ledger extends BaseTable<LedgerEntity> {
   public constructor() {

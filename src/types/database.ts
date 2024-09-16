@@ -1,4 +1,4 @@
-import { type UUID } from './utils'
+import { type UUID } from '@/types/utils'
 
 export interface AutoBaseEntity {
   id: UUID

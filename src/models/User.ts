@@ -1,5 +1,5 @@
-import { type UserEntity } from '../types/database'
-import { BaseTable } from './BaseTable'
+import { type UserEntity } from '@/types/database'
+import { BaseTable } from '@/models/BaseTable'
 
 export class User extends BaseTable<UserEntity> {
   public constructor() {

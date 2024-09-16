@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "allowImportingTsExtensions": true,
     "composite": true,
     "isolatedModules": true,
@@ -25,5 +28,5 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "useDefineForClassFields": true
   },
-  "include": ["src", "vite.config.ts"]
+  "include": ["src"]
 }
