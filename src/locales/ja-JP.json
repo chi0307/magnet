@@ -1,7 +1,10 @@
 {
   "general": {
     "welcome": "マグブック",
-    "complete": "完了"
+    "complete": "完了",
+    "today": "今日",
+    "save": "保存",
+    "add": "追加"
   },
   "language": {
     "en-us": "英語",
@@ -19,6 +22,24 @@
   "ledger": {
     "my_ledger": "私の帳簿",
     "expense": "支出",
-    "income": "収入"
+    "income": "収入",
+    "tap_to_write": "ここをタップ",
+    "category": {
+      "breakfast": "朝食",
+      "lunch": "昼食",
+      "dinner": "夕食",
+      "drinks": "飲み物",
+      "housing": "日月品",
+      "desert": "デザート",
+      "shopping": "買い物",
+      "socialize": "交際",
+      "rent": "家賃",
+      "bill": "請求書",
+      "traffic": "交通",
+      "ent": "娯楽",
+      "medical": "医療",
+      "gift": "贈り物",
+      "other": "その他"
+    }
   }
 }
