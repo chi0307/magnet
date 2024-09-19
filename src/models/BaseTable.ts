@@ -42,14 +42,14 @@ type TableName<Entity> = {
 export type ExcludeAutoBaseEntity<Entity> = Omit<Entity, keyof AutoBaseEntity>
 
 export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
-  protected _db = db
+  protected db = db
   private tableName: TableName<Entity>
   public constructor(tableName: TableName<Entity>) {
     this.tableName = tableName
   }
 
   protected get table(): Table<Entity, UUID, ExcludeAutoBaseEntity<Entity>> {
-    return this._db.table<Entity, UUID, ExcludeAutoBaseEntity<Entity>>(
+    return this.db.table<Entity, UUID, ExcludeAutoBaseEntity<Entity>>(
       this.tableName
     )
   }
