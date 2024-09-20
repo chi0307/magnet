@@ -3,40 +3,52 @@ import '@/styles/global.css'
 import 'virtual:uno.css'
 import '@unocss/reset/tailwind.css'
 
+import { type UUID } from 'crypto'
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { redirect } from 'react-router-dom'
+import typia from 'typia'
 
 import ErrorPage from '@/error-page'
+import { User } from '@/models/User'
 import AddTransaction from '@/pages/AddTransaction'
 import CreateLedgerPage from '@/pages/CreateLedgerPage'
 import LedgerPage from '@/pages/LedgerPage'
 import SignInPage from '@/pages/SignInPage'
 import { localStorageManager } from '@/utils/StorageManager'
 
-export function rootLoader(): Response {
-  const savedLoginMethod = localStorageManager.get('loginMethod')
+async function checkUser(): Promise<boolean> {
+  const userModel = new User()
+  const savedUserId = localStorageManager.get('userId')
 
-  if (savedLoginMethod !== null && savedLoginMethod !== '') {
+  if (typia.is<UUID>(savedUserId)) {
+    const existingUser = await userModel.findById(savedUserId)
+    return !!existingUser
+  }
+
+  return false
+}
+
+async function rootLoader(): Promise<Response> {
+  const userExists = await checkUser()
+
+  if (userExists) {
     return redirect('/ledger')
   }
 
-  return new Response(null, {
-    status: 200,
-  })
+  return new Response(null, { status: 200 })
 }
 
-export function authLoader(): Response {
-  const savedLoginMethod = localStorageManager.get('loginMethod')
+async function authLoader(): Promise<Response> {
+  const userExists = await checkUser()
 
-  if (savedLoginMethod === null || savedLoginMethod === '') {
+  if (!userExists) {
     return redirect('/')
   }
 
-  return new Response(null, {
-    status: 200,
-  })
+  return new Response(null, { status: 200 })
 }
 
 const router = createBrowserRouter([
