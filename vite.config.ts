@@ -1,3 +1,5 @@
+import path from 'path'
+
 import UnpluginTypia from '@ryoppippi/unplugin-typia/vite'
 import react from '@vitejs/plugin-react'
 import presetUno from 'unocss/preset-uno'
@@ -13,4 +15,9 @@ export default defineConfig({
     }),
     react(),
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
 })
