@@ -1,23 +1,23 @@
+import { t } from 'i18next'
 import { type IconType } from 'react-icons'
+import { GiMeal } from 'react-icons/gi'
+import { GrGroup } from 'react-icons/gr'
+import { HiOutlineShoppingBag } from 'react-icons/hi2'
+import { IoMdGift } from 'react-icons/io'
+import { IoHomeOutline } from 'react-icons/io5'
 import { LiaBreadSliceSolid } from 'react-icons/lia'
+import { LuShoppingCart, LuCakeSlice } from 'react-icons/lu'
 import {
   MdOutlineLunchDining,
   MdOutlineLocalPlay,
   MdOutlineMedicalServices,
 } from 'react-icons/md'
-import { GiMeal } from 'react-icons/gi'
 import {
   RiDrinksLine,
   RiMoneyDollarCircleLine,
   RiBusFill,
   RiFunctionLine,
 } from 'react-icons/ri'
-import { LuShoppingCart, LuCakeSlice } from 'react-icons/lu'
-import { HiOutlineShoppingBag } from 'react-icons/hi2'
-import { GrGroup } from 'react-icons/gr'
-import { IoHomeOutline } from 'react-icons/io5'
-import { IoMdGift } from 'react-icons/io'
-import { t } from 'i18next'
 
 export interface Category {
   icon: IconType

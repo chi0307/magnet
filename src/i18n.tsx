@@ -1,5 +1,6 @@
 import i18n, { type ResourceLanguage } from 'i18next'
 import { initReactI18next } from 'react-i18next'
+
 import en from '@/locales/en-US.json'
 import jp from '@/locales/ja-JP.json'
 import hk from '@/locales/zh-HK.json'

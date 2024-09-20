@@ -1,5 +1,6 @@
 import Dexie from 'dexie'
 import { type UpdateSpec, type Table } from 'dexie'
+
 import {
   type UserEntity,
   type LedgerEntity,

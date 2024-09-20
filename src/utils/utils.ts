@@ -1,5 +1,5 @@
-import { v4 as uuidv4 } from 'uuid'
 import typia from 'typia'
+import { v4 as uuidv4 } from 'uuid'
 
 import { type UUID } from '@/types/utils'
 

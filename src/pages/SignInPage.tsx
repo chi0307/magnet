@@ -1,7 +1,8 @@
-import SignInButton from '@/components/SignInButton'
-import { FaFacebookF, FaGoogle, FaApple, FaUser, FaLine } from 'react-icons/fa'
-import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { FaFacebookF, FaGoogle, FaApple, FaUser, FaLine } from 'react-icons/fa'
+
+import SignInButton from '@/components/SignInButton'
 import { initializeCurrency } from '@/utils/CurrencyManager'
 
 const SignInPage = (): JSX.Element => {

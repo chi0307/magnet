@@ -1,6 +1,7 @@
 import typia from 'typia'
-import { type Locale } from '@/utils/locale'
+
 import { type Currency } from '@/utils/CurrencyManager'
+import { type Locale } from '@/utils/locale'
 
 class StorageManager<StorageTyping extends Record<string, unknown>> {
   private readonly storage: Storage
