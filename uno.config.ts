@@ -5,6 +5,7 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 import type { Theme } from 'unocss/preset-mini'
+
 import { Breakpoints } from './src/constant/breakpoint'
 
 export default defineConfig<Theme>({

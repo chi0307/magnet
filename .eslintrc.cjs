@@ -9,7 +9,7 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', '@typescript-eslint'],
+  plugins: ['react-refresh', '@typescript-eslint', 'perfectionist'],
   parserOptions: {
     project: './tsconfig.app.json',
   },
@@ -76,6 +76,21 @@ module.exports = {
         destructuredArrayIgnorePattern: '^_',
         varsIgnorePattern: '^_',
         ignoreRestSiblings: true,
+      },
+    ],
+    'perfectionist/sort-imports': [
+      'error',
+      {
+        groups: [
+          'side-effect',
+          ['builtin-type', 'builtin'],
+          ['external-type', 'external'],
+          ['internal-type', 'internal'],
+          ['parent-type', 'parent', 'sibling-type', 'sibling'],
+          'object',
+          'unknown',
+        ],
+        internalPattern: ['@/**'],
       },
     ],
   },

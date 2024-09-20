@@ -1,10 +1,11 @@
+import { useTranslation } from 'react-i18next'
 import { FaShoppingCart } from 'react-icons/fa'
 import { IoAdd } from 'react-icons/io5'
-import { getCurrency } from '../utils/CurrencyManager'
-import { getLocale } from '../utils/locale'
 import { Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import DoughnutPieChart from '../components/DoughnutPieChart'
+
+import DoughnutPieChart from '@/components/DoughnutPieChart'
+import { getCurrency } from '@/utils/CurrencyManager'
+import { getLocale } from '@/utils/locale'
 
 interface Transaction {
   date: string

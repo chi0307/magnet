@@ -1,13 +1,17 @@
 import Dexie from 'dexie'
 import { type UpdateSpec, type Table } from 'dexie'
+
 import {
   type UserEntity,
-  type AutoBaseEntity,
   type LedgerEntity,
   type CategoryEntity,
   type PurchaseEntity,
 } from '@/types/database'
-import { type UUID } from '@/types/utils'
+import {
+  type ExcludeAutoBaseEntity,
+  type TableName,
+  type UUID,
+} from '@/types/utils'
 import { generateUuid, uniqueArray } from '@/utils/utils'
 
 interface TableSchema {
@@ -36,20 +40,15 @@ db.version(1).stores(
   )
 )
 
-type TableName<Entity> = {
-  [K in keyof TableSchema]: TableSchema[K] extends Entity ? K : never
-}[keyof TableSchema]
-export type ExcludeAutoBaseEntity<Entity> = Omit<Entity, keyof AutoBaseEntity>
-
 export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
-  protected _db = db
-  private tableName: TableName<Entity>
-  public constructor(tableName: TableName<Entity>) {
+  protected db = db
+  private tableName: TableName<Entity, TableSchema>
+  public constructor(tableName: TableName<Entity, TableSchema>) {
     this.tableName = tableName
   }
 
   protected get table(): Table<Entity, UUID, ExcludeAutoBaseEntity<Entity>> {
-    return this._db.table<Entity, UUID, ExcludeAutoBaseEntity<Entity>>(
+    return this.db.table<Entity, UUID, ExcludeAutoBaseEntity<Entity>>(
       this.tableName
     )
   }

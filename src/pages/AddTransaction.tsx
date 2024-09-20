@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react'
-import { t } from 'i18next'
-import { IoAddCircleOutline } from 'react-icons/io5'
-import { DayPicker } from 'react-day-picker'
+import { addDays, format, subDays } from 'date-fns'
 import { enUS, ja, zhHK, zhTW, type Locale as LanLocale } from 'date-fns/locale'
+import { t } from 'i18next'
+import { useEffect, useState } from 'react'
+import { DayPicker } from 'react-day-picker'
 import { FaCaretLeft } from 'react-icons/fa6'
 import { FaCaretRight } from 'react-icons/fa6'
-import { type Locale, getLocale } from '../utils/locale'
-import { addDays, format, subDays } from 'date-fns'
-import Calculator from '../components/Calculator'
+import { IoAddCircleOutline } from 'react-icons/io5'
+
+import Calculator from '@/components/Calculator'
 import {
   type Category,
   expenseCategory,
   incomeCategory,
-} from '../constant/transactionCategories'
+} from '@/constant/transactionCategories'
+import { type Locale, getLocale } from '@/utils/locale'
 
 interface CategoryItemProps {
   category: Category

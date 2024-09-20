@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react'
 import Chart, { type ChartType } from 'chart.js/auto'
+import { useEffect, useRef } from 'react'
 
 interface DoughnutPieChartProps {
   type?: ChartType

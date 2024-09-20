@@ -1,4 +1,5 @@
 import typia from 'typia'
+
 import { localStorageManager } from '@/utils/StorageManager'
 
 export type Locale = (typeof locales)[number]
