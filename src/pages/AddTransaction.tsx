@@ -5,14 +5,14 @@ import { DayPicker } from 'react-day-picker'
 import { enUS, ja, zhHK, zhTW, type Locale as LanLocale } from 'date-fns/locale'
 import { FaCaretLeft } from 'react-icons/fa6'
 import { FaCaretRight } from 'react-icons/fa6'
-import { type Locale, getLocale } from '../utils/locale'
+import { type Locale, getLocale } from '@/utils/locale'
 import { addDays, format, subDays } from 'date-fns'
-import Calculator from '../components/Calculator'
+import Calculator from '@/components/Calculator'
 import {
   type Category,
   expenseCategory,
   incomeCategory,
-} from '../constant/transactionCategories'
+} from '@/constant/transactionCategories'
 
 interface CategoryItemProps {
   category: Category

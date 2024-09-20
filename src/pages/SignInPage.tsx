@@ -2,7 +2,7 @@ import SignInButton from '@/components/SignInButton'
 import { FaFacebookF, FaGoogle, FaApple, FaUser, FaLine } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'
-import { initializeCurrency } from '../utils/CurrencyManager'
+import { initializeCurrency } from '@/utils/CurrencyManager'
 
 const SignInPage = (): JSX.Element => {
   const { t } = useTranslation()
