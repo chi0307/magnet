@@ -57,7 +57,7 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
     return this.table.toArray()
   }
 
-  public async find(id: UUID): Promise<Readonly<Entity> | null> {
+  public async findById(id: UUID): Promise<Readonly<Entity> | null> {
     return (await this.table.get(id)) ?? null
   }
 
