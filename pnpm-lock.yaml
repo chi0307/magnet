@@ -51,6 +51,9 @@ importers:
       '@ryoppippi/unplugin-typia':
         specifier: npm:@jsr/ryoppippi__unplugin-typia@^0.6.21
         version: '@jsr/ryoppippi__unplugin-typia@0.6.21(@types/node@22.5.5)(rollup@4.19.1)'
+      '@tsconfig/strictest':
+        specifier: ^2.0.5
+        version: 2.0.5
       '@types/node':
         specifier: ^22.5.5
         version: 22.5.5
@@ -573,6 +576,9 @@ packages:
 
   '@samchon/openapi@0.4.5':
     resolution: {integrity: sha512-EqCkQqjs54dQIxuOum/KIomxLIGtfu/QpJB1NjwU/+DwS9Se+PHSg/G+TqeNdpWyY2V4PDMXRIwhIWM3zF0G2w==}
+
+  '@tsconfig/strictest@2.0.5':
+    resolution: {integrity: sha512-ec4tjL2Rr0pkZ5hww65c+EEPYwxOi4Ryv+0MtjeaSQRJyq322Q27eOQiFbuNgw2hpL4hB1/W/HBGk3VKS43osg==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -2452,6 +2458,8 @@ snapshots:
     optional: true
 
   '@samchon/openapi@0.4.5': {}
+
+  '@tsconfig/strictest@2.0.5': {}
 
   '@types/babel__core@7.20.5':
     dependencies:
