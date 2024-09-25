@@ -45,6 +45,15 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
   private tableName: TableName<Entity, TableSchema>
   public constructor(tableName: TableName<Entity, TableSchema>) {
     this.tableName = tableName
+    this.table.hook('creating', (_primKey: UUID, obj: Entity) => {
+      // 目前這邊實作了 AutoBaseEntity 的資訊，這樣在 insert 的時候可以不用多寫這些資訊，所以 AutoBaseEntity 如果有改這邊也需要調整（因為沒有 typing check，所以需要特別注意）
+      obj.id = generateUuid()
+      obj.createdAt = new Date()
+      obj.updatedAt = new Date()
+    })
+    this.table.hook('updating', () => {
+      return { updatedAt: new Date() }
+    })
   }
 
   protected get table(): Table<Entity, UUID, ExcludeAutoBaseEntity<Entity>> {
@@ -65,13 +74,7 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
     item: ExcludeAutoBaseEntity<Entity>
   ): Promise<UUID | null> {
     try {
-      // TODO: 之後 id, createdAt, updatedAt 搬移到 hook 裡面去可能會比較正確
-      return await this.table.add({
-        ...item,
-        id: generateUuid(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      })
+      return await this.table.add(item)
     } catch (error) {
       console.error(error)
       return null
@@ -82,13 +85,7 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
     id: UUID,
     item: UpdateSpec<ExcludeAutoBaseEntity<Entity>>
   ): Promise<boolean> {
-    // TODO: 之後 updatedAt 搬移到 hook 裡面去可能會比較正確
-    return (
-      (await this.table.update(id, {
-        ...item,
-        updatedAt: new Date(),
-      })) === 1
-    )
+    return (await this.table.update(id, item)) === 1
   }
 
   public async delete(id: UUID): Promise<boolean> {

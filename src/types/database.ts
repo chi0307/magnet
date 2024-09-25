@@ -1,5 +1,8 @@
 import { type UUID } from '@/types/utils'
 
+/**
+ * 這個 Entity 如果調整的話，dexie hook 也要一併調整
+ */
 export interface AutoBaseEntity {
   id: UUID
   createdAt: Date
