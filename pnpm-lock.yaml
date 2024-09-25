@@ -49,8 +49,8 @@ importers:
         version: 10.0.0
     devDependencies:
       '@ryoppippi/unplugin-typia':
-        specifier: npm:@jsr/ryoppippi__unplugin-typia@^1.0.6
-        version: '@jsr/ryoppippi__unplugin-typia@1.0.6(@types/node@22.5.5)(rollup@4.22.4)'
+        specifier: ^1.0.6
+        version: 1.0.6(@types/node@22.5.5)(rollup@4.22.4)
       '@tsconfig/strictest':
         specifier: ^2.0.5
         version: 2.0.5
@@ -405,9 +405,6 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@jsr/ryoppippi__unplugin-typia@1.0.6':
-    resolution: {integrity: sha512-6Jgj8vZ7kui/LsjRUbZWsOR38o9XArrKCkv8sCVflgS11mh+4SiORilPTPKON8hB+rbHW7IJlmy8Sz2g1ppizQ==, tarball: https://npm.jsr.io/~/11/@jsr/ryoppippi__unplugin-typia/1.0.6.tgz}
-
   '@kurkle/color@0.3.2':
     resolution: {integrity: sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==}
 
@@ -518,6 +515,9 @@ packages:
     resolution: {integrity: sha512-j8pPKp53/lq9lMXN57S8cFz0MynJk8OWNuUnXct/9KCpKU7DgU3bYMJhwWmcqC0UU29p8Lr0/7KEVcaM6bf47Q==}
     cpu: [x64]
     os: [win32]
+
+  '@ryoppippi/unplugin-typia@1.0.6':
+    resolution: {integrity: sha512-jG6/uyYb1wl4qUxZaT+qkVVzDhBCIxZOCCqQS9NAECxy6CpOCuYqCvucDgIvYF51+zaQnPix6pCcr98Dl3oodA==}
 
   '@samchon/openapi@1.0.2':
     resolution: {integrity: sha512-+PFmOo3fZ0RejmhMnX+yKZCC2CCSxO6NhdQLnNStcX0JFdyNZk9Z5rrcOu+SDfWOlaMdRqfYzbmfUjpknJCMfA==}
@@ -2135,32 +2135,6 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@jsr/ryoppippi__unplugin-typia@1.0.6(@types/node@22.5.5)(rollup@4.22.4)':
-    dependencies:
-      '@rollup/pluginutils': 5.1.0(rollup@4.22.4)
-      consola: 3.2.3
-      defu: 6.1.4
-      diff-match-patch: 1.0.5
-      find-cache-dir: 5.0.0
-      magic-string: 0.30.11
-      pathe: 1.1.2
-      pkg-types: 1.1.3
-      type-fest: 4.25.0
-      typescript: 5.5.4
-      typia: 6.10.2(typescript@5.5.4)
-      unplugin: 1.12.2
-      vite: 5.4.7(@types/node@22.5.5)
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - rollup
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-
   '@kurkle/color@0.3.2': {}
 
   '@nodelib/fs.scandir@2.1.5':
@@ -2234,6 +2208,32 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.22.4':
     optional: true
+
+  '@ryoppippi/unplugin-typia@1.0.6(@types/node@22.5.5)(rollup@4.22.4)':
+    dependencies:
+      '@rollup/pluginutils': 5.1.0(rollup@4.22.4)
+      consola: 3.2.3
+      defu: 6.1.4
+      diff-match-patch: 1.0.5
+      find-cache-dir: 5.0.0
+      magic-string: 0.30.11
+      pathe: 1.1.2
+      pkg-types: 1.1.3
+      type-fest: 4.25.0
+      typescript: 5.5.4
+      typia: 6.10.2(typescript@5.5.4)
+      unplugin: 1.12.2
+      vite: 5.4.7(@types/node@22.5.5)
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - lightningcss
+      - rollup
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
 
   '@samchon/openapi@1.0.2': {}
 
