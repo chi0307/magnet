@@ -32,7 +32,6 @@ module.exports = {
     '@typescript-eslint/array-type': 'error',
     '@typescript-eslint/ban-ts-comment': 'error',
     '@typescript-eslint/ban-tslint-comment': 'error',
-    '@typescript-eslint/ban-types': 'error',
     '@typescript-eslint/class-literal-property-style': 'error',
     '@typescript-eslint/consistent-type-definitions': 'error',
     '@typescript-eslint/consistent-type-imports': [
