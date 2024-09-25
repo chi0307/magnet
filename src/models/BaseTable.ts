@@ -1,5 +1,4 @@
-import Dexie from 'dexie'
-import { type UpdateSpec, type Table } from 'dexie'
+import Dexie, { type UpdateSpec, type Table } from 'dexie'
 
 import {
   type UserEntity,
@@ -71,10 +70,19 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
   }
 
   public async insert(
-    item: ExcludeAutoBaseEntity<Entity>
+    entity: ExcludeAutoBaseEntity<Entity>
   ): Promise<UUID | null> {
     try {
-      return await this.table.add(item)
+      return await this.table.add(entity)
+    } catch (error) {
+      console.error(error)
+      return null
+    }
+  }
+
+  public async insertMany(entities: ExcludeAutoBaseEntity<Entity>[]): Promise<UUID[] | null> {
+    try {
+      return await this.table.bulkAdd(entities, { allKeys: true })
     } catch (error) {
       console.error(error)
       return null
@@ -83,9 +91,9 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
 
   public async update(
     id: UUID,
-    item: UpdateSpec<ExcludeAutoBaseEntity<Entity>>
+    entity: UpdateSpec<ExcludeAutoBaseEntity<Entity>>
   ): Promise<boolean> {
-    return (await this.table.update(id, item)) === 1
+    return (await this.table.update(id, entity)) === 1
   }
 
   public async delete(id: UUID): Promise<boolean> {
