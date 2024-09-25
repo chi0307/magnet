@@ -3,13 +3,10 @@ import '@/styles/global.css'
 import 'virtual:uno.css'
 import '@unocss/reset/tailwind.css'
 
-import { type UUID } from 'crypto'
-
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { redirect } from 'react-router-dom'
-import typia from 'typia'
 
 import ErrorPage from '@/error-page'
 import { User } from '@/models/User'
@@ -17,13 +14,14 @@ import AddTransaction from '@/pages/AddTransaction'
 import CreateLedgerPage from '@/pages/CreateLedgerPage'
 import LedgerPage from '@/pages/LedgerPage'
 import SignInPage from '@/pages/SignInPage'
+import { isUuid } from '@/utils/checkTyping'
 import { localStorageManager } from '@/utils/StorageManager'
 
 async function checkUser(): Promise<boolean> {
   const userModel = new User()
   const savedUserId = localStorageManager.get('userId')
 
-  if (typia.is<UUID>(savedUserId)) {
+  if (isUuid(savedUserId)) {
     const existingUser = await userModel.findById(savedUserId)
     return !!existingUser
   }

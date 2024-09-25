@@ -1,6 +1,5 @@
-import typia from 'typia'
-
 import { type UUID } from '@/types/utils'
+import { isCurrency, isLocale, isUuid } from '@/utils/checkTyping'
 import { type Currency } from '@/utils/CurrencyManager'
 import { type Locale } from '@/utils/locale'
 
@@ -53,13 +52,12 @@ type TypeChecker<StorageTyping> = {
   [key in keyof StorageTyping]: (data: unknown) => data is StorageTyping[key]
 }
 
-// using 'typia.createIs<Your type>()' is necessary, can not use 'typia.is<Your type>'
 export const localStorageManager = new StorageManager<{
   locale: Locale
   userId: UUID
   currency: Currency
 }>(localStorage, {
-  locale: typia.createIs<Locale>(),
-  userId: typia.createIs<UUID>(),
-  currency: typia.createIs<Currency>(),
+  locale: isLocale,
+  userId: isUuid,
+  currency: isCurrency,
 })
