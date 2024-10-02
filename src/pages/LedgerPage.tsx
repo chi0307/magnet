@@ -1,67 +1,52 @@
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaShoppingCart } from 'react-icons/fa'
 import { IoAdd } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 
 import DoughnutPieChart from '@/components/DoughnutPieChart'
+import { type Transaction } from '@/types/utils'
 import { getCurrency } from '@/utils/CurrencyManager'
 import { getLocale } from '@/utils/locale'
-
-interface Transaction {
-  date: string
-  items: { description: string; amount: number }[]
-  total: number
-}
-
-const transactions: Transaction[] = [
-  {
-    date: '2024-08-01',
-    items: [
-      { description: 'Groceries', amount: -50.98 },
-      { description: 'Coffee', amount: -5.03 },
-    ],
-    total: -56.01,
-  },
-  {
-    date: '2024-08-02',
-    items: [
-      { description: 'Book', amount: -15 },
-      { description: 'Dinner', amount: -30 },
-    ],
-    total: -45,
-  },
-  {
-    date: '2024-08-05',
-    items: [
-      { description: 'Book', amount: 15 },
-      { description: 'Dinner', amount: 30 },
-    ],
-    total: 45,
-  },
-  {
-    date: '2024-08-03',
-    items: [
-      { description: 'Book', amount: -15 },
-      { description: 'Dinner', amount: -30 },
-    ],
-    total: -45,
-  },
-]
+import { fetchGroupedTransactions } from '@/utils/transactionService'
 
 const LedgerPage = (): JSX.Element => {
   const { t } = useTranslation()
   const currency = getCurrency()
   const locale = getLocale()
 
-  transactions.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
+  const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  function formattedCurrency(dollar: number): string {
+  // 獲取 transactions 的副作用
+  useEffect(() => {
+    const fetchTransactions = async (): Promise<void> => {
+      const allTransactions = await fetchGroupedTransactions()
+      setTransactions(allTransactions)
+    }
+    void fetchTransactions()
+  }, [])
+
+  // 排序 transactions 依照日期
+  if (transactions.length > 0) {
+    console.log(transactions)
+    transactions.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    )
+  }
+
+  // 格式化貨幣
+  function formattedCurrency(amount: number): string {
     return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency,
-    }).format(dollar)
+    }).format(amount)
+  }
+
+  // 格式化日期 (你可以根據需要修改)
+  function formattedDate(date: string): string {
+    return new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(
+      new Date(date)
+    )
   }
 
   return (
@@ -87,58 +72,66 @@ const LedgerPage = (): JSX.Element => {
         <DoughnutPieChart />
       </div>
       <div>
-        {transactions.map((transaction) => (
-          <div key={transaction.date} className='mb-6 last:(mb-0 pb-4)'>
-            <div className='p-4 bg-[#F6F4EF] text-bold-md rounded-4'>
-              <div
-                className='
-                  px-3 pb-3
-                  flex justify-between items-center
-                  border-b border-[#E5E5E5]
-                  '
-              >
-                <span className='text-[#4B4B4B]'>{transaction.date}</span>
-                <span
-                  className={`
-                    text-bold-lg 
-                    ${
-                      transaction.total > 0
-                        ? 'text-[#1BB0F6]'
-                        : 'text-[#FF4B4A]'
-                    }
-                  `}
-                >
-                  {formattedCurrency(transaction.total)}
-                </span>
-              </div>
-              {transaction.items.map((item, index) => (
+        {transactions.length > 0 ? (
+          transactions.map((transaction) => (
+            <div key={transaction.date} className='mb-6 last:(mb-0 pb-4)'>
+              <div className='p-4 bg-[#F6F4EF] text-bold-md rounded-4'>
                 <div
-                  key={index}
                   className='
-                    px-3 py-2
+                    px-3 pb-3
                     flex justify-between items-center
                     border-b border-[#E5E5E5]
-                    last:(pb-0 border-none)
                   '
                 >
-                  <FaShoppingCart className='min-w-6 min-h-6 text-[#4B4B4B]' />
-                  <span
-                    className='
-                      ml-3 mr-2
-                      flex-1
-                      text-[#4B4B4B] text-ellipsis line-clamp-1
-                    '
-                  >
-                    {item.description}
-                  </span>
                   <span className='text-[#4B4B4B]'>
-                    {formattedCurrency(item.amount)}
+                    {formattedDate(transaction.date)}
+                  </span>
+                  <span
+                    className={`
+                      text-bold-lg 
+                      ${
+                        transaction.total > 0
+                          ? 'text-[#1BB0F6]'
+                          : 'text-[#FF4B4A]'
+                      }
+                    `}
+                  >
+                    {formattedCurrency(transaction.total)}
                   </span>
                 </div>
-              ))}
+                {transaction.items.map((item, index) => (
+                  <div
+                    key={index}
+                    className='
+                      px-3 py-2
+                      flex justify-between items-center
+                      border-b border-[#E5E5E5]
+                      last:(pb-0 border-none)
+                    '
+                  >
+                    <FaShoppingCart className='min-w-6 min-h-6 text-[#4B4B4B]' />
+                    <span
+                      className='
+                        ml-3 mr-2
+                        flex-1
+                        text-[#4B4B4B] text-ellipsis line-clamp-1
+                      '
+                    >
+                      {item.description}
+                    </span>
+                    <span className='text-[#4B4B4B]'>
+                      {formattedCurrency(item.amount)}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className='pt-20 text-(center sm)'>
+            {t('ledger.no_transactions')}
+          </p>
+        )}
       </div>
       <Link
         to={'/ledger/add'}
