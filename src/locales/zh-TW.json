@@ -40,6 +40,7 @@
       "medical": "醫療",
       "gift": "禮物",
       "other": "其他"
-    }
+    },
+    "no_transactions": "點擊下方的 + 按鈕，開始新增紀錄吧！"
   }
 }
