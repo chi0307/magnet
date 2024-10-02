@@ -9,3 +9,9 @@ export type ExcludeAutoBaseEntity<Entity extends AutoBaseEntity> = Omit<
   Entity,
   keyof AutoBaseEntity
 >
+
+export interface Transaction {
+  date: string
+  items: { description: string; amount: number }[]
+  total: number
+}
