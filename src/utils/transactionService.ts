@@ -1,7 +1,6 @@
 import { Purchase } from '@/models/Purchase'
 import { type PurchaseEntity } from '@/types/database'
 import { type Transaction } from '@/types/utils'
-import { isUuid } from '@/utils/checkTyping'
 import { localStorageManager } from '@/utils/StorageManager'
 
 const groupedTransactions = (rawData: PurchaseEntity[]): Transaction[] => {
@@ -34,7 +33,7 @@ export async function fetchAllTransactions(): Promise<PurchaseEntity[]> {
 
   const savedUserId = localStorageManager.get('userId')
 
-  if (isUuid(savedUserId)) {
+  if (savedUserId !== null) {
     const allTransactions = await purchaseModel.findAll()
 
     return [...allTransactions]
