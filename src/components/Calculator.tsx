@@ -4,6 +4,7 @@ import { useState } from 'react'
 interface CalculatorProps {
   className?: string
   onDisplayValueChange?: (value: string) => void
+  onClick: () => void
 }
 
 type Operator = '+' | '-' | '*' | '/'
@@ -23,6 +24,7 @@ type CalculatorInputKey =
 const Calculator = ({
   className = '',
   onDisplayValueChange = (): void => {},
+  onClick,
 }: CalculatorProps): JSX.Element => {
   const [displayValue, setDisplayValue] = useState<string>('0')
   const [firstOperand, setFirstOperand] = useState<number | null>(null)
@@ -167,7 +169,7 @@ const Calculator = ({
         className={`${defaultButtonStyle} text-white row-span-2 ${
           operator && !isOperatorClicked ? 'bg-[#FF9E0B]' : 'bg-[#FF4B4A]'
         }`}
-        onClick={calculateResult}
+        onClick={operator && !isOperatorClicked ? calculateResult : onClick}
       >
         {operator && !isOperatorClicked ? '=' : t('general.save')}
       </button>

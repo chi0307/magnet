@@ -41,5 +41,6 @@
       "gift": "Gift",
       "other": "Other"
     }
-  }
+  },
+  "no_transactions": "Click the + button below to start adding your records!"
 }

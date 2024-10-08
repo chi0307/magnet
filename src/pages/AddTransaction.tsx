@@ -6,6 +6,7 @@ import { DayPicker } from 'react-day-picker'
 import { FaCaretLeft } from 'react-icons/fa6'
 import { FaCaretRight } from 'react-icons/fa6'
 import { IoAddCircleOutline } from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom'
 
 import Calculator from '@/components/Calculator'
 import {
@@ -13,7 +14,11 @@ import {
   expenseCategory,
   incomeCategory,
 } from '@/constant/transactionCategories'
+import { Ledger } from '@/models/Ledger'
+import { Purchase } from '@/models/Purchase'
 import { type Locale, getLocale } from '@/utils/locale'
+import { localStorageManager } from '@/utils/StorageManager'
+import { generateUuid } from '@/utils/utils'
 
 interface CategoryItemProps {
   category: Category
@@ -65,11 +70,17 @@ const CategoryItem = ({
 
 // Main Component
 const AddTransaction = (): JSX.Element => {
+  const navigate = useNavigate()
+
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0)
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [isDayPickerVisible, setIsDayPickerVisible] = useState(false)
   const [selectedTab, setSelectedTab] = useState<SelectedTab>('expense')
-  const [displayValue, setDisplayValue] = useState('0')
+  const [calculatorValue, setCalculatorValue] = useState('0')
+  const [purchaseContext, setPurchaseContext] = useState('')
+
+  const ledgerModel = new Ledger()
+  const purchaseModel = new Purchase()
 
   // Toggles visibility of DayPicker
   const toggleDayPicker = (): void => setIsDayPickerVisible((prev) => !prev)
@@ -109,6 +120,37 @@ const AddTransaction = (): JSX.Element => {
     selectedTab === 'expense' ? expenseCategory : incomeCategory
 
   const tabs: SelectedTab[] = ['expense', 'income']
+
+  const handleTransaction = async (): Promise<void> => {
+    const savedUserId = localStorageManager.get('userId')
+
+    if (savedUserId === null) {
+      return
+    }
+
+    const existingLedger = await ledgerModel.findByUserId(savedUserId)
+    const adjustedAmount =
+      selectedTab === 'expense'
+        ? -Math.abs(Number(calculatorValue))
+        : Math.abs(Number(calculatorValue))
+
+    if (existingLedger) {
+      await purchaseModel
+        .insert({
+          ledgerId: existingLedger.id,
+          categoryId: generateUuid(), //TODO
+          name: purchaseContext,
+          amount: adjustedAmount,
+          purchaseDate: selectedDate,
+        })
+        .then(() => {
+          navigate('/ledger')
+        })
+        .catch((error) => {
+          console.error('add transaction error: ', error)
+        })
+    }
+  }
 
   // Fix Safari input focus issue
   useEffect(() => {
@@ -188,13 +230,15 @@ const AddTransaction = (): JSX.Element => {
               overflow-hidden whitespace-nowrap
             '
           >
-            {displayValue}
+            {calculatorValue}
           </span>
           {/* Context */}
           <input
+            name='context'
             type='text'
             className='flex-1 h-full bg-transparent text-(bold-md center) focus:outline-none'
             placeholder={t('ledger.tap_to_write')}
+            onChange={(e) => setPurchaseContext(e.target.value)}
           />
         </div>
         {/* Date */}
@@ -216,7 +260,12 @@ const AddTransaction = (): JSX.Element => {
         {/* Calculator */}
         <Calculator
           className='w-full'
-          onDisplayValueChange={setDisplayValue} // Pass the callback to Calculator
+          onDisplayValueChange={setCalculatorValue} // Pass the callback to Calculator
+          onClick={() => {
+            handleTransaction().catch((error) => {
+              console.error('Error during user registration:', error)
+            })
+          }}
         />
       </div>
 
