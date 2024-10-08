@@ -1,7 +1,23 @@
 import { Category } from '@/models/Category'
 import { type LedgerEntity, type CategoryEntity } from '@/types/database'
+import { type RequiredEntity } from '@/types/utils'
 
 const categoryModel = new Category()
+
+export async function createCategories(
+  ledgerId: CategoryEntity['ledgerId'],
+  list: Omit<RequiredEntity<CategoryEntity>, 'ledgerId'>[]
+): Promise<CategoryEntity['id'][]> {
+  const newCategories: RequiredEntity<CategoryEntity>[] = list.map((item) => ({
+    ...item,
+    ledgerId,
+  }))
+  const categoryIds = await categoryModel.insertMany(newCategories)
+  if (categoryIds === null) {
+    throw new Error('create categories failed')
+  }
+  return categoryIds
+}
 
 /**
  * sorting:
