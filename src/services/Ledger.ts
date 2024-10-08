@@ -1,3 +1,4 @@
+import { defaultCategories } from '@/constant/defaultCategories'
 import { Ledger } from '@/models/Ledger'
 import { createCategories } from '@/services/Category'
 import { type LedgerEntity } from '@/types/database'
@@ -25,8 +26,7 @@ export async function createLedger({
     throw new Error('create ledger failed')
   }
 
-  // TODO: 想一下這時候要怎麼把類別帶進來
-  await createCategories(ledgerId, [])
+  await createCategories(ledgerId, defaultCategories)
 
   return ledgerId
 }
