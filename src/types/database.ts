@@ -1,3 +1,4 @@
+import { type Icon } from '@/constant/icons'
 import { type UUID } from '@/types/utils'
 
 /**
@@ -23,7 +24,7 @@ export interface LedgerEntity extends AutoBaseEntity {
 export interface CategoryEntity extends AutoBaseEntity {
   ledgerId: LedgerEntity['id']
   name: string
-  icon: string
+  icon: Icon
   sortIndex: number
 }
 

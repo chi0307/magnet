@@ -4,16 +4,13 @@ import { FaFacebookF, FaGoogle, FaApple, FaUser, FaLine } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 import SignInButton from '@/components/SignInButton'
-import { Ledger } from '@/models/Ledger'
-import { User } from '@/models/User'
-import { initializeCurrency, getCurrency } from '@/utils/CurrencyManager'
+import { signInOrRegisterUser } from '@/services/User'
+import { initializeCurrency } from '@/utils/CurrencyManager'
 import { localStorageManager } from '@/utils/StorageManager'
 
 const SignInPage = (): JSX.Element => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const userModel = new User()
-  const ledgerModel = new Ledger()
   const buttons: Omit<Parameters<typeof SignInButton>[0], 'onClick'>[] = [
     { color: '#4267B2', icon: <FaFacebookF />, text: 'facebook' },
     { color: '#DB4437', icon: <FaGoogle />, text: 'google' },
@@ -30,28 +27,11 @@ const SignInPage = (): JSX.Element => {
       email: 'johndoe@example.com',
     }
 
-    const existingUser = await userModel.findByEmail(userData.email)
-
-    if (existingUser) {
-      localStorageManager.set('userId', existingUser.id)
-      navigate('/ledger')
-    }
-
-    const userId = await userModel.insert({
-      name: userData.name,
-      email: userData.email,
-    })
-
-    if (userId !== null) {
-      await ledgerModel.insert({
-        name: 'default',
-        currency: getCurrency(),
-        userId,
-      })
-
+    try {
+      const userId = await signInOrRegisterUser(userData)
       localStorageManager.set('userId', userId)
       navigate('/ledger')
-    } else {
+    } catch {
       console.error('register fail')
     }
   }

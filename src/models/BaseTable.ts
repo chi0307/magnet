@@ -6,11 +6,7 @@ import {
   type CategoryEntity,
   type PurchaseEntity,
 } from '@/types/database'
-import {
-  type ExcludeAutoBaseEntity,
-  type TableName,
-  type UUID,
-} from '@/types/utils'
+import { type RequiredEntity, type TableName, type UUID } from '@/types/utils'
 import { generateUuid, uniqueArray } from '@/utils/utils'
 
 interface TableSchema {
@@ -55,10 +51,8 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
     })
   }
 
-  protected get table(): Table<Entity, UUID, ExcludeAutoBaseEntity<Entity>> {
-    return this.db.table<Entity, UUID, ExcludeAutoBaseEntity<Entity>>(
-      this.tableName
-    )
+  protected get table(): Table<Entity, UUID, RequiredEntity<Entity>> {
+    return this.db.table<Entity, UUID, RequiredEntity<Entity>>(this.tableName)
   }
 
   public async findAll(): Promise<readonly Readonly<Entity>[]> {
@@ -69,9 +63,7 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
     return (await this.table.get(id)) ?? null
   }
 
-  public async insert(
-    entity: ExcludeAutoBaseEntity<Entity>
-  ): Promise<UUID | null> {
+  public async insert(entity: RequiredEntity<Entity>): Promise<UUID | null> {
     try {
       return await this.table.add(entity)
     } catch (error) {
@@ -80,7 +72,9 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
     }
   }
 
-  public async insertMany(entities: ExcludeAutoBaseEntity<Entity>[]): Promise<UUID[] | null> {
+  public async insertMany(
+    entities: RequiredEntity<Entity>[]
+  ): Promise<UUID[] | null> {
     try {
       return await this.table.bulkAdd(entities, { allKeys: true })
     } catch (error) {
@@ -91,7 +85,7 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
 
   public async update(
     id: UUID,
-    entity: UpdateSpec<ExcludeAutoBaseEntity<Entity>>
+    entity: UpdateSpec<RequiredEntity<Entity>>
   ): Promise<boolean> {
     return (await this.table.update(id, entity)) === 1
   }

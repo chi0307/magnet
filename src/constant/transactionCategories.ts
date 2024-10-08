@@ -19,6 +19,7 @@ import {
   RiFunctionLine,
 } from 'react-icons/ri'
 
+// TODO: 這個檔案可以砍了
 export interface Category {
   icon: IconType
   name: string
