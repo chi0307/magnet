@@ -16,9 +16,9 @@ import {
 } from '@/constant/transactionCategories'
 import { Ledger } from '@/models/Ledger'
 import { Purchase } from '@/models/Purchase'
-import { isUuid } from '@/utils/checkTyping'
 import { type Locale, getLocale } from '@/utils/locale'
 import { localStorageManager } from '@/utils/StorageManager'
+import { generateUuid } from '@/utils/utils'
 
 interface CategoryItemProps {
   category: Category
@@ -124,7 +124,7 @@ const AddTransaction = (): JSX.Element => {
   const handleTransaction = async (): Promise<void> => {
     const savedUserId = localStorageManager.get('userId')
 
-    if (!isUuid(savedUserId)) {
+    if (savedUserId === null) {
       return
     }
 
@@ -138,7 +138,7 @@ const AddTransaction = (): JSX.Element => {
       await purchaseModel
         .insert({
           ledgerId: existingLedger.id,
-          categoryId: existingLedger.id,
+          categoryId: generateUuid(), //TODO
           name: purchaseContext,
           amount: adjustedAmount,
           purchaseDate: selectedDate,
@@ -147,7 +147,7 @@ const AddTransaction = (): JSX.Element => {
           navigate('/ledger')
         })
         .catch((error) => {
-          console.log('add transaction error: ', error)
+          console.error('add transaction error: ', error)
         })
     }
   }
