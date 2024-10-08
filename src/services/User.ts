@@ -1,10 +1,9 @@
-import { Ledger } from '@/models/Ledger'
 import { User } from '@/models/User'
+import { createLedger } from '@/services/Ledger'
 import { type UserEntity } from '@/types/database'
 import { getCurrency } from '@/utils/CurrencyManager'
 
 const userModel = new User()
-const ledgerModel = new Ledger()
 
 export async function signInOrRegisterUser({
   name,
@@ -25,10 +24,10 @@ export async function signInOrRegisterUser({
   if (userId === null) {
     throw new Error('insert user failed')
   }
-  await ledgerModel.insert({
-    name: 'default',
-    currency: getCurrency(),
+  await createLedger({
     userId,
+    currency: getCurrency(),
+    ledgerName: 'default',
   })
 
   return userId
