@@ -28,7 +28,6 @@ const LedgerPage = (): JSX.Element => {
 
   // 排序 transactions 依照日期
   if (transactions.length > 0) {
-    console.log(transactions)
     transactions.sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     )
