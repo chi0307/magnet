@@ -1,5 +1,6 @@
 import { createIs } from 'typia'
 
+import { type Icon } from '@/constant/icons'
 import { type UUID } from '@/types/utils'
 import { type Currency } from '@/utils/CurrencyManager'
 import { type Locale } from '@/utils/locale'
@@ -10,3 +11,4 @@ export const isCurrency = createIs<Currency>()
 export const isUuid = (data: unknown): data is UUID =>
   typeof data === 'string' &&
   /[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}/.test(data)
+export const isIcon = createIs<Icon>()
