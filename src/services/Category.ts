@@ -5,13 +5,9 @@ import { type RequiredEntity } from '@/types/utils'
 const categoryModel = new Category()
 
 export async function createCategory(
-  ledgerId: CategoryEntity['ledgerId'],
   item: RequiredEntity<CategoryEntity>
 ): Promise<CategoryEntity['id']> {
-  const categoryId = await categoryModel.insert({
-    ...item,
-    ledgerId,
-  })
+  const categoryId = await categoryModel.insert(item)
   if (categoryId === null) {
     throw new Error('create category failed')
   }
