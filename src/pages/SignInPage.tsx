@@ -22,7 +22,7 @@ const SignInPage = (): JSX.Element => {
   ]
 
   const handleRegisterUser = async (service: string): Promise<void> => {
-    console.log('logging service is ', service)
+    console.info('logging service is ', service)
 
     // mock sso user data
     const userData = {
