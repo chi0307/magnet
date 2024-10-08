@@ -2,7 +2,6 @@ import { defaultCategories } from '@/constant/defaultCategories'
 import { Ledger } from '@/models/Ledger'
 import { createCategories } from '@/services/Category'
 import { type LedgerEntity } from '@/types/database'
-import { type UUID } from '@/types/utils'
 import { type Currency } from '@/utils/CurrencyManager'
 
 const ledgerModel = new Ledger()
@@ -12,7 +11,7 @@ export async function createLedger({
   ledgerName,
   currency,
 }: {
-  userId: UUID
+  userId: LedgerEntity['userId']
   ledgerName: string
   currency: Currency
 }): Promise<LedgerEntity['id']> {

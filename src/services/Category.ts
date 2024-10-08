@@ -1,5 +1,3 @@
-import { type UUID } from 'crypto'
-
 import { Category } from '@/models/Category'
 import { type CategoryEntity } from '@/types/database'
 import { type RequiredEntity } from '@/types/utils'
@@ -7,7 +5,7 @@ import { type RequiredEntity } from '@/types/utils'
 const categoryModel = new Category()
 
 export async function createCategory(
-  ledgerId: UUID,
+  ledgerId: CategoryEntity['ledgerId'],
   item: RequiredEntity<CategoryEntity>
 ): Promise<CategoryEntity['id']> {
   const categoryId = await categoryModel.insert({
@@ -21,7 +19,7 @@ export async function createCategory(
 }
 
 export async function createCategories(
-  ledgerId: UUID,
+  ledgerId: CategoryEntity['ledgerId'],
   list: Omit<RequiredEntity<CategoryEntity>, 'ledgerId'>[]
 ): Promise<CategoryEntity['id'][]> {
   const newCategories: RequiredEntity<CategoryEntity>[] = list.map((item) => ({
@@ -41,7 +39,7 @@ export async function createCategories(
  * 2. created_at old -> new
  */
 export async function getCategories(
-  ledgerId: UUID
+  ledgerId: CategoryEntity['ledgerId']
 ): Promise<readonly Readonly<CategoryEntity>[]> {
   const categories = await categoryModel.findByLedgerId(ledgerId)
 

@@ -24,7 +24,6 @@ export interface LedgerEntity extends AutoBaseEntity {
 export interface CategoryEntity extends AutoBaseEntity {
   ledgerId: LedgerEntity['id']
   name: string
-  // 不確定寫 Icon type 好不好，可以討論，但我覺得型別寫強一點比較好
   icon: Icon
   sortIndex: number
 }
