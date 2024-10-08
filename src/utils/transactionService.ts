@@ -1,31 +1,30 @@
+import { format } from 'date-fns'
+
 import { Purchase } from '@/models/Purchase'
 import { type PurchaseEntity } from '@/types/database'
 import { type Transaction } from '@/types/utils'
 import { localStorageManager } from '@/utils/StorageManager'
 
 const groupedTransactions = (rawData: PurchaseEntity[]): Transaction[] => {
-  const grouped: { [key: string]: Transaction } = {}
+  const grouped = new Map<string, Transaction>()
 
-  rawData.forEach((transaction) => {
-    const date = new Date(transaction.purchaseDate).toISOString().split('T')[0] // Format date as YYYY-MM-DD
-    const description = transaction.name
-    const amount = transaction.amount
-
-    // Use hasOwnProperty to check if the key exists
-    if (!Object.prototype.hasOwnProperty.call(grouped, date)) {
-      grouped[date] = {
-        date,
-        items: [],
-        total: 0,
-      }
+  for (const { purchaseDate, name: description, amount } of rawData) {
+    const date = format(purchaseDate, 'yyyy-MM-dd')
+    const itemsByDate = grouped.get(date) ?? {
+      date,
+      items: [],
+      total: 0,
     }
 
-    grouped[date].items.push({ description, amount })
-    grouped[date].total += amount
-  })
+    itemsByDate.items.push({
+      description,
+      amount,
+    })
+    itemsByDate.total += amount
+    grouped.set(date, itemsByDate)
+  }
 
-  // Convert the grouped object to an array
-  return Object.values(grouped)
+  return [...grouped.values()]
 }
 
 export async function fetchAllTransactions(): Promise<PurchaseEntity[]> {
