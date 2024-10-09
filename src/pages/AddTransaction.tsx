@@ -144,7 +144,7 @@ const AddTransaction = (): JSX.Element => {
           purchaseDate: selectedDate,
         })
         .then(() => {
-          navigate('/ledger')
+          navigate('/magnet/ledger')
         })
         .catch((error) => {
           console.error('add transaction error: ', error)
@@ -164,7 +164,7 @@ const AddTransaction = (): JSX.Element => {
       className='
         mx-auto
         flex flex-col
-        max-w-192 h-100dvh
+        max-w-107.5 h-100dvh
         text-(4.2 [#4B4B4B])
       '
     >

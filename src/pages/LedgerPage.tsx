@@ -49,7 +49,7 @@ const LedgerPage = (): JSX.Element => {
   }
 
   return (
-    <div className='mx-auto px-4 pt-4 max-w-192 text-4.2'>
+    <div className='mx-auto px-4 pt-4 max-w-107.5 text-4.2'>
       <div
         className='
           p-4
@@ -133,7 +133,7 @@ const LedgerPage = (): JSX.Element => {
         )}
       </div>
       <Link
-        to={'/ledger/add'}
+        to={'/magnet/ledger/add'}
         className='
           fixed bottom-5% left-1/2
           flex flex-center
