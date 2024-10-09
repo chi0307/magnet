@@ -9,7 +9,8 @@
     "check:lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "check": "pnpm run \"/^check:.*/\"",
     "preview": "vite preview",
-    "prepare": "ts-patch install && typia patch"
+    "prepare": "ts-patch install && typia patch",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@unocss/reset": "^0.62.4",
