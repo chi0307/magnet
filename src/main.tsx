@@ -33,7 +33,7 @@ async function rootLoader(): Promise<Response> {
   const userExists = await checkUser()
 
   if (userExists) {
-    return redirect('/ledger')
+    return redirect('/magnet/ledger')
   }
 
   return new Response(null, { status: 200 })
@@ -43,7 +43,7 @@ async function authLoader(): Promise<Response> {
   const userExists = await checkUser()
 
   if (!userExists) {
-    return redirect('/')
+    return redirect('/magnet')
   }
 
   return new Response(null, { status: 200 })
@@ -51,23 +51,23 @@ async function authLoader(): Promise<Response> {
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/magnet',
     element: <SignInPage />,
     errorElement: <ErrorPage />,
     loader: rootLoader,
   },
   {
-    path: '/ledger',
+    path: '/magnet/ledger',
     element: <LedgerPage />,
     loader: authLoader,
   },
   {
-    path: '/ledger/add',
+    path: '/magnet/ledger/add',
     element: <AddTransaction />,
     loader: authLoader,
   },
   {
-    path: '/ledger/create',
+    path: '/magnet/ledger/create',
     element: <CreateLedgerPage />,
     loader: authLoader,
   },

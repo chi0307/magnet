@@ -30,7 +30,7 @@ const SignInPage = (): JSX.Element => {
     try {
       const userId = await signInOrRegisterUser(userData)
       localStorageManager.set('userId', userId)
-      navigate('/ledger')
+      navigate('/magnet/ledger')
     } catch {
       console.error('register fail')
     }
@@ -41,7 +41,7 @@ const SignInPage = (): JSX.Element => {
   }, [])
 
   return (
-    <div className='mx-auto max-w-192 max-h-100dvh flex items-center flex-col'>
+    <div className='mx-auto max-w-107.5 max-h-100dvh flex items-center flex-col'>
       <p className='mt-15 px-5 text-(8 bold-lg)'>{t('general.welcome')}</p>
       <img src='https://fakeimg.pl/400/' alt='Logo' className='mt-8 max-w-50' />
       <div className='mt-20 flex flex-center flex-col gap-4'>
