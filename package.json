@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "check:lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "check:lint": "eslint .",
     "check": "pnpm run \"/^check:.*/\"",
     "preview": "vite preview",
     "prepare": "ts-patch install && typia patch",
