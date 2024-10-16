@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var target = location.pathname
+
+      if (!target.startsWith('/magnet/')) {
+        location.replace('/magnet/')
+      } else {
+        // 將用戶重導向到 index.html 並附加原始路徑
+        location.replace(
+          '/magnet/index.html?redirect=' + encodeURIComponent(target)
+        )
+      }
+    </script>
+  </body>
+</html>

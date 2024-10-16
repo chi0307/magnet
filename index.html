@@ -4,10 +4,26 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <title>Magnet</title>
   </head>
   <body>
     <div id="root"></div>
+    <script type="module">
+      // 檢查當前路徑是否有效
+      if (!location.pathname.startsWith('/magnet/')) {
+        // 將使用者重導向到首頁
+        history.replaceState(null, '', '/magnet/')
+      } else {
+        // 檢查是否有 redirect 查詢參數
+        const params = new URLSearchParams(window.location.search)
+        const redirect = params.get('redirect')
+        console.log('redirect', redirect)
+        // 如果有重導向的路徑，則轉導到該路徑
+        if (redirect) {
+          window.history.replaceState(null, '', redirect)
+        }
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
