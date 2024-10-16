@@ -296,7 +296,7 @@ const AddTransaction = (): JSX.Element => {
           defaultMonth={selectedDate}
           selected={selectedDate}
           onSelect={(date) => {
-            setSelectedDate(date || new Date())
+            setSelectedDate(date ?? new Date())
           }}
           classNames={{
             root: 'p-5 relative bottom-0',

@@ -23,6 +23,7 @@ type CalculatorInputKey =
 
 const Calculator = ({
   className = '',
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onDisplayValueChange = (): void => {},
   onClick,
 }: CalculatorProps): JSX.Element => {
