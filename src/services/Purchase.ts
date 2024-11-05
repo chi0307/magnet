@@ -19,10 +19,12 @@ export async function getAllPurchases(): Promise<
     [...(await getCategories(ledger.id))].map((item) => [item.id, item.icon])
   )
 
-  return purchases.map((item) => {
-    return {
-      ...item,
-      icon: iconMapping.get(item.categoryId) ?? 'error',
-    }
-  })
+  return purchases
+    .map((item) => {
+      return {
+        ...item,
+        icon: iconMapping.get(item.categoryId) ?? 'error',
+      }
+    })
+    .sort((a, b) => (a.purchaseDate > b.purchaseDate ? -1 : 1))
 }
