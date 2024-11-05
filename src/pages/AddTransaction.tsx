@@ -3,25 +3,28 @@ import { enUS, ja, zhHK, zhTW, type Locale as LanLocale } from 'date-fns/locale'
 import { t } from 'i18next'
 import { useEffect, useState } from 'react'
 import { DayPicker } from 'react-day-picker'
+import { type IconType } from 'react-icons'
 import { FaCaretLeft } from 'react-icons/fa6'
 import { FaCaretRight } from 'react-icons/fa6'
 import { IoAddCircleOutline } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
 
 import Calculator from '@/components/Calculator'
-import {
-  type Category,
-  expenseCategory,
-  incomeCategory,
-} from '@/constant/transactionCategories'
+import { iconList } from '@/constant/icons'
 import { Ledger } from '@/models/Ledger'
 import { Purchase } from '@/models/Purchase'
+import { getCategories } from '@/services/Category'
+import { getDefaultLedger } from '@/services/Ledger'
+import { type CategoryEntity } from '@/types/database'
 import { type Locale, getLocale } from '@/utils/locale'
 import { localStorageManager } from '@/utils/StorageManager'
-import { generateUuid } from '@/utils/utils'
+
+interface CategoryEntityWithIcon extends Omit<CategoryEntity, 'icon'> {
+  icon: IconType
+}
 
 interface CategoryItemProps {
-  category: Category
+  category: CategoryEntityWithIcon
   isSelected: boolean
   onSelect: () => void
   color: string
@@ -78,6 +81,8 @@ const AddTransaction = (): JSX.Element => {
   const [selectedTab, setSelectedTab] = useState<SelectedTab>('expense')
   const [calculatorValue, setCalculatorValue] = useState('0')
   const [purchaseContext, setPurchaseContext] = useState('')
+  // TODO: 需要分開做收入跟支出的 category (e.g. model 需要增加 type 欄位)
+  const [categoryList, setCategoryList] = useState<CategoryEntityWithIcon[]>([])
 
   const ledgerModel = new Ledger()
   const purchaseModel = new Purchase()
@@ -116,9 +121,6 @@ const AddTransaction = (): JSX.Element => {
   const selectedCategoryBgColor =
     selectedTab === 'expense' ? 'bg-[#FF4B4A]' : 'bg-[#1BB0F6]'
 
-  const categoryList =
-    selectedTab === 'expense' ? expenseCategory : incomeCategory
-
   const tabs: SelectedTab[] = ['expense', 'income']
 
   const handleTransaction = async (): Promise<void> => {
@@ -135,10 +137,11 @@ const AddTransaction = (): JSX.Element => {
         : Math.abs(Number(calculatorValue))
 
     if (existingLedger) {
+      const category = categoryList[selectedCategoryIndex]
       await purchaseModel
         .insert({
           ledgerId: existingLedger.id,
-          categoryId: generateUuid(), //TODO
+          categoryId: category.id,
           name: purchaseContext,
           amount: adjustedAmount,
           purchaseDate: selectedDate,
@@ -154,6 +157,15 @@ const AddTransaction = (): JSX.Element => {
 
   // Fix Safari input focus issue
   useEffect(() => {
+    void (async (): Promise<void> => {
+      const ledger = await getDefaultLedger()
+      const categories = await getCategories(ledger.id)
+      const list: CategoryEntityWithIcon[] = categories.map((item) => ({
+        ...item,
+        icon: iconList[item.icon],
+      }))
+      setCategoryList(list)
+    })()
     const handleFocusOut = (): void => window.scrollTo(0, 0)
     window.addEventListener('focusout', handleFocusOut)
     return (): void => window.removeEventListener('focusout', handleFocusOut)
