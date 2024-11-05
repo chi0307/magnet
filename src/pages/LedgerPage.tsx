@@ -5,19 +5,18 @@ import { IoAdd } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 
 import DoughnutPieChart from '@/components/DoughnutPieChart'
-import { Icon, iconList } from '@/constant/icons'
+import { iconList } from '@/constant/icons'
 import { getAllPurchases } from '@/services/Purchase'
-import { PurchaseEntity } from '@/types/database'
 import { type Transaction } from '@/types/utils'
 import { getCurrency } from '@/utils/CurrencyManager'
 import { getLocale } from '@/utils/locale'
 
 function groupTransactionsByDate(
-  rawData: readonly Readonly<PurchaseEntity & { icon: Icon }>[]
+  rawData: Awaited<ReturnType<typeof getAllPurchases>>
 ): Transaction[] {
   const grouped = new Map<string, Transaction>()
 
-  for (const { purchaseDate, name: description, amount, icon } of rawData) {
+  for (const { purchaseDate, name, amount, icon, categoryName } of rawData) {
     const date = format(purchaseDate, 'yyyy-MM-dd')
     const itemsByDate = grouped.get(date) ?? {
       date,
@@ -26,7 +25,7 @@ function groupTransactionsByDate(
     }
 
     itemsByDate.items.push({
-      description,
+      description: name === '' ? categoryName : name,
       amount,
       icon: iconList[icon],
     })
