@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaShoppingCart } from 'react-icons/fa'
@@ -5,10 +6,35 @@ import { IoAdd } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 
 import DoughnutPieChart from '@/components/DoughnutPieChart'
+import { getAllPurchases } from '@/services/Purchase'
+import { PurchaseEntity } from '@/types/database'
 import { type Transaction } from '@/types/utils'
 import { getCurrency } from '@/utils/CurrencyManager'
 import { getLocale } from '@/utils/locale'
-import { fetchGroupedTransactions } from '@/utils/transactionService'
+
+function groupTransactionsByDate(
+  rawData: readonly Readonly<PurchaseEntity>[]
+): Transaction[] {
+  const grouped = new Map<string, Transaction>()
+
+  for (const { purchaseDate, name: description, amount } of rawData) {
+    const date = format(purchaseDate, 'yyyy-MM-dd')
+    const itemsByDate = grouped.get(date) ?? {
+      date,
+      items: [],
+      total: 0,
+    }
+
+    itemsByDate.items.push({
+      description,
+      amount,
+    })
+    itemsByDate.total += amount
+    grouped.set(date, itemsByDate)
+  }
+
+  return [...grouped.values()]
+}
 
 const LedgerPage = (): JSX.Element => {
   const { t } = useTranslation()
@@ -19,8 +45,9 @@ const LedgerPage = (): JSX.Element => {
 
   // 獲取 transactions 的副作用
   useEffect(() => {
-    const fetchTransactions = async (): Promise<void> => {
-      const allTransactions = await fetchGroupedTransactions()
+    async function fetchTransactions(): Promise<void> {
+      const transactions = await getAllPurchases()
+      const allTransactions = groupTransactionsByDate(transactions)
       setTransactions(allTransactions)
     }
     void fetchTransactions()
