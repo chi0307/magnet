@@ -25,7 +25,7 @@ function groupTransactionsByDate(
     }
 
     itemsByDate.items.push({
-      description: name === '' ? categoryName : name,
+      description: name ?? categoryName,
       amount,
       icon: iconList[icon],
     })

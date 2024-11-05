@@ -26,14 +26,27 @@ const tableIndexes: {
 }
 
 const db = new Dexie('MagnetDB')
-db.version(1).stores(
-  Object.fromEntries(
-    Object.entries(tableIndexes).map(([key, value]) => [
-      key,
-      uniqueArray(value).join(','),
-    ])
+// TODO: 需要想一下要怎麼兼容多個版本，文件是建議保留所有版本下來，但同時也包含了每個版本的 entity 感覺頗麻煩的
+// https://dexie.org/docs/Tutorial/Design#database-versioning
+db.version(2)
+  .stores(
+    Object.fromEntries(
+      Object.entries(tableIndexes).map(([key, value]) => [
+        key,
+        uniqueArray(value).join(','),
+      ])
+    )
   )
-)
+  .upgrade((tx) => {
+    return tx
+      .table('purchase')
+      .toCollection()
+      .modify((item: PurchaseEntity) => {
+        if (item.name === '') {
+          item.name = null
+        }
+      })
+  })
 
 export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
   protected db = db

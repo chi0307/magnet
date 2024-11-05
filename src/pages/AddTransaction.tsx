@@ -143,7 +143,7 @@ const AddTransaction = (): JSX.Element => {
         .insert({
           ledgerId: existingLedger.id,
           categoryId: category.id,
-          name: purchaseContext,
+          name: purchaseContext === '' ? null : purchaseContext,
           amount: adjustedAmount,
           purchaseDate: selectedDate,
         })
