@@ -28,3 +28,11 @@ export async function createLedger({
 
   return ledgerId
 }
+
+export async function getDefaultLedger(): Promise<Readonly<LedgerEntity>> {
+  const ledger = await ledgerModel.findByName('default')
+  if (ledger === null) {
+    throw new Error('not found default ledger')
+  }
+  return ledger
+}
