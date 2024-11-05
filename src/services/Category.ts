@@ -1,3 +1,4 @@
+import { defaultCategories } from '@/constant/defaultCategories'
 import { Category } from '@/models/Category'
 import { type CategoryEntity } from '@/types/database'
 import { type RequiredEntity } from '@/types/utils'
@@ -14,14 +15,15 @@ export async function createCategory(
   return categoryId
 }
 
-export async function createCategories(
-  ledgerId: CategoryEntity['ledgerId'],
-  list: Omit<RequiredEntity<CategoryEntity>, 'ledgerId'>[]
+export async function createDefaultCategories(
+  ledgerId: CategoryEntity['ledgerId']
 ): Promise<CategoryEntity['id'][]> {
-  const newCategories: RequiredEntity<CategoryEntity>[] = list.map((item) => ({
-    ...item,
-    ledgerId,
-  }))
+  const newCategories: RequiredEntity<CategoryEntity>[] = defaultCategories.map(
+    (item) => ({
+      ...item,
+      ledgerId,
+    })
+  )
   const categoryIds = await categoryModel.insertMany(newCategories)
   if (categoryIds === null) {
     throw new Error('create categories failed')
