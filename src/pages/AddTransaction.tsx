@@ -130,6 +130,7 @@ const AddTransaction = (): JSX.Element => {
       return
     }
 
+    // TODO: 帳本 id 要改從 url 來
     const existingLedger = await ledgerModel.findByUserId(savedUserId)
     const adjustedAmount =
       selectedTab === 'expense'

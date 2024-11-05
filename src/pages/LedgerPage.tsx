@@ -1,11 +1,11 @@
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FaShoppingCart } from 'react-icons/fa'
 import { IoAdd } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 
 import DoughnutPieChart from '@/components/DoughnutPieChart'
+import { Icon, iconList } from '@/constant/icons'
 import { getAllPurchases } from '@/services/Purchase'
 import { PurchaseEntity } from '@/types/database'
 import { type Transaction } from '@/types/utils'
@@ -13,11 +13,11 @@ import { getCurrency } from '@/utils/CurrencyManager'
 import { getLocale } from '@/utils/locale'
 
 function groupTransactionsByDate(
-  rawData: readonly Readonly<PurchaseEntity>[]
+  rawData: readonly Readonly<PurchaseEntity & { icon: Icon }>[]
 ): Transaction[] {
   const grouped = new Map<string, Transaction>()
 
-  for (const { purchaseDate, name: description, amount } of rawData) {
+  for (const { purchaseDate, name: description, amount, icon } of rawData) {
     const date = format(purchaseDate, 'yyyy-MM-dd')
     const itemsByDate = grouped.get(date) ?? {
       date,
@@ -28,6 +28,7 @@ function groupTransactionsByDate(
     itemsByDate.items.push({
       description,
       amount,
+      icon: iconList[icon],
     })
     itemsByDate.total += amount
     grouped.set(date, itemsByDate)
@@ -135,7 +136,7 @@ const LedgerPage = (): JSX.Element => {
                       last:(pb-0 border-none)
                     '
                   >
-                    <FaShoppingCart className='min-w-6 min-h-6 text-[#4B4B4B]' />
+                    <item.icon className='min-w-6 min-h-6 text-[#4B4B4B]' />
                     <span
                       className='
                         ml-3 mr-2
