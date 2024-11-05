@@ -11,4 +11,8 @@ export class Ledger extends BaseTable<LedgerEntity> {
   ): Promise<Readonly<LedgerEntity> | null> {
     return (await this.table.where({ userId }).first()) ?? null
   }
+
+  public async findByName(name: LedgerEntity['name']): Promise<Readonly<LedgerEntity> | null> {
+    return (await this.table.where({name}).first()) ?? null
+  }
 }

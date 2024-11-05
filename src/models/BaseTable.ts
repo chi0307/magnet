@@ -20,7 +20,7 @@ const tableIndexes: {
   [key in keyof TableSchema]: (keyof TableSchema[key])[]
 } = {
   user: ['id', 'email'],
-  ledger: ['id', 'userId'],
+  ledger: ['id', 'userId', 'name'],
   category: ['id', 'ledgerId'],
   purchase: ['id', 'ledgerId', 'categoryId'],
 }
