@@ -1,6 +1,5 @@
-import { defaultCategories } from '@/constant/defaultCategories'
 import { Ledger } from '@/models/Ledger'
-import { createCategories } from '@/services/Category'
+import { createDefaultCategories } from '@/services/Category'
 import { type LedgerEntity } from '@/types/database'
 import { type Currency } from '@/utils/CurrencyManager'
 
@@ -25,7 +24,15 @@ export async function createLedger({
     throw new Error('create ledger failed')
   }
 
-  await createCategories(ledgerId, defaultCategories)
+  await createDefaultCategories(ledgerId)
 
   return ledgerId
+}
+
+export async function getDefaultLedger(): Promise<Readonly<LedgerEntity>> {
+  const ledger = await ledgerModel.findByName('default')
+  if (ledger === null) {
+    throw new Error('not found default ledger')
+  }
+  return ledger
 }

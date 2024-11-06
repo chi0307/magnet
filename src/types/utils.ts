@@ -1,3 +1,5 @@
+import { IconType } from 'react-icons'
+
 import { type AutoBaseEntity } from '@/types/database'
 
 export type UUID = `${string}-${string}-${string}-${string}-${string}`
@@ -12,6 +14,6 @@ export type RequiredEntity<Entity extends AutoBaseEntity> = Omit<
 
 export interface Transaction {
   date: string
-  items: { description: string; amount: number }[]
+  items: { description: string; amount: number; icon: IconType }[]
   total: number
 }

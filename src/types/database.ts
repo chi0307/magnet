@@ -31,7 +31,7 @@ export interface CategoryEntity extends AutoBaseEntity {
 export interface PurchaseEntity extends AutoBaseEntity {
   ledgerId: LedgerEntity['id']
   categoryId: CategoryEntity['id']
-  name: string
+  name: string | null
   amount: number
   purchaseDate: Date
 }

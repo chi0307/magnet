@@ -17,6 +17,7 @@ import {
   RiBusFill,
   RiFunctionLine,
 } from 'react-icons/ri'
+import { VscError } from 'react-icons/vsc'
 
 export const iconList = {
   breakfast: LiaBreadSliceSolid,
@@ -34,5 +35,7 @@ export const iconList = {
   medical: MdOutlineMedicalServices,
   gift: IoMdGift,
   other: RiFunctionLine,
+  // error 這個是專門給網頁找不到的時候顯示一個 X 的 icon 用的
+  error: VscError,
 } as const satisfies Record<string, IconType>
 export type Icon = keyof typeof iconList
