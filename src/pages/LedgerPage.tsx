@@ -10,7 +10,7 @@ import { getAllPurchases } from '@/services/Purchase'
 import { type Transaction } from '@/types/utils'
 import { getCurrency } from '@/utils/CurrencyManager'
 import { getLocale } from '@/utils/locale'
-import { calculateTotal } from '@/utils/utils'
+import { calculateTotal } from '@/utils/transactionHelpers'
 
 function groupTransactionsByDate(
   rawData: Awaited<ReturnType<typeof getAllPurchases>>
