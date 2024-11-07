@@ -9,8 +9,8 @@ interface DoughnutPieChartProps {
 }
 
 const DoughnutPieChart = ({
-  totalExpense = 0,
-  totalIncome = 0,
+  totalExpense,
+  totalIncome,
   type = 'doughnut',
   className = '',
 }: DoughnutPieChartProps): JSX.Element => {
