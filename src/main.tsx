@@ -11,9 +11,9 @@ import { redirect } from 'react-router-dom'
 import ErrorPage from '@/error-page'
 import { User } from '@/models/User'
 import AddTransaction from '@/pages/AddTransaction'
-import CreateLedgerPage from '@/pages/CreateLedgerPage'
-import LedgerPage from '@/pages/LedgerPage'
-import SignInPage from '@/pages/SignInPage'
+import Book from '@/pages/Book'
+import CreateBook from '@/pages/CreateBook'
+import Login from '@/pages/Login'
 import { isUuid } from '@/utils/checkTyping'
 import { localStorageManager } from '@/utils/StorageManager'
 
@@ -33,7 +33,7 @@ async function rootLoader(): Promise<Response> {
   const userExists = await checkUser()
 
   if (userExists) {
-    return redirect('/magnet/ledger')
+    return redirect('/magnet/book')
   }
 
   return new Response(null, { status: 200 })
@@ -52,23 +52,23 @@ async function authLoader(): Promise<Response> {
 const router = createBrowserRouter([
   {
     path: '/magnet',
-    element: <SignInPage />,
+    element: <Login />,
     errorElement: <ErrorPage />,
     loader: rootLoader,
   },
   {
-    path: '/magnet/ledger',
-    element: <LedgerPage />,
+    path: '/magnet/book',
+    element: <Book />,
     loader: authLoader,
   },
   {
-    path: '/magnet/ledger/add',
+    path: '/magnet/book/add',
     element: <AddTransaction />,
     loader: authLoader,
   },
   {
-    path: '/magnet/ledger/create',
-    element: <CreateLedgerPage />,
+    path: '/magnet/book/create',
+    element: <CreateBook />,
     loader: authLoader,
   },
 ])
