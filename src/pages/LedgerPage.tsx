@@ -10,6 +10,7 @@ import { getAllPurchases } from '@/services/Purchase'
 import { type Transaction } from '@/types/utils'
 import { getCurrency } from '@/utils/CurrencyManager'
 import { getLocale } from '@/utils/locale'
+import { calculateTotal } from '@/utils/transactionHelpers'
 
 function groupTransactionsByDate(
   rawData: Awaited<ReturnType<typeof getAllPurchases>>
@@ -42,12 +43,17 @@ const LedgerPage = (): JSX.Element => {
   const locale = getLocale()
 
   const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [totalExpense, setTotalExpense] = useState<number>(0)
+  const [totalIncome, setTotalIncome] = useState<number>(0)
 
   // 獲取 transactions 的副作用
   useEffect(() => {
     async function fetchTransactions(): Promise<void> {
       const transactions = await getAllPurchases()
       const allTransactions = groupTransactionsByDate(transactions)
+
+      setTotalExpense(Math.abs(calculateTotal(transactions, 'expense')))
+      setTotalIncome(calculateTotal(transactions, 'income'))
       setTransactions(allTransactions)
     }
     void fetchTransactions()
@@ -87,15 +93,22 @@ const LedgerPage = (): JSX.Element => {
       >
         <div className='text-left'>
           <p className='text-[#4B4B4B] text-sm'>{t('ledger.expense')}</p>
-          <p className='text-[#FF4B4A] text-xl'>{formattedCurrency(123456)}</p>
+          <p className='text-[#FF4B4A] text-xl'>
+            {formattedCurrency(totalExpense)}
+          </p>
         </div>
         <div className='text-right'>
           <p className='text-[#4B4B4B] text-sm'>{t('ledger.income')}</p>
-          <p className='text-[#1BB0F6] text-xl'>{formattedCurrency(654321)}</p>
+          <p className='text-[#1BB0F6] text-xl'>
+            {formattedCurrency(totalIncome)}
+          </p>
         </div>
       </div>
       <div className='mx-auto my-8 w-80'>
-        <DoughnutPieChart />
+        <DoughnutPieChart
+          totalExpense={totalExpense}
+          totalIncome={totalIncome}
+        />
       </div>
       <div>
         {transactions.length > 0 ? (
