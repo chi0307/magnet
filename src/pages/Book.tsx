@@ -37,7 +37,7 @@ function groupTransactionsByDate(
   return [...grouped.values()]
 }
 
-const LedgerPage = (): JSX.Element => {
+const Book = (): JSX.Element => {
   const { t } = useTranslation()
   const currency = getCurrency()
   const locale = getLocale()
@@ -92,13 +92,13 @@ const LedgerPage = (): JSX.Element => {
         '
       >
         <div className='text-left'>
-          <p className='text-[#4B4B4B] text-sm'>{t('ledger.expense')}</p>
+          <p className='text-[#4B4B4B] text-sm'>{t('book.expense')}</p>
           <p className='text-[#FF4B4A] text-xl'>
             {formattedCurrency(totalExpense)}
           </p>
         </div>
         <div className='text-right'>
-          <p className='text-[#4B4B4B] text-sm'>{t('ledger.income')}</p>
+          <p className='text-[#4B4B4B] text-sm'>{t('book.income')}</p>
           <p className='text-[#1BB0F6] text-xl'>
             {formattedCurrency(totalIncome)}
           </p>
@@ -167,13 +167,11 @@ const LedgerPage = (): JSX.Element => {
             </div>
           ))
         ) : (
-          <p className='pt-20 text-(center sm)'>
-            {t('ledger.no_transactions')}
-          </p>
+          <p className='pt-20 text-(center sm)'>{t('book.no_transactions')}</p>
         )}
       </div>
       <Link
-        to={'/magnet/ledger/add'}
+        to={'/magnet/book/add'}
         className='
           fixed bottom-5% left-1/2
           flex flex-center
@@ -189,4 +187,4 @@ const LedgerPage = (): JSX.Element => {
   )
 }
 
-export default LedgerPage
+export default Book
