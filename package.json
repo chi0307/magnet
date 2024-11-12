@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "pnpm run generate-pages && tsc -b && vite build",
+    "clear": "sh clear.sh",
+    "generate-pages": "sh ./generate-pages.sh",
     "check:lint": "eslint .",
     "check": "pnpm run \"/^check:.*/\"",
     "preview": "vite preview",

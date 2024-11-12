@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.node.json",
+  "compilerOptions": {
+    "outDir": "./dist-generate-html",
+    "rootDir": "./",
+    "noEmit": false,
+    "module": "ES6",
+    "moduleResolution": "node"
+  },
+  "include": ["generate-pages.ts", "src/router/route.ts"]
+}
