@@ -1,6 +1,6 @@
 {
   "general": {
-    "welcome": "マグブック",
+    "application_name": "Speedy",
     "complete": "完了",
     "today": "今日",
     "save": "保存",
@@ -12,15 +12,14 @@
     "zh-tw": "繁体字 (TW)",
     "zh-hk": "繁体字 (HK)"
   },
-  "sign-in": {
+  "login": {
     "facebook": "Facebookでサインイン",
     "google": "Googleでサインイン",
     "line": "LINEでサインイン",
     "apple": "Appleでサインイン",
     "guest": "ゲストとして続行"
   },
-  "ledger": {
-    "my_ledger": "私の帳簿",
+  "book": {
     "expense": "支出",
     "income": "収入",
     "tap_to_write": "ここをタップ",

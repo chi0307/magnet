@@ -1,6 +1,6 @@
 {
   "general": {
-    "welcome": "Magbook",
+    "application_name": "Speedy",
     "complete": "Complete",
     "today": "Today",
     "save": "Save",
@@ -12,15 +12,14 @@
     "zh-tw": "Traditional Chinese (TW)",
     "zh-hk": "Traditional Chinese (HK)"
   },
-  "sign-in": {
+  "login": {
     "facebook": "Sign in with Facebook",
     "google": "Sign in with Google",
     "line": "Sign in with LINE",
     "apple": "Sign in with Apple",
     "guest": "Continue as Guest"
   },
-  "ledger": {
-    "my_ledger": "My Ledger",
+  "book": {
     "expense": "Expense",
     "income": "Income",
     "tap_to_write": "Tap here to write.",
