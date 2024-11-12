@@ -67,7 +67,15 @@ export default tsEslint.config(
     },
   },
   {
-    ignores: ['**/dist/*', 'eslint.config.mjs'],
+    files: ['generate-pages.ts'],
+    languageOptions: {
+      parserOptions: {
+        project: './tsconfig.generate.json'
+      }
+    }
+  },
+  {
+    ignores: ['**/dist/*', 'eslint.config.mjs', '**/dist-generate-html/*'],
   },
   eslintConfigPrettier,
 );

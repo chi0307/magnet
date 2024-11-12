@@ -4,6 +4,7 @@ import { FaFacebookF, FaGoogle, FaApple, FaUser, FaLine } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 import LoginButton from '@/components/LoginButton'
+import { Route } from '@/router/route'
 import { signInOrRegisterUser } from '@/services/User'
 import { initializeCurrency } from '@/utils/CurrencyManager'
 import { localStorageManager } from '@/utils/StorageManager'
@@ -30,7 +31,7 @@ const Login = (): JSX.Element => {
     try {
       const userId = await signInOrRegisterUser(userData)
       localStorageManager.set('userId', userId)
-      navigate('/magnet/book')
+      navigate(Route.Book)
     } catch {
       console.error('register fail')
     }

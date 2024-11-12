@@ -14,6 +14,7 @@ import AddTransaction from '@/pages/AddTransaction'
 import Book from '@/pages/Book'
 import CreateBook from '@/pages/CreateBook'
 import Login from '@/pages/Login'
+import { Route } from '@/router/route'
 import { isUuid } from '@/utils/checkTyping'
 import { localStorageManager } from '@/utils/StorageManager'
 
@@ -33,7 +34,7 @@ async function rootLoader(): Promise<Response> {
   const userExists = await checkUser()
 
   if (userExists) {
-    return redirect('/magnet/book')
+    return redirect(Route.Book)
   }
 
   return new Response(null, { status: 200 })
@@ -43,7 +44,7 @@ async function authLoader(): Promise<Response> {
   const userExists = await checkUser()
 
   if (!userExists) {
-    return redirect('/magnet')
+    return redirect(Route.Home)
   }
 
   return new Response(null, { status: 200 })
@@ -51,27 +52,29 @@ async function authLoader(): Promise<Response> {
 
 const router = createBrowserRouter([
   {
-    path: '/magnet',
+    path: Route.Home,
     element: <Login />,
     errorElement: <ErrorPage />,
     loader: rootLoader,
   },
   {
-    path: '/magnet/book',
+    path: Route.Book,
     element: <Book />,
     loader: authLoader,
   },
   {
-    path: '/magnet/book/add',
+    path: Route.BookAdd,
     element: <AddTransaction />,
     loader: authLoader,
   },
   {
-    path: '/magnet/book/create',
+    path: Route.BookCreate,
     element: <CreateBook />,
     loader: authLoader,
   },
-])
+], {
+  basename: '/magnet'
+})
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

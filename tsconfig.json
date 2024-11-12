@@ -3,6 +3,9 @@
   "files": [],
   "references": [
     {
+      "path": "./tsconfig.generate.json"
+    },
+    {
       "path": "./tsconfig.app.json"
     },
     {
