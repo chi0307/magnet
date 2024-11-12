@@ -148,7 +148,7 @@ const AddTransaction = (): JSX.Element => {
           purchaseDate: selectedDate,
         })
         .then(() => {
-          navigate('/magnet/book')
+          navigate('/book')
         })
         .catch((error) => {
           console.error('add transaction error: ', error)

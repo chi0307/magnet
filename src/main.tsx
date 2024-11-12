@@ -33,7 +33,7 @@ async function rootLoader(): Promise<Response> {
   const userExists = await checkUser()
 
   if (userExists) {
-    return redirect('/magnet/book')
+    return redirect('/book')
   }
 
   return new Response(null, { status: 200 })
@@ -43,7 +43,7 @@ async function authLoader(): Promise<Response> {
   const userExists = await checkUser()
 
   if (!userExists) {
-    return redirect('/magnet')
+    return redirect('/')
   }
 
   return new Response(null, { status: 200 })
@@ -51,27 +51,29 @@ async function authLoader(): Promise<Response> {
 
 const router = createBrowserRouter([
   {
-    path: '/magnet',
+    path: '/',
     element: <Login />,
     errorElement: <ErrorPage />,
     loader: rootLoader,
   },
   {
-    path: '/magnet/book',
+    path: '/book',
     element: <Book />,
     loader: authLoader,
   },
   {
-    path: '/magnet/book/add',
+    path: '/book/add',
     element: <AddTransaction />,
     loader: authLoader,
   },
   {
-    path: '/magnet/book/create',
+    path: '/book/create',
     element: <CreateBook />,
     loader: authLoader,
   },
-])
+], {
+  basename: '/magnet'
+})
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -171,7 +171,7 @@ const Book = (): JSX.Element => {
         )}
       </div>
       <Link
-        to={'/magnet/book/add'}
+        to={'/book/add'}
         className='
           fixed bottom-5% left-1/2
           flex flex-center
