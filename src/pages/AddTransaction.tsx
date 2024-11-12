@@ -13,6 +13,7 @@ import Calculator from '@/components/Calculator'
 import { iconList } from '@/constant/icons'
 import { Ledger } from '@/models/Ledger'
 import { Purchase } from '@/models/Purchase'
+import { Route } from '@/router/route'
 import { getCategories } from '@/services/Category'
 import { getDefaultLedger } from '@/services/Ledger'
 import { type CategoryEntity } from '@/types/database'
@@ -148,7 +149,7 @@ const AddTransaction = (): JSX.Element => {
           purchaseDate: selectedDate,
         })
         .then(() => {
-          navigate('/book')
+          navigate(Route.Book)
         })
         .catch((error) => {
           console.error('add transaction error: ', error)

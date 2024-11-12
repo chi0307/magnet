@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 import DoughnutPieChart from '@/components/DoughnutPieChart'
 import { iconList } from '@/constant/icons'
+import { Route } from '@/router/route'
 import { getAllPurchases } from '@/services/Purchase'
 import { type Transaction } from '@/types/utils'
 import { getCurrency } from '@/utils/CurrencyManager'
@@ -171,7 +172,7 @@ const Book = (): JSX.Element => {
         )}
       </div>
       <Link
-        to={'/book/add'}
+        to={Route.BookAdd}
         className='
           fixed bottom-5% left-1/2
           flex flex-center
