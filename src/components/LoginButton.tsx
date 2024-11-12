@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface SignInButtonProps {
+interface LoginButtonProps {
   color: string
   icon: React.ReactNode
   text: string
@@ -8,13 +8,13 @@ interface SignInButtonProps {
   className?: string
 }
 
-const SignInButton = ({
+const LoginButton = ({
   color,
   icon,
   text,
   onClick,
   className = '',
-}: SignInButtonProps): JSX.Element => {
+}: LoginButtonProps): JSX.Element => {
   return (
     <button
       className={`px-6 py-2 min-w-40 rounded-5 text-white text-bold-lg ${className}`}
@@ -29,4 +29,4 @@ const SignInButton = ({
   )
 }
 
-export default SignInButton
+export default LoginButton
