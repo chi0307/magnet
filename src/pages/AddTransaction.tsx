@@ -80,12 +80,12 @@ const AddTransaction = (): JSX.Element => {
   const [isDayPickerVisible, setIsDayPickerVisible] = useState(false)
   const [selectedTab, setSelectedTab] = useState<SelectedTab>('expense')
   const [calculatorValue, setCalculatorValue] = useState('0')
-  const [purchaseContext, setPurchaseContext] = useState('')
+  const [transactionContent, setTransactionContent] = useState('')
   // TODO: 需要分開做收入跟支出的 category (e.g. model 需要增加 type 欄位)
   const [categoryList, setCategoryList] = useState<CategoryEntityWithIcon[]>([])
 
-  const ledgerModel = new Ledger()
-  const purchaseModel = new Purchase()
+  const bookModel = new Ledger()
+  const transactionModel = new Purchase()
 
   // Toggles visibility of DayPicker
   const toggleDayPicker = (): void => setIsDayPickerVisible((prev) => !prev)
@@ -131,24 +131,24 @@ const AddTransaction = (): JSX.Element => {
     }
 
     // TODO: 帳本 id 要改從 url 來
-    const existingLedger = await ledgerModel.findByUserId(savedUserId)
+    const existingBook = await bookModel.findByUserId(savedUserId)
     const adjustedAmount =
       selectedTab === 'expense'
         ? -Math.abs(Number(calculatorValue))
         : Math.abs(Number(calculatorValue))
 
-    if (existingLedger) {
+    if (existingBook) {
       const category = categoryList[selectedCategoryIndex]
-      await purchaseModel
+      await transactionModel
         .insert({
-          ledgerId: existingLedger.id,
+          ledgerId: existingBook.id,
           categoryId: category.id,
-          name: purchaseContext === '' ? null : purchaseContext,
+          name: transactionContent || null,
           amount: adjustedAmount,
           purchaseDate: selectedDate,
         })
         .then(() => {
-          navigate('/magnet/ledger')
+          navigate('/magnet/book')
         })
         .catch((error) => {
           console.error('add transaction error: ', error)
@@ -159,8 +159,8 @@ const AddTransaction = (): JSX.Element => {
   // Fix Safari input focus issue
   useEffect(() => {
     void (async (): Promise<void> => {
-      const ledger = await getDefaultLedger()
-      const categories = await getCategories(ledger.id)
+      const book = await getDefaultLedger()
+      const categories = await getCategories(book.id)
       const list: CategoryEntityWithIcon[] = categories.map((item) => ({
         ...item,
         icon: iconList[item.icon],
@@ -201,7 +201,7 @@ const AddTransaction = (): JSX.Element => {
                   : ''
               }`}
             >
-              {t(`ledger.${tab}`)}
+              {t(`book.${tab}`)}
             </button>
           ))}
         </div>
@@ -245,13 +245,13 @@ const AddTransaction = (): JSX.Element => {
           >
             {calculatorValue}
           </span>
-          {/* Context */}
+          {/* Content */}
           <input
-            name='context'
+            name='content'
             type='text'
             className='flex-1 h-full bg-transparent text-(bold-md center) focus:outline-none'
-            placeholder={t('ledger.tap_to_write')}
-            onChange={(e) => setPurchaseContext(e.target.value)}
+            placeholder={t('book.tap_to_write')}
+            onChange={(e) => setTransactionContent(e.target.value)}
           />
         </div>
         {/* Date */}
