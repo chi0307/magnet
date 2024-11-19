@@ -15,7 +15,7 @@ const input = Object.fromEntries([
     .map((route) => {
       const pageName = route.replace(/^\//, '')
       return [pageName, `${pageName}.html`] as const
-    })
+    }),
 ])
 
 // https://vitejs.dev/config/
@@ -25,10 +25,10 @@ export default defineConfig({
     rollupOptions: {
       input,
       output: {
-        entryFileNames: '[name].js',
-        assetFileNames: '[name].[ext]'
-      }
-    }
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+      },
+    },
   },
   plugins: [
     UnpluginTypia(),
