@@ -28,10 +28,10 @@ export interface CategoryEntity extends AutoBaseEntity {
   sortIndex: number
 }
 
-export interface PurchaseEntity extends AutoBaseEntity {
+export interface TransactionEntity extends AutoBaseEntity {
   bookId: BookEntity['id']
   categoryId: CategoryEntity['id']
   name: string | null
   amount: number
-  purchaseDate: Date
+  transactionDate: Date
 }

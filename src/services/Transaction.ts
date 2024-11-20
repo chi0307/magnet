@@ -1,20 +1,20 @@
 import { Icon } from '@/constant/icons'
-import { Purchase } from '@/models/Purchase'
+import { Transaction } from '@/models/Transaction'
 import { getDefaultBook } from '@/services/Book'
 import { getCategories } from '@/services/Category'
-import { PurchaseEntity } from '@/types/database'
+import { TransactionEntity } from '@/types/database'
 import { localStorageManager } from '@/utils/StorageManager'
 
-export async function getAllPurchases(): Promise<
-  readonly Readonly<PurchaseEntity & { icon: Icon; categoryName: string }>[]
+export async function getAllTransactions(): Promise<
+  readonly Readonly<TransactionEntity & { icon: Icon; categoryName: string }>[]
 > {
-  const purchaseModel = new Purchase()
+  const transactionModel = new Transaction()
   const userId = localStorageManager.get('userId')
   if (userId === null) {
     return []
   }
   const book = await getDefaultBook()
-  const purchases = await purchaseModel.findByBookId(book.id)
+  const transactions = await transactionModel.findByBookId(book.id)
   const iconMapping = new Map(
     [...(await getCategories(book.id))].map((item) => [
       item.id,
@@ -22,7 +22,7 @@ export async function getAllPurchases(): Promise<
     ])
   )
 
-  return purchases
+  return transactions
     .map((item) => {
       return {
         ...item,
@@ -30,5 +30,5 @@ export async function getAllPurchases(): Promise<
         categoryName: iconMapping.get(item.categoryId)?.name ?? '',
       }
     })
-    .sort((a, b) => (a.purchaseDate > b.purchaseDate ? -1 : 1))
+    .sort((a, b) => (a.transactionDate > b.transactionDate ? -1 : 1))
 }

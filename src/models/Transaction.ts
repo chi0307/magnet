@@ -1,15 +1,15 @@
 import { BaseTable } from '@/models/BaseTable'
-import { type PurchaseEntity } from '@/types/database'
+import { type TransactionEntity } from '@/types/database'
 
-export class Purchase extends BaseTable<PurchaseEntity> {
+export class Transaction extends BaseTable<TransactionEntity> {
   public constructor() {
-    super('purchase')
+    super('transaction')
   }
 
   // TODO: 這邊要想一下 find 有沒有需要可以透過名稱馬上知道是取得一個還是 array
   public async findByBookId(
-    bookId: PurchaseEntity['bookId']
-  ): Promise<readonly Readonly<PurchaseEntity>[]> {
+    bookId: TransactionEntity['bookId']
+  ): Promise<readonly Readonly<TransactionEntity>[]> {
     return this.table.where({ bookId }).toArray()
   }
 }

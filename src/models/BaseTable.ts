@@ -4,7 +4,7 @@ import {
   type UserEntity,
   type BookEntity,
   type CategoryEntity,
-  type PurchaseEntity,
+  type TransactionEntity,
 } from '@/types/database'
 import { type RequiredEntity, type TableName, type UUID } from '@/types/utils'
 import { generateUuid, uniqueArray } from '@/utils/utils'
@@ -13,7 +13,7 @@ interface TableSchema {
   user: UserEntity
   book: BookEntity
   category: CategoryEntity
-  purchase: PurchaseEntity
+  transaction: TransactionEntity
 }
 
 const tableIndexes: {
@@ -22,7 +22,7 @@ const tableIndexes: {
   user: ['id', 'email'],
   book: ['id', 'userId', 'name'],
   category: ['id', 'bookId'],
-  purchase: ['id', 'bookId', 'categoryId'],
+  transaction: ['id', 'bookId', 'categoryId'],
 }
 
 const db = new Dexie('MagnetDB')

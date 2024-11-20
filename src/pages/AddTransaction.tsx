@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import Calculator from '@/components/Calculator'
 import { iconList } from '@/constant/icons'
 import { Book } from '@/models/Book'
-import { Purchase } from '@/models/Purchase'
+import { Transaction } from '@/models/Transaction'
 import { Route } from '@/router/route'
 import { getDefaultBook } from '@/services/Book'
 import { getCategories } from '@/services/Category'
@@ -86,7 +86,7 @@ const AddTransaction = (): JSX.Element => {
   const [categoryList, setCategoryList] = useState<CategoryEntityWithIcon[]>([])
 
   const bookModel = new Book()
-  const transactionModel = new Purchase()
+  const transactionModel = new Transaction()
 
   // Toggles visibility of DayPicker
   const toggleDayPicker = (): void => setIsDayPickerVisible((prev) => !prev)
@@ -146,7 +146,7 @@ const AddTransaction = (): JSX.Element => {
           categoryId: category.id,
           name: transactionContent || null,
           amount: adjustedAmount,
-          purchaseDate: selectedDate,
+          transactionDate: selectedDate,
         })
         .then(() => {
           navigate(Route.Book)

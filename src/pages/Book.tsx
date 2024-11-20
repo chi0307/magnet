@@ -7,19 +7,19 @@ import { Link } from 'react-router-dom'
 import DoughnutPieChart from '@/components/DoughnutPieChart'
 import { iconList } from '@/constant/icons'
 import { Route } from '@/router/route'
-import { getAllPurchases } from '@/services/Purchase'
+import { getAllTransactions } from '@/services/Transaction'
 import { type Transaction } from '@/types/utils'
 import { getCurrency } from '@/utils/CurrencyManager'
 import { getLocale } from '@/utils/locale'
 import { calculateTotal } from '@/utils/transactionHelpers'
 
 function groupTransactionsByDate(
-  rawData: Awaited<ReturnType<typeof getAllPurchases>>
+  rawData: Awaited<ReturnType<typeof getAllTransactions>>
 ): Transaction[] {
   const grouped = new Map<string, Transaction>()
 
-  for (const { purchaseDate, name, amount, icon, categoryName } of rawData) {
-    const date = format(purchaseDate, 'yyyy-MM-dd')
+  for (const { transactionDate, name, amount, icon, categoryName } of rawData) {
+    const date = format(transactionDate, 'yyyy-MM-dd')
     const itemsByDate = grouped.get(date) ?? {
       date,
       items: [],
@@ -50,12 +50,16 @@ const Book = (): JSX.Element => {
   // 獲取 transactions 的副作用
   useEffect(() => {
     async function fetchTransactions(): Promise<void> {
-      const transactions = await getAllPurchases()
-      const allTransactions = groupTransactionsByDate(transactions)
+      try {
+        const transactions = await getAllTransactions()
+        const allTransactions = groupTransactionsByDate(transactions)
 
-      setTotalExpense(Math.abs(calculateTotal(transactions, 'expense')))
-      setTotalIncome(calculateTotal(transactions, 'income'))
-      setTransactions(allTransactions)
+        setTotalExpense(Math.abs(calculateTotal(transactions, 'expense')))
+        setTotalIncome(calculateTotal(transactions, 'income'))
+        setTransactions(allTransactions)
+      } catch {
+        // TODO: 會回報錯誤 Error: not found default book，需要檢查登入狀況跟重新建立 book 資料
+      }
     }
     void fetchTransactions()
   }, [])
