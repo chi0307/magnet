@@ -11,11 +11,11 @@ import { useNavigate } from 'react-router-dom'
 
 import Calculator from '@/components/Calculator'
 import { iconList } from '@/constant/icons'
-import { Ledger } from '@/models/Ledger'
+import { Book } from '@/models/Book'
 import { Purchase } from '@/models/Purchase'
 import { Route } from '@/router/route'
+import { getDefaultBook } from '@/services/Book'
 import { getCategories } from '@/services/Category'
-import { getDefaultLedger } from '@/services/Ledger'
 import { type CategoryEntity } from '@/types/database'
 import { type Locale, getLocale } from '@/utils/locale'
 import { localStorageManager } from '@/utils/StorageManager'
@@ -85,7 +85,7 @@ const AddTransaction = (): JSX.Element => {
   // TODO: 需要分開做收入跟支出的 category (e.g. model 需要增加 type 欄位)
   const [categoryList, setCategoryList] = useState<CategoryEntityWithIcon[]>([])
 
-  const bookModel = new Ledger()
+  const bookModel = new Book()
   const transactionModel = new Purchase()
 
   // Toggles visibility of DayPicker
@@ -142,7 +142,7 @@ const AddTransaction = (): JSX.Element => {
       const category = categoryList[selectedCategoryIndex]
       await transactionModel
         .insert({
-          ledgerId: existingBook.id,
+          bookId: existingBook.id,
           categoryId: category.id,
           name: transactionContent || null,
           amount: adjustedAmount,
@@ -160,7 +160,7 @@ const AddTransaction = (): JSX.Element => {
   // Fix Safari input focus issue
   useEffect(() => {
     void (async (): Promise<void> => {
-      const book = await getDefaultLedger()
+      const book = await getDefaultBook()
       const categories = await getCategories(book.id)
       const list: CategoryEntityWithIcon[] = categories.map((item) => ({
         ...item,

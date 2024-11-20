@@ -7,9 +7,9 @@ export class Purchase extends BaseTable<PurchaseEntity> {
   }
 
   // TODO: 這邊要想一下 find 有沒有需要可以透過名稱馬上知道是取得一個還是 array
-  public async findByLedgerId(
-    ledgerId: PurchaseEntity['ledgerId']
+  public async findByBookId(
+    bookId: PurchaseEntity['bookId']
   ): Promise<readonly Readonly<PurchaseEntity>[]> {
-    return this.table.where({ ledgerId }).toArray()
+    return this.table.where({ bookId }).toArray()
   }
 }

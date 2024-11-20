@@ -1,5 +1,5 @@
 import { User } from '@/models/User'
-import { createLedger } from '@/services/Ledger'
+import { createBook } from '@/services/Book'
 import { type UserEntity } from '@/types/database'
 import { getCurrency } from '@/utils/CurrencyManager'
 
@@ -24,10 +24,10 @@ export async function signInOrRegisterUser({
   if (userId === null) {
     throw new Error('insert user failed')
   }
-  await createLedger({
+  await createBook({
     userId,
     currency: getCurrency(),
-    ledgerName: 'default',
+    bookName: 'default',
   })
 
   return userId

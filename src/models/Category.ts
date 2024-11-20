@@ -6,9 +6,9 @@ export class Category extends BaseTable<CategoryEntity> {
     super('category')
   }
 
-  public async findByLedgerId(
-    ledgerId: CategoryEntity['ledgerId']
+  public async findByBookId(
+    bookId: CategoryEntity['bookId']
   ): Promise<readonly Readonly<CategoryEntity>[]> {
-    return this.table.where({ ledgerId }).toArray()
+    return this.table.where({ bookId }).toArray()
   }
 }

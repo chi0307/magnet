@@ -1,7 +1,7 @@
 import { Icon } from '@/constant/icons'
 import { Purchase } from '@/models/Purchase'
+import { getDefaultBook } from '@/services/Book'
 import { getCategories } from '@/services/Category'
-import { getDefaultLedger } from '@/services/Ledger'
 import { PurchaseEntity } from '@/types/database'
 import { localStorageManager } from '@/utils/StorageManager'
 
@@ -13,10 +13,10 @@ export async function getAllPurchases(): Promise<
   if (userId === null) {
     return []
   }
-  const ledger = await getDefaultLedger()
-  const purchases = await purchaseModel.findByLedgerId(ledger.id)
+  const book = await getDefaultBook()
+  const purchases = await purchaseModel.findByBookId(book.id)
   const iconMapping = new Map(
-    [...(await getCategories(ledger.id))].map((item) => [
+    [...(await getCategories(book.id))].map((item) => [
       item.id,
       { icon: item.icon, name: item.name },
     ])
