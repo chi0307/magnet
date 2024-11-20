@@ -2,51 +2,40 @@ import Dexie, { type UpdateSpec, type Table } from 'dexie'
 
 import {
   type UserEntity,
-  type LedgerEntity,
+  type BookEntity,
   type CategoryEntity,
-  type PurchaseEntity,
+  type TransactionEntity,
 } from '@/types/database'
 import { type RequiredEntity, type TableName, type UUID } from '@/types/utils'
 import { generateUuid, uniqueArray } from '@/utils/utils'
 
 interface TableSchema {
   user: UserEntity
-  ledger: LedgerEntity
+  book: BookEntity
   category: CategoryEntity
-  purchase: PurchaseEntity
+  transaction: TransactionEntity
 }
 
 const tableIndexes: {
   [key in keyof TableSchema]: (keyof TableSchema[key])[]
 } = {
   user: ['id', 'email'],
-  ledger: ['id', 'userId', 'name'],
-  category: ['id', 'ledgerId'],
-  purchase: ['id', 'ledgerId', 'categoryId'],
+  book: ['id', 'userId', 'name'],
+  category: ['id', 'bookId'],
+  transaction: ['id', 'bookId', 'categoryId'],
 }
 
 const db = new Dexie('MagnetDB')
 // TODO: 需要想一下要怎麼兼容多個版本，文件是建議保留所有版本下來，但同時也包含了每個版本的 entity 感覺頗麻煩的
 // https://dexie.org/docs/Tutorial/Design#database-versioning
-db.version(2)
-  .stores(
-    Object.fromEntries(
-      Object.entries(tableIndexes).map(([key, value]) => [
-        key,
-        uniqueArray(value).join(','),
-      ])
-    )
+db.version(1).stores(
+  Object.fromEntries(
+    Object.entries(tableIndexes).map(([key, value]) => [
+      key,
+      uniqueArray(value).join(','),
+    ])
   )
-  .upgrade((tx) => {
-    return tx
-      .table('purchase')
-      .toCollection()
-      .modify((item: PurchaseEntity) => {
-        if (item.name === '') {
-          item.name = null
-        }
-      })
-  })
+)
 
 export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
   protected db = db

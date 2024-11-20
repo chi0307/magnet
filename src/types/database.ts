@@ -15,23 +15,23 @@ export interface UserEntity extends AutoBaseEntity {
   email: string
 }
 
-export interface LedgerEntity extends AutoBaseEntity {
+export interface BookEntity extends AutoBaseEntity {
   name: string
   currency: string
   userId: UserEntity['id']
 }
 
 export interface CategoryEntity extends AutoBaseEntity {
-  ledgerId: LedgerEntity['id']
+  bookId: BookEntity['id']
   name: string
   icon: Icon
   sortIndex: number
 }
 
-export interface PurchaseEntity extends AutoBaseEntity {
-  ledgerId: LedgerEntity['id']
+export interface TransactionEntity extends AutoBaseEntity {
+  bookId: BookEntity['id']
   categoryId: CategoryEntity['id']
   name: string | null
   amount: number
-  purchaseDate: Date
+  transactionDate: Date
 }

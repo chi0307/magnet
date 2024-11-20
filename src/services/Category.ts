@@ -16,12 +16,12 @@ export async function createCategory(
 }
 
 export async function createDefaultCategories(
-  ledgerId: CategoryEntity['ledgerId']
+  bookId: CategoryEntity['bookId']
 ): Promise<CategoryEntity['id'][]> {
   const newCategories: RequiredEntity<CategoryEntity>[] = defaultCategories.map(
     (item) => ({
       ...item,
-      ledgerId,
+      bookId,
     })
   )
   const categoryIds = await categoryModel.insertMany(newCategories)
@@ -37,9 +37,9 @@ export async function createDefaultCategories(
  * 2. created_at old -> new
  */
 export async function getCategories(
-  ledgerId: CategoryEntity['ledgerId']
+  bookId: CategoryEntity['bookId']
 ): Promise<readonly Readonly<CategoryEntity>[]> {
-  const categories = await categoryModel.findByLedgerId(ledgerId)
+  const categories = await categoryModel.findByBookId(bookId)
 
   return [...categories].sort(
     (aItem, bItem) =>
