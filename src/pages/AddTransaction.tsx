@@ -17,6 +17,7 @@ import { Route } from '@/router/route'
 import { getDefaultBook } from '@/services/Book'
 import { getCategories } from '@/services/Category'
 import { type CategoryEntity } from '@/types/database'
+import { errorHandle } from '@/utils'
 import { type Locale, getLocale } from '@/utils/locale'
 import { localStorageManager } from '@/utils/StorageManager'
 
@@ -151,7 +152,7 @@ const AddTransaction = (): JSX.Element => {
           navigate(Route.Book)
         })
         .catch((error) => {
-          console.error('add transaction error: ', error)
+          errorHandle('add transaction error: ', { error, type: 'alert' })
         })
     }
   }
@@ -268,7 +269,7 @@ const AddTransaction = (): JSX.Element => {
           onDisplayValueChange={setCalculatorValue} // Pass the callback to Calculator
           onClick={() => {
             handleTransaction().catch((error) => {
-              console.error('Error during user registration:', error)
+              errorHandle('Error during user registration:', { error, type: 'alert' })
             })
           }}
         />

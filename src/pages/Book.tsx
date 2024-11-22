@@ -10,7 +10,7 @@ import { Route } from '@/router/route'
 import { getAllTransactions } from '@/services/Transaction'
 import { checkUser } from '@/services/User'
 import { type Transaction } from '@/types/utils'
-import { errorEvent } from '@/utils'
+import { errorHandle } from '@/utils'
 import { getCurrency } from '@/utils/CurrencyManager'
 import { getLocale } from '@/utils/locale'
 import { calculateTotal } from '@/utils/transactionHelpers'
@@ -61,7 +61,7 @@ const Book = (): JSX.Element => {
         setTotalIncome(calculateTotal(transactions, 'income'))
         setTransactions(allTransactions)
       } catch (error) {
-        errorEvent(`get all transaction failed`, { error })
+        errorHandle(`get all transaction failed`, { error, type: 'alert' })
         const result = await checkUser()
         if (result === false) {
           navigate(Route.Home)

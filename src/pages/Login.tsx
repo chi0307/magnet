@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import LoginButton from '@/components/LoginButton'
 import { Route } from '@/router/route'
 import { signInOrRegisterUser } from '@/services/User'
+import { errorHandle } from '@/utils'
 import { initializeCurrency } from '@/utils/CurrencyManager'
 import { localStorageManager } from '@/utils/StorageManager'
 
@@ -33,7 +34,7 @@ const Login = (): JSX.Element => {
       localStorageManager.set('userId', userId)
       navigate(Route.Book)
     } catch {
-      console.error('register fail')
+      errorHandle('register fail', { type: 'alert' })
     }
   }
 
@@ -54,7 +55,7 @@ const Login = (): JSX.Element => {
             text={t(`login.${button.text}`)}
             onClick={() => {
               handleRegisterUser(button.text).catch((error) => {
-                console.error('Error during user registration:', error)
+                errorHandle('Error during user registration:', { error })
               })
             }}
           />
@@ -66,7 +67,7 @@ const Login = (): JSX.Element => {
           text={t('login.guest')}
           onClick={() => {
             handleRegisterUser('guest').catch((error) => {
-              console.error('Error during user registration:', error)
+              errorHandle('Error during user registration:', { error })
             })
           }}
         />

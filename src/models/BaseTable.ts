@@ -7,7 +7,7 @@ import {
   type TransactionEntity,
 } from '@/types/database'
 import { type RequiredEntity, type TableName, type UUID } from '@/types/utils'
-import { generateUuid, uniqueArray } from '@/utils'
+import { errorHandle, generateUuid, uniqueArray } from '@/utils'
 
 interface TableSchema {
   user: UserEntity
@@ -66,7 +66,7 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
     try {
       return await this.table.add(entity)
     } catch (error) {
-      console.error(error)
+      errorHandle('database insert failed', { error, entity })
       return null
     }
   }
@@ -75,7 +75,7 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
     try {
       return await this.table.bulkAdd(entities, { allKeys: true })
     } catch (error) {
-      console.error(error)
+      errorHandle(`database insert many failed`, { error, entities })
       return null
     }
   }
@@ -89,7 +89,7 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
       await this.table.delete(id)
       return true
     } catch (error) {
-      console.error(error)
+      errorHandle(`database delete ${id} failed`, { error })
       return false
     }
   }
