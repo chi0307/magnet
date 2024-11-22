@@ -30,11 +30,8 @@ const db = new Dexie('MagnetDB')
 // https://dexie.org/docs/Tutorial/Design#database-versioning
 db.version(1).stores(
   Object.fromEntries(
-    Object.entries(tableIndexes).map(([key, value]) => [
-      key,
-      uniqueArray(value).join(','),
-    ])
-  )
+    Object.entries(tableIndexes).map(([key, value]) => [key, uniqueArray(value).join(',')]),
+  ),
 )
 
 export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
@@ -74,9 +71,7 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
     }
   }
 
-  public async insertMany(
-    entities: RequiredEntity<Entity>[]
-  ): Promise<UUID[] | null> {
+  public async insertMany(entities: RequiredEntity<Entity>[]): Promise<UUID[] | null> {
     try {
       return await this.table.bulkAdd(entities, { allKeys: true })
     } catch (error) {
@@ -85,10 +80,7 @@ export class BaseTable<Entity extends TableSchema[keyof TableSchema]> {
     }
   }
 
-  public async update(
-    id: UUID,
-    entity: UpdateSpec<RequiredEntity<Entity>>
-  ): Promise<boolean> {
+  public async update(id: UUID, entity: UpdateSpec<RequiredEntity<Entity>>): Promise<boolean> {
     return (await this.table.update(id, entity)) === 1
   }
 

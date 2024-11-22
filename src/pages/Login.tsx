@@ -42,12 +42,10 @@ const Login = (): JSX.Element => {
   }, [])
 
   return (
-    <div className='mx-auto max-w-107.5 max-h-100dvh flex items-center flex-col'>
-      <p className='mt-15 px-5 text-(8 bold-lg)'>
-        {t('general.application_name')}
-      </p>
-      <img src='https://fakeimg.pl/400/' alt='Logo' className='mt-8 max-w-50' />
-      <div className='mt-20 flex flex-center flex-col gap-4'>
+    <div className="mx-auto max-w-107.5 max-h-100dvh flex items-center flex-col">
+      <p className="mt-15 px-5 text-(8 bold-lg)">{t('general.application_name')}</p>
+      <img src="https://fakeimg.pl/400/" alt="Logo" className="mt-8 max-w-50" />
+      <div className="mt-20 flex flex-center flex-col gap-4">
         {buttons.map((button, index) => (
           <LoginButton
             key={index}
@@ -61,9 +59,9 @@ const Login = (): JSX.Element => {
             }}
           />
         ))}
-        <span className='text-4'>-</span>
+        <span className="text-4">-</span>
         <LoginButton
-          color='#9E9E9E'
+          color="#9E9E9E"
           icon={<FaUser />}
           text={t('login.guest')}
           onClick={() => {

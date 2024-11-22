@@ -7,16 +7,13 @@ class StorageManager<StorageTyping extends Record<string, unknown>> {
   private readonly storage: Storage
   private readonly typeChecker: TypeChecker<StorageTyping>
 
-  public constructor(
-    storage: Storage,
-    typeChecker: TypeChecker<StorageTyping>
-  ) {
+  public constructor(storage: Storage, typeChecker: TypeChecker<StorageTyping>) {
     this.storage = storage
     this.typeChecker = typeChecker
   }
 
   public get<Key extends Extract<keyof StorageTyping, string>>(
-    key: Key
+    key: Key,
   ): StorageTyping[Key] | null {
     const sourceData = this.storage.getItem(key)
     if (sourceData === null) {
@@ -36,14 +33,12 @@ class StorageManager<StorageTyping extends Record<string, unknown>> {
 
   public set<Key extends Extract<keyof StorageTyping, string>>(
     key: Key,
-    value: StorageTyping[Key]
+    value: StorageTyping[Key],
   ): void {
     this.storage.setItem(key, JSON.stringify(value))
   }
 
-  public remove<Key extends Extract<keyof StorageTyping, string>>(
-    key: Key
-  ): void {
+  public remove<Key extends Extract<keyof StorageTyping, string>>(key: Key): void {
     this.storage.removeItem(key)
   }
 }

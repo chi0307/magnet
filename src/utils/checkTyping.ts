@@ -9,6 +9,5 @@ import { type Locale } from '@/utils/locale'
 export const isLocale = createIs<Locale>()
 export const isCurrency = createIs<Currency>()
 export const isUuid = (data: unknown): data is UUID =>
-  typeof data === 'string' &&
-  /[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}/.test(data)
+  typeof data === 'string' && /[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}/.test(data)
 export const isIcon = createIs<Icon>()

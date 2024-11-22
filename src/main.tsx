@@ -50,34 +50,37 @@ async function authLoader(): Promise<Response> {
   return new Response(null, { status: 200 })
 }
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: Route.Home,
+      element: <Login />,
+      errorElement: <ErrorPage />,
+      loader: rootLoader,
+    },
+    {
+      path: Route.Book,
+      element: <Book />,
+      loader: authLoader,
+    },
+    {
+      path: Route.BookAdd,
+      element: <AddTransaction />,
+      loader: authLoader,
+    },
+    {
+      path: Route.BookCreate,
+      element: <CreateBook />,
+      loader: authLoader,
+    },
+  ],
   {
-    path: Route.Home,
-    element: <Login />,
-    errorElement: <ErrorPage />,
-    loader: rootLoader,
+    basename: '/magnet',
   },
-  {
-    path: Route.Book,
-    element: <Book />,
-    loader: authLoader,
-  },
-  {
-    path: Route.BookAdd,
-    element: <AddTransaction />,
-    loader: authLoader,
-  },
-  {
-    path: Route.BookCreate,
-    element: <CreateBook />,
-    loader: authLoader,
-  },
-], {
-  basename: '/magnet'
-})
+)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+  </React.StrictMode>,
 )

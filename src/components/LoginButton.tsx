@@ -21,9 +21,9 @@ const LoginButton = ({
       style={{ backgroundColor: color }}
       onClick={onClick}
     >
-      <div className='mx-auto flex flex-center gap-2'>
+      <div className="mx-auto flex flex-center gap-2">
         <div>{icon}</div>
-        <span className='min-w-45'>{text}</span>
+        <span className="min-w-45">{text}</span>
       </div>
     </button>
   )

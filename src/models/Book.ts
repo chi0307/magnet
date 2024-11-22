@@ -6,15 +6,11 @@ export class Book extends BaseTable<BookEntity> {
     super('book')
   }
 
-  public async findByUserId(
-    userId: BookEntity['userId']
-  ): Promise<Readonly<BookEntity> | null> {
+  public async findByUserId(userId: BookEntity['userId']): Promise<Readonly<BookEntity> | null> {
     return (await this.table.where({ userId }).first()) ?? null
   }
 
-  public async findByName(
-    name: BookEntity['name']
-  ): Promise<Readonly<BookEntity> | null> {
+  public async findByName(name: BookEntity['name']): Promise<Readonly<BookEntity> | null> {
     return (await this.table.where({ name }).first()) ?? null
   }
 }

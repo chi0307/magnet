@@ -14,7 +14,5 @@ export function initializeCurrency(): void {
 }
 
 export function getCurrency(): Currency {
-  return (
-    localStorageManager.get('currency') ?? currencyMap[getBrowserLanguage()]
-  )
+  return localStorageManager.get('currency') ?? currencyMap[getBrowserLanguage()]
 }

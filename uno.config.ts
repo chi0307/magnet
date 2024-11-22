@@ -1,9 +1,4 @@
-import {
-  defineConfig,
-  presetUno,
-  presetAttributify,
-  transformerVariantGroup,
-} from 'unocss'
+import { defineConfig, presetUno, presetAttributify, transformerVariantGroup } from 'unocss'
 import type { Theme } from 'unocss/preset-mini'
 
 import { Breakpoints } from './src/constant/breakpoint'

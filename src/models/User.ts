@@ -6,9 +6,7 @@ export class User extends BaseTable<UserEntity> {
     super('user')
   }
 
-  public async findByEmail(
-    email: UserEntity['email']
-  ): Promise<Readonly<UserEntity> | null> {
+  public async findByEmail(email: UserEntity['email']): Promise<Readonly<UserEntity> | null> {
     return (await this.table.where({ email }).first()) ?? null
   }
 }

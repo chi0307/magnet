@@ -8,18 +8,7 @@ interface CalculatorProps {
 }
 
 type Operator = '+' | '-' | '*' | '/'
-type CalculatorInputKey =
-  | '0'
-  | '1'
-  | '2'
-  | '3'
-  | '4'
-  | '5'
-  | '6'
-  | '7'
-  | '8'
-  | '9'
-  | '.'
+type CalculatorInputKey = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '.'
 
 const Calculator = ({
   className = '',
@@ -114,15 +103,8 @@ const Calculator = ({
 
   const defaultButtonStyle = 'border-2 border-[#E5E5E5] rounded-full'
 
-  const renderButton = (
-    label: string,
-    onClick: () => void,
-    className = ''
-  ): JSX.Element => (
-    <button
-      className={`${defaultButtonStyle} aspect-ratio-1/1 ${className}`}
-      onClick={onClick}
-    >
+  const renderButton = (label: string, onClick: () => void, className = ''): JSX.Element => (
+    <button className={`${defaultButtonStyle} aspect-ratio-1/1 ${className}`} onClick={onClick}>
       {label}
     </button>
   )
@@ -138,7 +120,7 @@ const Calculator = ({
         () => handleOperatorClick('/'),
         operator === '/' && isOperatorClicked
           ? 'bg-[#FF4B4A] text-white'
-          : 'bg-[#FEC700] text-white'
+          : 'bg-[#FEC700] text-white',
       )}
       {renderButton('AC', clearDisplay, 'bg-[#1DB0F5] text-white')}
 
@@ -151,7 +133,7 @@ const Calculator = ({
         () => handleOperatorClick('*'),
         operator === '*' && isOperatorClicked
           ? 'bg-[#FF4B4A] text-white'
-          : 'bg-[#FEC700] text-white'
+          : 'bg-[#FEC700] text-white',
       )}
       {renderButton('←', handleDelete, 'bg-[#1DB0F5] text-white')}
 
@@ -164,7 +146,7 @@ const Calculator = ({
         () => handleOperatorClick('+'),
         operator === '+' && isOperatorClicked
           ? 'bg-[#FF4B4A] text-white'
-          : 'bg-[#FEC700] text-white'
+          : 'bg-[#FEC700] text-white',
       )}
       <button
         className={`${defaultButtonStyle} text-white row-span-2 ${
@@ -176,10 +158,7 @@ const Calculator = ({
       </button>
 
       {/* 第四排 */}
-      <button
-        className={`${defaultButtonStyle} col-span-2`}
-        onClick={() => handleNumberClick('0')}
-      >
+      <button className={`${defaultButtonStyle} col-span-2`} onClick={() => handleNumberClick('0')}>
         0
       </button>
       {renderButton('.', () => handleNumberClick('.'))}
@@ -188,7 +167,7 @@ const Calculator = ({
         () => handleOperatorClick('-'),
         operator === '-' && isOperatorClicked
           ? 'bg-[#FF4B4A] text-white'
-          : 'bg-[#FEC700] text-white'
+          : 'bg-[#FEC700] text-white',
       )}
     </div>
   )

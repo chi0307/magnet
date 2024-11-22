@@ -30,11 +30,11 @@ export async function signInOrRegisterUser({
 
 export async function checkUser(): Promise<boolean> {
   const userId = localStorageManager.get('userId')
-  if(userId === null) {
+  if (userId === null) {
     return false
   }
   const user = await userModel.findById(userId)
-  if(user === null) {
+  if (user === null) {
     return false
   }
   try {
