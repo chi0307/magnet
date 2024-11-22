@@ -1,7 +1,7 @@
 import { Book } from '@/models/Book'
 import { createDefaultCategories } from '@/services/Category'
 import { type BookEntity } from '@/types/database'
-import { type Currency } from '@/utils/CurrencyManager'
+import { getCurrency, type Currency } from '@/utils/CurrencyManager'
 
 const bookModel = new Book()
 
@@ -35,4 +35,18 @@ export async function getDefaultBook(): Promise<Readonly<BookEntity>> {
     throw new Error('not found default book')
   }
   return book
+}
+
+export async function checkDefaultBook(userId: BookEntity['userId']): Promise<BookEntity['id']> {
+  try {
+    const book = await getDefaultBook()
+    return book.id
+  } catch {
+    const bookId = await createBook({
+      userId,
+      currency: getCurrency(),
+      bookName: 'default',
+    })
+    return bookId
+  }
 }

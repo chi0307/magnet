@@ -2,13 +2,15 @@ import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoAdd } from 'react-icons/io5'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import DoughnutPieChart from '@/components/DoughnutPieChart'
 import { iconList } from '@/constant/icons'
 import { Route } from '@/router/route'
 import { getAllTransactions } from '@/services/Transaction'
+import { checkUser } from '@/services/User'
 import { type Transaction } from '@/types/utils'
+import { errorEvent } from '@/utils'
 import { getCurrency } from '@/utils/CurrencyManager'
 import { getLocale } from '@/utils/locale'
 import { calculateTotal } from '@/utils/transactionHelpers'
@@ -39,6 +41,7 @@ function groupTransactionsByDate(
 }
 
 const Book = (): JSX.Element => {
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const currency = getCurrency()
   const locale = getLocale()
@@ -57,8 +60,12 @@ const Book = (): JSX.Element => {
         setTotalExpense(Math.abs(calculateTotal(transactions, 'expense')))
         setTotalIncome(calculateTotal(transactions, 'income'))
         setTransactions(allTransactions)
-      } catch {
-        // TODO: 會回報錯誤 Error: not found default book，需要檢查登入狀況跟重新建立 book 資料
+      } catch(error) {
+        errorEvent(`get all transaction failed`, {error})
+        const result = await checkUser()
+        if(result === false){
+          navigate(Route.Home)
+        }
       }
     }
     void fetchTransactions()
