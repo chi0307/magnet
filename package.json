@@ -12,7 +12,7 @@
     "check": "pnpm run \"/^check:.*/\"",
     "preview": "vite preview",
     "prepare": "ts-patch install && typia patch",
-    "deploy": "gh-pages -d dist -m \"deploy ($(git rev-parse --abbrev-ref HEAD)): $(git rev-parse HEAD)\""
+    "deploy": "gh-pages -d dist -m \"deploy($(git rev-parse --abbrev-ref HEAD)): $(git rev-parse HEAD)\""
   },
   "dependencies": {
     "@unocss/reset": "^0.64.0",
