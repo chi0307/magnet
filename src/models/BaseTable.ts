@@ -7,7 +7,7 @@ import {
   type TransactionEntity,
 } from '@/types/database'
 import { type RequiredEntity, type TableName, type UUID } from '@/types/utils'
-import { generateUuid, uniqueArray } from '@/utils/utils'
+import { generateUuid, uniqueArray } from '@/utils'
 
 interface TableSchema {
   user: UserEntity
