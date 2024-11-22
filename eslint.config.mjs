@@ -1,6 +1,6 @@
 import eslint from '@eslint/js'
 import tsEslintPlugin from '@typescript-eslint/eslint-plugin'
-import eslintConfigPrettier from 'eslint-config-prettier'
+import prettierRecommended from 'eslint-plugin-prettier/recommended'
 import eslintPerfectionist from 'eslint-plugin-perfectionist'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
@@ -10,6 +10,7 @@ export default tsEslint.config(
   eslint.configs.recommended,
   ...tsEslint.configs.recommendedTypeChecked,
   ...tsEslint.configs.stylisticTypeChecked,
+  prettierRecommended,
   {
     plugins: {
       'react-hooks': reactHooks,
@@ -77,5 +78,4 @@ export default tsEslint.config(
   {
     ignores: ['**/dist/*', 'eslint.config.mjs', '**/dist-generate-html/*'],
   },
-  eslintConfigPrettier,
 );
