@@ -6,17 +6,8 @@ import { IoMdGift } from 'react-icons/io'
 import { IoHomeOutline } from 'react-icons/io5'
 import { LiaBreadSliceSolid } from 'react-icons/lia'
 import { LuShoppingCart, LuCakeSlice } from 'react-icons/lu'
-import {
-  MdOutlineLunchDining,
-  MdOutlineLocalPlay,
-  MdOutlineMedicalServices,
-} from 'react-icons/md'
-import {
-  RiDrinksLine,
-  RiMoneyDollarCircleLine,
-  RiBusFill,
-  RiFunctionLine,
-} from 'react-icons/ri'
+import { MdOutlineLunchDining, MdOutlineLocalPlay, MdOutlineMedicalServices } from 'react-icons/md'
+import { RiDrinksLine, RiMoneyDollarCircleLine, RiBusFill, RiFunctionLine } from 'react-icons/ri'
 import { VscError } from 'react-icons/vsc'
 
 export const iconList = {

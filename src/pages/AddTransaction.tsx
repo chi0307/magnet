@@ -17,6 +17,7 @@ import { Route } from '@/router/route'
 import { getDefaultBook } from '@/services/Book'
 import { getCategories } from '@/services/Category'
 import { type CategoryEntity } from '@/types/database'
+import { errorHandle } from '@/utils'
 import { type Locale, getLocale } from '@/utils/locale'
 import { localStorageManager } from '@/utils/StorageManager'
 
@@ -67,7 +68,7 @@ const CategoryItem = ({
     `}
     onClick={onSelect}
   >
-    <category.icon className='min-w-10 min-h-10' />
+    <category.icon className="min-w-10 min-h-10" />
     <span>{category.name}</span>
   </div>
 )
@@ -119,8 +120,7 @@ const AddTransaction = (): JSX.Element => {
     'zh-TW': zhTW,
   }
 
-  const selectedCategoryBgColor =
-    selectedTab === 'expense' ? 'bg-[#FF4B4A]' : 'bg-[#1BB0F6]'
+  const selectedCategoryBgColor = selectedTab === 'expense' ? 'bg-[#FF4B4A]' : 'bg-[#1BB0F6]'
 
   const tabs: SelectedTab[] = ['expense', 'income']
 
@@ -152,7 +152,7 @@ const AddTransaction = (): JSX.Element => {
           navigate(Route.Book)
         })
         .catch((error) => {
-          console.error('add transaction error: ', error)
+          errorHandle('add transaction error: ', { error, type: 'alert' })
         })
     }
   }
@@ -175,30 +175,29 @@ const AddTransaction = (): JSX.Element => {
 
   return (
     <div
-      className='
+      className="
         mx-auto
         flex flex-col
         max-w-107.5 h-100dvh
         text-(4.2 [#4B4B4B])
-      '
+      "
     >
       {/* Tabs */}
       <div
-        className='
+        className="
           mt-2 pb-4
           flex flex-center
           border-b-2 border-[#E5E5E5]
-        '
+        "
       >
-        <div className='flex border-2 border-[#E5E5E5] rounded-4 overflow-hidden'>
+        <div className="flex border-2 border-[#E5E5E5] rounded-4 overflow-hidden">
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => toggleTab(tab)}
               className={`py-2 px-5 text-bold-lg transition-colors duration-100 ${
                 selectedTab === tab
-                  ? (tab === 'expense' ? 'bg-[#FF4B4A]' : 'bg-[#1BB0F6]') +
-                    ' text-white'
+                  ? (tab === 'expense' ? 'bg-[#FF4B4A]' : 'bg-[#1BB0F6]') + ' text-white'
                   : ''
               }`}
             >
@@ -209,8 +208,8 @@ const AddTransaction = (): JSX.Element => {
       </div>
 
       {/* Category */}
-      <div className='flex-1 overflow-y-auto'>
-        <div className='p-5 grid grid-cols-4 gap-2.5'>
+      <div className="flex-1 overflow-y-auto">
+        <div className="p-5 grid grid-cols-4 gap-2.5">
           {categoryList.map((category, index) => (
             <CategoryItem
               key={category.name}
@@ -221,63 +220,56 @@ const AddTransaction = (): JSX.Element => {
             />
           ))}
           <div
-            className='
+            className="
               p-2
               flex flex-center flex-col
               text-3.5 rounded-4 aspect-ratio-1/1
-            '
+            "
           >
-            <IoAddCircleOutline className='min-w-10 min-h-10' />
+            <IoAddCircleOutline className="min-w-10 min-h-10" />
             <span>{t('general.add')}</span>
           </div>
         </div>
       </div>
 
-      <div className='p-5 flex flex-center flex-col bg-[#F6F4EF] rounded-t-4'>
+      <div className="p-5 flex flex-center flex-col bg-[#F6F4EF] rounded-t-4">
         {/* Transaction Info */}
-        <div className='w-full flex justify-between items-center gap-1'>
+        <div className="w-full flex justify-between items-center gap-1">
           <span
-            className='
+            className="
               px-2.5 py-1
               w-30% bg-[#E5E5E5] rounded-4
               text-(6 bold-lg right ellipsis)
               overflow-hidden whitespace-nowrap
-            '
+            "
           >
             {calculatorValue}
           </span>
           {/* Content */}
           <input
-            name='content'
-            type='text'
-            className='flex-1 h-full bg-transparent text-(bold-md center) focus:outline-none'
+            name="content"
+            type="text"
+            className="flex-1 h-full bg-transparent text-(bold-md center) focus:outline-none"
             placeholder={t('book.tap_to_write')}
             onChange={(e) => setTransactionContent(e.target.value)}
           />
         </div>
         {/* Date */}
-        <div className='my-4 flex flex-center gap-5'>
-          <FaCaretLeft
-            onClick={() => setSelectedDate(subDays(selectedDate, 1))}
-          />
-          <span
-            className='min-w-50 text-(center bold-lg)'
-            onClick={toggleDayPicker}
-          >
+        <div className="my-4 flex flex-center gap-5">
+          <FaCaretLeft onClick={() => setSelectedDate(subDays(selectedDate, 1))} />
+          <span className="min-w-50 text-(center bold-lg)" onClick={toggleDayPicker}>
             {formatDate(selectedDate, getLocale())}
           </span>
-          <FaCaretRight
-            onClick={() => setSelectedDate(addDays(selectedDate, 1))}
-          />
+          <FaCaretRight onClick={() => setSelectedDate(addDays(selectedDate, 1))} />
         </div>
 
         {/* Calculator */}
         <Calculator
-          className='w-full'
+          className="w-full"
           onDisplayValueChange={setCalculatorValue} // Pass the callback to Calculator
           onClick={() => {
             handleTransaction().catch((error) => {
-              console.error('Error during user registration:', error)
+              errorHandle('Error during user registration:', { error, type: 'alert' })
             })
           }}
         />
@@ -305,7 +297,7 @@ const AddTransaction = (): JSX.Element => {
         `}
       >
         <DayPicker
-          mode='single'
+          mode="single"
           locale={dateLanguageMap[getLocale()]}
           defaultMonth={selectedDate}
           selected={selectedDate}
@@ -322,10 +314,10 @@ const AddTransaction = (): JSX.Element => {
             selected: `${selectedCategoryBgColor} text-(white [#4B4B4B] bold-lg) rounded-4`,
           }}
         />
-        <div className='px-10 py-5 flex flex-center gap-5 text-(5 bold-md)'>
+        <div className="px-10 py-5 flex flex-center gap-5 text-(5 bold-md)">
           <button
             onClick={selectToday}
-            className='flex-1 py-3 text-center text-bold-lg bg-[#E5E5E5] rounded-4'
+            className="flex-1 py-3 text-center text-bold-lg bg-[#E5E5E5] rounded-4"
           >
             {t('general.today')}
           </button>

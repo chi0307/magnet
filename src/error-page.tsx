@@ -1,11 +1,13 @@
 import { useRouteError } from 'react-router-dom'
 
+import { errorHandle } from './utils'
+
 export default function ErrorPage(): JSX.Element {
   const error = useRouteError()
-  console.error(error)
+  errorHandle('is error page', { error })
 
   return (
-    <div id='error-page'>
+    <div id="error-page">
       <h1>Oops! Page Not Found</h1>
     </div>
   )

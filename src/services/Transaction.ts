@@ -19,7 +19,7 @@ export async function getAllTransactions(): Promise<
     [...(await getCategories(book.id))].map((item) => [
       item.id,
       { icon: item.icon, name: item.name },
-    ])
+    ]),
   )
 
   return transactions
