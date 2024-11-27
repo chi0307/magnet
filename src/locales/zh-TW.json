@@ -35,10 +35,14 @@
       "rent": "租金",
       "bill": "帳單",
       "traffic": "交通",
-      "ent": "娛樂",
+      "entertainment": "娛樂",
       "medical": "醫療",
       "gift": "禮物",
-      "other": "其他"
+      "other": "其他",
+      "deposit": "存款",
+      "salary": "薪水",
+      "interest": "利息",
+      "stock": "股票"
     },
     "no_transactions": "點擊下方的 + 按鈕，開始新增紀錄吧！"
   }

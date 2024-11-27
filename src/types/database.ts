@@ -26,6 +26,7 @@ export interface CategoryEntity extends AutoBaseEntity {
   name: string
   icon: Icon
   sortIndex: number
+  type: 'expense' | 'income'
 }
 
 export interface TransactionEntity extends AutoBaseEntity {

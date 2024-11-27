@@ -1,4 +1,4 @@
-import { defaultCategories } from '@/constant/defaultCategories'
+import { expenseCategories, incomeCategories } from '@/constant/defaultCategories'
 import { Category } from '@/models/Category'
 import { type CategoryEntity } from '@/types/database'
 import { type RequiredEntity } from '@/types/utils'
@@ -18,7 +18,10 @@ export async function createCategory(
 export async function createDefaultCategories(
   bookId: CategoryEntity['bookId'],
 ): Promise<CategoryEntity['id'][]> {
-  const newCategories: RequiredEntity<CategoryEntity>[] = defaultCategories.map((item) => ({
+  const newCategories: RequiredEntity<CategoryEntity>[] = [
+    ...expenseCategories,
+    ...incomeCategories,
+  ].map((item) => ({
     ...item,
     bookId,
   }))

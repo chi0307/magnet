@@ -35,10 +35,14 @@
       "rent": "Rent",
       "bill": "Bill",
       "traffic": "Traffic",
-      "ent": "ENT",
+      "entertainment": "entertainment",
       "medical": "Medical",
       "gift": "Gift",
-      "other": "Other"
+      "other": "Other",
+      "deposit": "Deposit",
+      "salary": "Salary",
+      "interest": "Interest",
+      "stock": "Stock"
     }
   },
   "no_transactions": "Click the + button below to start adding your records!"

@@ -14,7 +14,7 @@ export async function signInOrRegisterUser({
 }): Promise<UserEntity['id']> {
   const existingUser = await userModel.findByEmail(email)
   let userId = existingUser?.id ?? null
-  if (userId === undefined) {
+  if (userId === null) {
     userId = await userModel.insert({
       name,
       email,
