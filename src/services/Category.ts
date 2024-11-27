@@ -1,4 +1,4 @@
-import { defaultCategories } from '@/constant/defaultCategories'
+import { expenseCategories, incomeCategories } from '@/constant/defaultCategories'
 import { Category } from '@/models/Category'
 import { type CategoryEntity } from '@/types/database'
 import { type RequiredEntity } from '@/types/utils'
@@ -6,7 +6,7 @@ import { type RequiredEntity } from '@/types/utils'
 const categoryModel = new Category()
 
 export async function createCategory(
-  item: RequiredEntity<CategoryEntity>,
+  item: RequiredEntity<CategoryEntity>
 ): Promise<CategoryEntity['id']> {
   const categoryId = await categoryModel.insert(item)
   if (categoryId === null) {
@@ -16,9 +16,12 @@ export async function createCategory(
 }
 
 export async function createDefaultCategories(
-  bookId: CategoryEntity['bookId'],
+  bookId: CategoryEntity['bookId']
 ): Promise<CategoryEntity['id'][]> {
-  const newCategories: RequiredEntity<CategoryEntity>[] = defaultCategories.map((item) => ({
+  const newCategories: RequiredEntity<CategoryEntity>[] = [
+    ...expenseCategories,
+    ...incomeCategories,
+  ].map((item) => ({
     ...item,
     bookId,
   }))
@@ -35,12 +38,12 @@ export async function createDefaultCategories(
  * 2. created_at old -> new
  */
 export async function getCategories(
-  bookId: CategoryEntity['bookId'],
+  bookId: CategoryEntity['bookId']
 ): Promise<readonly Readonly<CategoryEntity>[]> {
   const categories = await categoryModel.findByBookId(bookId)
 
   return [...categories].sort(
     (aItem, bItem) =>
-      bItem.sortIndex - aItem.sortIndex || (aItem.createdAt > bItem.createdAt ? 1 : -1),
+      bItem.sortIndex - aItem.sortIndex || (aItem.createdAt > bItem.createdAt ? 1 : -1)
   )
 }
