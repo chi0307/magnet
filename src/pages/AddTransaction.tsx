@@ -1,7 +1,7 @@
 import { addDays, format, subDays } from 'date-fns'
 import { enUS, ja, zhHK, zhTW, type Locale as LanLocale } from 'date-fns/locale'
 import { t } from 'i18next'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { DayPicker } from 'react-day-picker'
 import { type IconType } from 'react-icons'
 import { FaCaretLeft } from 'react-icons/fa6'
@@ -32,7 +32,7 @@ interface CategoryItemProps {
   color: string
 }
 
-type SelectedTab = 'expense' | 'income'
+type CategoryType = 'expense' | 'income'
 
 const formatDate = (date: Date, locale: Locale): string => {
   const localeMap: Record<Locale, LanLocale> = {
@@ -80,11 +80,12 @@ const AddTransaction = (): JSX.Element => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0)
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [isDayPickerVisible, setIsDayPickerVisible] = useState(false)
-  const [selectedTab, setSelectedTab] = useState<SelectedTab>('expense')
+  const [selectedCategoryType, setSelectedCategoryType] = useState<CategoryType>('expense')
   const [calculatorValue, setCalculatorValue] = useState('0')
   const [transactionContent, setTransactionContent] = useState('')
   // TODO: 需要分開做收入跟支出的 category (e.g. model 需要增加 type 欄位)
-  const [categoryList, setCategoryList] = useState<CategoryEntityWithIcon[]>([])
+  const [originalCategoryList, setOriginalCategoryList] = useState<CategoryEntityWithIcon[]>([])
+  const [categoryByType, setCategoryByType] = useState<CategoryEntityWithIcon[]>([])
 
   const bookModel = new Book()
   const transactionModel = new Transaction()
@@ -99,12 +100,11 @@ const AddTransaction = (): JSX.Element => {
     closeDayPicker()
   }
 
-  // Sets tab state and resets category index
-  const toggleTab = (tab: SelectedTab): void => {
-    if (selectedTab !== tab) {
-      setSelectedTab(tab)
-      setSelectedCategoryIndex(0)
-    }
+  // Sets category type and resets index
+  const switchCategoryType = (categoryType: CategoryType): void => {
+    setSelectedCategoryType(categoryType)
+    changeCategory(categoryType)
+    setSelectedCategoryIndex(0)
   }
 
   // Updates document body style based on DayPicker visibility
@@ -120,9 +120,10 @@ const AddTransaction = (): JSX.Element => {
     'zh-TW': zhTW,
   }
 
-  const selectedCategoryBgColor = selectedTab === 'expense' ? 'bg-[#FF4B4A]' : 'bg-[#1BB0F6]'
+  const selectedCategoryBgColor =
+    selectedCategoryType === 'expense' ? 'bg-[#FF4B4A]' : 'bg-[#1BB0F6]'
 
-  const tabs: SelectedTab[] = ['expense', 'income']
+  const categoryTypes: CategoryType[] = ['expense', 'income']
 
   const handleTransaction = async (): Promise<void> => {
     const savedUserId = localStorageManager.get('userId')
@@ -134,12 +135,12 @@ const AddTransaction = (): JSX.Element => {
     // TODO: 帳本 id 要改從 url 來
     const existingBook = await bookModel.findByUserId(savedUserId)
     const adjustedAmount =
-      selectedTab === 'expense'
+      selectedCategoryType === 'expense'
         ? -Math.abs(Number(calculatorValue))
         : Math.abs(Number(calculatorValue))
 
     if (existingBook) {
-      const category = categoryList[selectedCategoryIndex]
+      const category = categoryByType[selectedCategoryIndex]
       await transactionModel
         .insert({
           bookId: existingBook.id,
@@ -159,19 +160,39 @@ const AddTransaction = (): JSX.Element => {
 
   // Fix Safari input focus issue
   useEffect(() => {
-    void (async (): Promise<void> => {
+    const initializeCategories = async (): Promise<void> => {
       const book = await getDefaultBook()
       const categories = await getCategories(book.id)
       const list: CategoryEntityWithIcon[] = categories.map((item) => ({
         ...item,
         icon: iconList[item.icon],
       }))
-      setCategoryList(list)
-    })()
+      setOriginalCategoryList(list)
+    }
+
+    initializeCategories().catch((error) => {
+      console.error('Failed to initialize categories:', error)
+    })
     const handleFocusOut = (): void => window.scrollTo(0, 0)
     window.addEventListener('focusout', handleFocusOut)
     return (): void => window.removeEventListener('focusout', handleFocusOut)
   }, [])
+
+  const changeCategory = useCallback(
+    (selectedCategoryType: CategoryType): void => {
+      const filteredCategories = originalCategoryList.filter(
+        (category) => category.type === selectedCategoryType,
+      )
+      setCategoryByType(filteredCategories)
+    },
+    [originalCategoryList],
+  )
+
+  useEffect(() => {
+    if (originalCategoryList.length > 0) {
+      changeCategory(selectedCategoryType)
+    }
+  }, [originalCategoryList, selectedCategoryType, changeCategory])
 
   return (
     <div
@@ -191,17 +212,17 @@ const AddTransaction = (): JSX.Element => {
         "
       >
         <div className="flex border-2 border-[#E5E5E5] rounded-4 overflow-hidden">
-          {tabs.map((tab) => (
+          {categoryTypes.map((categoryType) => (
             <button
-              key={tab}
-              onClick={() => toggleTab(tab)}
+              key={categoryType}
+              onClick={() => switchCategoryType(categoryType)}
               className={`py-2 px-5 text-bold-lg transition-colors duration-100 ${
-                selectedTab === tab
-                  ? (tab === 'expense' ? 'bg-[#FF4B4A]' : 'bg-[#1BB0F6]') + ' text-white'
+                selectedCategoryType === categoryType
+                  ? (categoryType === 'expense' ? 'bg-[#FF4B4A]' : 'bg-[#1BB0F6]') + ' text-white'
                   : ''
               }`}
             >
-              {t(`book.${tab}`)}
+              {t(`book.${categoryType}`)}
             </button>
           ))}
         </div>
@@ -210,7 +231,7 @@ const AddTransaction = (): JSX.Element => {
       {/* Category */}
       <div className="flex-1 overflow-y-auto">
         <div className="p-5 grid grid-cols-4 gap-2.5">
-          {categoryList.map((category, index) => (
+          {categoryByType.map((category, index) => (
             <CategoryItem
               key={category.name}
               category={category}
