@@ -1,7 +1,7 @@
 import { addDays, format, subDays } from 'date-fns'
 import { enUS, ja, zhHK, zhTW, type Locale as LanLocale } from 'date-fns/locale'
 import { t } from 'i18next'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { DayPicker } from 'react-day-picker'
 import { type IconType } from 'react-icons'
 import { FaCaretLeft } from 'react-icons/fa6'
@@ -85,7 +85,9 @@ const AddTransaction = (): JSX.Element => {
   const [transactionContent, setTransactionContent] = useState('')
   // TODO: 需要分開做收入跟支出的 category (e.g. model 需要增加 type 欄位)
   const [originalCategoryList, setOriginalCategoryList] = useState<CategoryEntityWithIcon[]>([])
-  const [categoryByType, setCategoryByType] = useState<CategoryEntityWithIcon[]>([])
+  const categoryByType = useMemo(() => {
+    return originalCategoryList.filter((category) => category.type === selectedCategoryType)
+  }, [originalCategoryList, selectedCategoryType])
 
   const bookModel = new Book()
   const transactionModel = new Transaction()
@@ -103,7 +105,6 @@ const AddTransaction = (): JSX.Element => {
   // Sets category type and resets index
   const switchCategoryType = (categoryType: CategoryType): void => {
     setSelectedCategoryType(categoryType)
-    changeCategory(categoryType)
     setSelectedCategoryIndex(0)
   }
 
@@ -171,28 +172,12 @@ const AddTransaction = (): JSX.Element => {
     }
 
     initializeCategories().catch((error) => {
-      console.error('Failed to initialize categories:', error)
+      errorHandle('Failed to initialize categories:', { error, type: 'alert' })
     })
     const handleFocusOut = (): void => window.scrollTo(0, 0)
     window.addEventListener('focusout', handleFocusOut)
     return (): void => window.removeEventListener('focusout', handleFocusOut)
   }, [])
-
-  const changeCategory = useCallback(
-    (selectedCategoryType: CategoryType): void => {
-      const filteredCategories = originalCategoryList.filter(
-        (category) => category.type === selectedCategoryType,
-      )
-      setCategoryByType(filteredCategories)
-    },
-    [originalCategoryList],
-  )
-
-  useEffect(() => {
-    if (originalCategoryList.length > 0) {
-      changeCategory(selectedCategoryType)
-    }
-  }, [originalCategoryList, selectedCategoryType, changeCategory])
 
   return (
     <div
