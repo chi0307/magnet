@@ -8,8 +8,9 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { routes } from '@/router'
+import { baseUrl } from '@/router/utils'
 
-const router = createBrowserRouter(routes, { basename: '/magnet' })
+const router = createBrowserRouter(routes, { basename: baseUrl })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
