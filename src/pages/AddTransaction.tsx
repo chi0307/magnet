@@ -142,20 +142,18 @@ const AddTransaction = (): JSX.Element => {
 
     if (existingBook) {
       const category = categoryByType[selectedCategoryIndex]
-      await transactionModel
-        .insert({
+      try {
+        await transactionModel.insert({
           bookId: existingBook.id,
           categoryId: category.id,
           name: transactionContent || null,
           amount: adjustedAmount,
           transactionDate: selectedDate,
         })
-        .then(() => {
-          navigate(Route.Book)
-        })
-        .catch((error) => {
-          errorHandle('add transaction error: ', { error, type: 'alert' })
-        })
+        await navigate(Route.Book)
+      } catch (error) {
+        errorHandle('add transaction error: ', { error, type: 'alert' })
+      }
     }
   }
 

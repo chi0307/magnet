@@ -64,7 +64,7 @@ const Book = (): JSX.Element => {
         errorHandle(`get all transaction failed`, { error, type: 'alert' })
         const result = await checkUser()
         if (result === false) {
-          navigate(Route.Home)
+          return await navigate(Route.Home)
         }
       }
     }

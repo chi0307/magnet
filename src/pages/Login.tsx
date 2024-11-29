@@ -32,7 +32,7 @@ const Login = (): JSX.Element => {
     try {
       const userId = await signInOrRegisterUser(userData)
       localStorageManager.set('userId', userId)
-      navigate(Route.Book)
+      return await navigate(Route.Book)
     } catch {
       errorHandle('register fail', { type: 'alert' })
     }
