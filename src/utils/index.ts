@@ -1,3 +1,4 @@
+import { isRouteErrorResponse } from 'react-router-dom'
 import { v7 as uuidv7 } from 'uuid'
 
 import { type UUID } from '@/types/utils'
@@ -30,9 +31,10 @@ export function errorHandle(
   let outputMessage = message
   if (error !== null && error instanceof Error) {
     outputMessage = `${message}, error: ${error.message}`
+  } else if (isRouteErrorResponse(error)) {
+    outputMessage = `${message}, status: ${error.status}, statusText: ${error.statusText}, data: ${error.data}`
   } else if (error !== null) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    outputMessage = `${message}, unknown: ${error}`
+    outputMessage = `${message}, unknown: ${JSON.stringify(error)}`
   }
   switch (type) {
     case 'error': {
@@ -40,6 +42,7 @@ export function errorHandle(
       break
     }
     case 'alert': {
+      console.error(otherData)
       alert(outputMessage)
       break
     }
