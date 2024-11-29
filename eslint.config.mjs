@@ -54,7 +54,7 @@ export default tsEslint.config(
             'object',
             'unknown',
           ],
-          internalPattern: ['@/**'],
+          internalPattern: ['^@/.*'],
         },
       ],
     },
