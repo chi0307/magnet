@@ -4,20 +4,30 @@ on:
   schedule:
     - cron: '0 0 1 * *'
   workflow_dispatch:
+    branches:
+      - master
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  update-dependencies:
-    if: ${{ github.actor == 'chi0307' }}
+  validate-actor:
     runs-on: ubuntu-latest
-
     steps:
-      # 檢出專案
-      - name: Check out repository
+      - name: Check Actor
+        if: ${{ github.actor != 'chi0307' }}
+        run: exit 1
+        continue-on-error: true
+
+  update-dependencies:
+    needs: validate-actor
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out master branch
         uses: actions/checkout@v4
+        with:
+          ref: master
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -28,7 +38,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
 
       - name: Upgrade npm packages
@@ -53,3 +63,4 @@ jobs:
           token: ${{ secrets.MACHINE_USER_PAT }}
           assignees: ${{ github.actor }}
           commit-message: 'upgrade: github auto upgrade all packages to latest'
+          delete-branch: true
