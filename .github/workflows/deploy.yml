@@ -9,8 +9,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Check out master branch
         uses: actions/checkout@v4
+        with:
+          ref: master
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
@@ -21,7 +23,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -30,13 +32,11 @@ jobs:
       - name: test
         run: pnpm run check
 
-      # 構建應用程序（假設你有 build 腳本）
       - name: Build project
         run: npm run build
 
-      # 部署到 gh-pages 分支
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # 指定要部署的目錄（dist）
+          publish_dir: ./dist
