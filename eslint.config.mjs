@@ -16,7 +16,7 @@ export default tsEslint.config(
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       '@typescript-eslint': tsEslintPlugin,
-      'perfectionist': eslintPerfectionist,
+      perfectionist: eslintPerfectionist,
     },
     languageOptions: {
       parserOptions: {
@@ -25,10 +25,7 @@ export default tsEslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       '@typescript-eslint/explicit-function-return-type': 'error',
       '@typescript-eslint/no-unused-vars': [
         'error',
@@ -54,7 +51,7 @@ export default tsEslint.config(
             'object',
             'unknown',
           ],
-          internalPattern: ['@/**'],
+          internalPattern: ['^@/.*'],
         },
       ],
     },
@@ -71,11 +68,11 @@ export default tsEslint.config(
     files: ['generate-pages.ts'],
     languageOptions: {
       parserOptions: {
-        project: './tsconfig.generate.json'
-      }
-    }
+        project: './tsconfig.generate.json',
+      },
+    },
   },
   {
     ignores: ['**/dist/*', 'eslint.config.mjs', '**/dist-generate-html/*'],
   },
-);
+)
