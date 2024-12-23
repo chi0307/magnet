@@ -50,3 +50,12 @@ export async function checkDefaultBook(userId: BookEntity['userId']): Promise<Bo
     return bookId
   }
 }
+
+export async function bookIsExists(bookId: BookEntity['id']): Promise<boolean> {
+  try {
+    const book = await bookModel.findById(bookId)
+    return book !== null
+  } catch {
+    return false
+  }
+}
