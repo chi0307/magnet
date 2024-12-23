@@ -7,7 +7,7 @@ import { type IconType } from 'react-icons'
 import { FaCaretLeft } from 'react-icons/fa6'
 import { FaCaretRight } from 'react-icons/fa6'
 import { IoAddCircleOutline } from 'react-icons/io5'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import Calculator from '@/components/Calculator'
 import { iconList } from '@/constant/icons'

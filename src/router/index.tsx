@@ -1,4 +1,4 @@
-import { redirect, LoaderFunctionArgs, RouteObject } from 'react-router-dom'
+import { redirect, LoaderFunctionArgs, RouteObject } from 'react-router'
 
 import ErrorPage from '@/error-page'
 import AddTransaction from '@/pages/AddTransaction'
