@@ -1,8 +1,8 @@
-name: Monthly Node.js Package Update
+name: Auto Update Dependencies
 
 on:
   schedule:
-    - cron: '0 0 1 * *'
+    - cron: '0 0 */14 * *'
   workflow_dispatch:
     branches:
       - master
@@ -44,8 +44,7 @@ jobs:
       - name: Upgrade npm packages
         run: |
           pnpm install -g npm-check-updates
-          ncu -u
-          pnpm install --no-frozen-lockfile
+          ncu --doctor -u --doctorInstall "pnpm install" --doctorTest "pnpm run check" --peer
 
       - name: Set branch name
         id: set_branch_name
@@ -58,8 +57,8 @@ jobs:
         with:
           branch: ${{ steps.set_branch_name.outputs.branch }}
           base: master
-          title: 'upgrade: Monthly auto update of Node.js dependencies'
-          body: 'This PR updates the Node.js dependencies to their latest versions.'
+          title: 'upgrade: auto update of dependencies'
+          body: 'This PR updates the dependencies to their latest versions.'
           token: ${{ secrets.MACHINE_USER_PAT }}
           assignees: ${{ github.actor }}
           commit-message: 'upgrade: github auto upgrade all packages to latest'
