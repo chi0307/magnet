@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaFacebookF, FaGoogle, FaApple, FaUser, FaLine } from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import LoginButton from '@/components/LoginButton'
 import { Route } from '@/router/route'
