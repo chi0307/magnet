@@ -1,4 +1,4 @@
-import { isRouteErrorResponse } from 'react-router-dom'
+import { isRouteErrorResponse } from 'react-router'
 import { v7 as uuidv7 } from 'uuid'
 
 import { type UUID } from '@/types/utils'

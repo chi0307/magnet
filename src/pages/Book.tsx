@@ -2,7 +2,7 @@ import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IoAdd } from 'react-icons/io5'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 
 import DoughnutPieChart from '@/components/DoughnutPieChart'
 import { iconList } from '@/constant/icons'
