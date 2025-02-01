@@ -15,13 +15,14 @@ jobs:
   validate-actor:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Actor
-        if: ${{ github.actor != 'chi0307' }}
+      - name: Check Repository
+        if: github.repository != 'chi0307/magnet'
         run: exit 1
         continue-on-error: true
 
   update-dependencies:
     needs: validate-actor
+    if: success() && github.repository == 'chi0307/magnet'
     runs-on: ubuntu-latest
     steps:
       - name: Check out master branch
