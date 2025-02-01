@@ -12,18 +12,15 @@ permissions:
   pull-requests: write
 
 jobs:
-  validate-actor:
+  noop-job:
     runs-on: ubuntu-latest
+    if: github.repository != 'chi0307/magnet'
     steps:
-      - name: Check Repository
-        if: github.repository != 'chi0307/magnet'
-        run: exit 1
-        continue-on-error: true
+      - run: echo "Skipping workflow."
 
   update-dependencies:
-    needs: validate-actor
-    if: success() && github.repository == 'chi0307/magnet'
     runs-on: ubuntu-latest
+    if: github.repository == 'chi0307/magnet'
     steps:
       - name: Check out master branch
         uses: actions/checkout@v4
