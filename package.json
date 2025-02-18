@@ -28,29 +28,29 @@
     "react-i18next": "^15.4.0",
     "react-icons": "^5.4.0",
     "react-router": "^7.1.5",
-    "typia": "^7.6.0",
+    "typia": "^7.6.4",
     "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@ryoppippi/unplugin-typia": "^1.2.0",
     "@tsconfig/strictest": "^2.0.5",
-    "@types/node": "^22.13.0",
+    "@types/node": "^22.13.4",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",
     "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.19.0",
-    "eslint-plugin-perfectionist": "^4.7.0",
+    "eslint": "^9.20.1",
+    "eslint-plugin-perfectionist": "^4.9.0",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.18",
+    "eslint-plugin-react-refresh": "^0.4.19",
     "gh-pages": "^6.3.0",
     "ts-patch": "^3.3.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.18.2",
     "unocss": "^65.4.3",
-    "vite": "^6.0.11"
+    "vite": "^6.1.0"
   }
 }
